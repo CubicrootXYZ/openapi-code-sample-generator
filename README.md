@@ -1,2 +1,11 @@
-# openapi-code-sample-generator
-Script that adds code samples to OpenAPI secifications
+# OpenApi code sample generator
+
+Generates sample code for different languages and inserts them in you OpenApi specification file.
+
+## Supported Languages
+
+* curl
+
+## Install & Run
+
+

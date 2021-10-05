@@ -15,7 +15,7 @@ limitations under the License.
 */
 package main
 
-import "openapi-sample-generator/cmd"
+import "openapi-code-sample-generator/cmd"
 
 func main() {
 	cmd.Execute()

@@ -16,7 +16,7 @@ var (
 
 // Debug logs with tag debug
 func Debug(msg string) {
-	print(msg, "DEBUG", None)
+	print(msg, "DEBUG", Blue)
 }
 
 // Info logs with tag info and in blue

@@ -10,7 +10,7 @@ var cfgFile string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "openapi-sample-generator",
+	Use:   "openapi-code-sample-generator",
 	Short: "Generates code samples for OpenApi spec files",
 	Long:  "Add code samples in different languages to your OpenApi spec files",
 	// Uncomment the following line if your bare application
@@ -29,7 +29,7 @@ func init() {
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.openapi-sample-generator.yaml)")
+	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.openapi-code-sample-generator.yaml)")
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.

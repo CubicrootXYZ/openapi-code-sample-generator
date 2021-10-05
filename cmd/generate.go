@@ -1,8 +1,8 @@
 package cmd
 
 import (
-	"openapi-sample-generator/internal/codesample"
-	"openapi-sample-generator/internal/log"
+	"openapi-code-sample-generator/internal/codesample"
+	"openapi-code-sample-generator/internal/log"
 	"os"
 
 	openapi "github.com/getkin/kin-openapi/openapi3"
@@ -21,6 +21,7 @@ var generateCmd = &cobra.Command{
 // Flags
 var inputFile string
 var outputFile string
+var debug bool
 
 func init() {
 	rootCmd.AddCommand(generateCmd)
@@ -31,6 +32,7 @@ func init() {
 	// and all subcommands, e.g.:
 	generateCmd.PersistentFlags().StringVar(&inputFile, "input-file", "swagger.yaml", "Location of the input swagger yaml specification file")
 	generateCmd.PersistentFlags().StringVar(&outputFile, "output-file", "swagger-out.yaml", "Location of the output swagger yaml specification file")
+	generateCmd.PersistentFlags().BoolVar(&debug, "v", false, "Enable to get verbose output")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
@@ -43,15 +45,11 @@ func generate(cmd *cobra.Command, args []string) {
 	doc, err := openapi.NewLoader().LoadFromFile(inputFile)
 	if err != nil {
 		log.Error("Failed to open file: " + err.Error())
-		return
+		os.Exit(1)
 	}
 
-	for _, path := range doc.Paths {
-		if path.Post != nil {
-			path.Post.ExtensionProps.Extensions = make(map[string]interface{})
-			path.Post.ExtensionProps.Extensions["x-codeSamples"] = codesample.GetSamples(codesample.LanguageCurl, path.Post, path)
-		}
-	}
+	constructor := codesample.NewConstructor(doc, debug)
+	constructor.AddSamples([]codesample.Language{codesample.LanguageCurl})
 
 	json, err := yaml.Marshal(doc)
 	os.WriteFile(outputFile, json, 0666)
