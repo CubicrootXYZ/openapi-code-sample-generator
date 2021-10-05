@@ -37,7 +37,7 @@ func GetExampleValueForSchema(schema *openapi3.Schema) (interface{}, error) {
 }
 
 func getExampleValueByType(schema *openapi3.Schema) (interface{}, error) {
-	log.Debug(fmt.Sprintf("Schema of type '%s' and format '%s' unknown", schema.Type, schema.Format))
+	log.Debug(fmt.Sprintf("Schema of type '%s' and format '%s' received", schema.Type, schema.Format))
 	switch schema.Type {
 	case "integer":
 		return 1234, nil
@@ -60,8 +60,8 @@ func getExampleValueByType(schema *openapi3.Schema) (interface{}, error) {
 		return false, nil
 	case "array":
 		if schema.Items != nil && schema.Items.Value != nil {
-			val, err := getExampleValueByType(schema.Items.Value)
-			if err != nil {
+			val, err := GetExampleValueForSchema(schema.Items.Value)
+			if err == nil {
 				return []interface{}{val}, nil
 			}
 		}
