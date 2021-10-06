@@ -9,8 +9,8 @@ import (
 	"strings"
 )
 
-// UrlencodeInterface encodes the interface to application/x-www-form-urlencoded
-func UrlencodeInterface(name string, value interface{}) (string, error) {
+// UrlencodeParameter encodes the given parameter and its value to application/x-www-form-urlencoded
+func UrlencodeParameter(name string, value interface{}) (string, error) {
 	encoded := strings.Builder{}
 
 	if helper.IsSlice(value) {
@@ -46,6 +46,11 @@ func UrlencodeInterface(name string, value interface{}) (string, error) {
 	}
 
 	return encoded.String(), nil
+}
+
+// UrlencodeValue encodes a single value to application/x-www-form-urlencoded
+func UrlencodeValue(value interface{}) (string, error) {
+	return url.QueryEscape(fmt.Sprint(value)), nil
 }
 
 func urlencodeSecondLevelObject(value interface{}) (string, error) {

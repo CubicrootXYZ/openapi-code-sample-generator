@@ -1,8 +1,10 @@
 package languages
 
 import (
+	"fmt"
 	"openapi-code-sample-generator/internal/encoding"
 	"openapi-code-sample-generator/internal/helper"
+	"openapi-code-sample-generator/internal/log"
 	"openapi-code-sample-generator/internal/types"
 	"strings"
 
@@ -24,7 +26,7 @@ func NewCurl(document *openapi3.T) types.Generator {
 // GetSample returns a curl sample for the given operation
 func (c *Curl) GetSample(path string, operation *openapi3.Operation, pathItem *openapi3.PathItem) (*types.CodeSample, error) {
 	cmd := strings.Builder{}
-	pathParams, queryParams, _, _, err := helper.GetParameters(operation.Parameters)
+	pathParams, queryParams, headerParams, _, err := helper.GetParameters(operation.Parameters)
 	if err != nil {
 		return nil, err
 	}
@@ -34,7 +36,8 @@ func (c *Curl) GetSample(path string, operation *openapi3.Operation, pathItem *o
 	cmd.WriteString(helper.GetPath(path, pathParams))
 	cmd.WriteString("?")
 	cmd.WriteString(c.getQueryParams(queryParams))
-	cmd.WriteString("\" ")
+	cmd.WriteString("\"")
+	cmd.WriteString(c.getHeaderParams(headerParams, operation.Security))
 
 	return &types.CodeSample{
 		Lang:   types.LanguageCurl,
@@ -46,7 +49,11 @@ func (c *Curl) GetSample(path string, operation *openapi3.Operation, pathItem *o
 func (c *Curl) getQueryParams(params []*types.Parameter) string {
 	query := strings.Builder{}
 	for i, param := range params {
-		encoded, err := encoding.UrlencodeInterface(param.Name, param.Value)
+		if param == nil {
+			continue
+		}
+
+		encoded, err := encoding.UrlencodeParameter(param.Name, param.Value)
 		if err != nil {
 			continue
 		}
@@ -61,6 +68,29 @@ func (c *Curl) getQueryParams(params []*types.Parameter) string {
 	return query.String()
 }
 
-func (c *Curl) getRequestBody() string {
-	return ""
+func (c *Curl) getHeaderParams(params []*types.Parameter, auth *openapi3.SecurityRequirements) string {
+	head := strings.Builder{}
+	for _, param := range params {
+		if param == nil {
+			continue
+		}
+
+		value, err := encoding.UrlencodeValue(param.Value)
+		if err != nil {
+			log.Info(fmt.Sprintf("Skipped header parameter %s due to: %s", param.Name, err.Error()))
+			continue
+		}
+
+		head.WriteString(" - H \"")
+		head.WriteString(param.Name)
+		head.WriteString(": ")
+		head.WriteString(value)
+		head.WriteString("\"")
+	}
+
+	if auth != nil {
+
+	}
+
+	return head.String()
 }
