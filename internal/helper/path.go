@@ -1,11 +1,13 @@
-package codesample
+package helper
 
 import (
 	"fmt"
+	"openapi-code-sample-generator/internal/types"
 	"strings"
 )
 
-func getPath(path string, params []*parameter) string {
+// GetPath returns the path with sample params set
+func GetPath(path string, params []*types.Parameter) string {
 	for _, param := range params {
 		if param == nil {
 			continue

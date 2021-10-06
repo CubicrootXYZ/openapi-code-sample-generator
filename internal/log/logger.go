@@ -14,9 +14,13 @@ var (
 	Blue   = "34"
 )
 
+var Verbose = false
+
 // Debug logs with tag debug
 func Debug(msg string) {
-	print(msg, "DEBUG", Blue)
+	if Verbose {
+		print(msg, "DEBUG", Blue)
+	}
 }
 
 // Info logs with tag info and in blue

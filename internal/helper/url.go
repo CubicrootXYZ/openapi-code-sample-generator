@@ -1,4 +1,4 @@
-package codesample
+package helper
 
 import (
 	"openapi-code-sample-generator/internal/errors"
@@ -7,12 +7,13 @@ import (
 	"github.com/getkin/kin-openapi/openapi3"
 )
 
-func (c *Constructor) getURL(operation *openapi3.Operation, pathItem *openapi3.PathItem) string {
-	url, err := c.getURLfromOperation(operation)
+// GetURL returns the url with multiple fallback strategies
+func GetURL(operation *openapi3.Operation, pathItem *openapi3.PathItem, document *openapi3.T) string {
+	url, err := getURLfromOperation(operation)
 	if err != nil {
-		url, err := c.getURLfromPath(pathItem)
+		url, err := getURLfromPath(pathItem)
 		if err != nil {
-			url, err := c.getURLfromDocument()
+			url, err := getURLfromDocument(document)
 			if err != nil {
 				return "domain.tld"
 			}
@@ -24,7 +25,7 @@ func (c *Constructor) getURL(operation *openapi3.Operation, pathItem *openapi3.P
 	return url
 }
 
-func (c *Constructor) getURLfromOperation(operation *openapi3.Operation) (string, error) {
+func getURLfromOperation(operation *openapi3.Operation) (string, error) {
 	if operation.Servers == nil {
 		return "", errors.NoServer
 	}
@@ -38,7 +39,7 @@ func (c *Constructor) getURLfromOperation(operation *openapi3.Operation) (string
 	return "", errors.NoServer
 }
 
-func (c *Constructor) getURLfromPath(pathItem *openapi3.PathItem) (string, error) {
+func getURLfromPath(pathItem *openapi3.PathItem) (string, error) {
 	if pathItem.Servers == nil {
 		return "", errors.NoServer
 	}
@@ -52,12 +53,12 @@ func (c *Constructor) getURLfromPath(pathItem *openapi3.PathItem) (string, error
 	return "", errors.NoServer
 }
 
-func (c *Constructor) getURLfromDocument() (string, error) {
-	if c.document.Servers == nil {
+func getURLfromDocument(document *openapi3.T) (string, error) {
+	if document.Servers == nil {
 		return "", errors.NoServer
 	}
 
-	for _, server := range c.document.Servers {
+	for _, server := range document.Servers {
 		if len(server.URL) > 0 {
 			return strings.TrimSuffix(server.URL, "/"), nil
 		}

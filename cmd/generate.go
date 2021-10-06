@@ -3,6 +3,7 @@ package cmd
 import (
 	"openapi-code-sample-generator/internal/codesample"
 	"openapi-code-sample-generator/internal/log"
+	"openapi-code-sample-generator/internal/types"
 	"os"
 
 	openapi "github.com/getkin/kin-openapi/openapi3"
@@ -40,6 +41,8 @@ func init() {
 }
 
 func generate(cmd *cobra.Command, args []string) {
+	log.Verbose = debug
+
 	log.Info("Loading file " + inputFile)
 
 	doc, err := openapi.NewLoader().LoadFromFile(inputFile)
@@ -49,7 +52,7 @@ func generate(cmd *cobra.Command, args []string) {
 	}
 
 	constructor := codesample.NewConstructor(doc, debug)
-	constructor.AddSamples([]codesample.Language{codesample.LanguageCurl})
+	constructor.AddSamples([]types.Language{types.LanguageCurl})
 
 	json, err := yaml.Marshal(doc)
 	os.WriteFile(outputFile, json, 0666)

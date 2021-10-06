@@ -1,25 +1,22 @@
-package codesample
+package helper
 
 import (
 	"fmt"
 	"openapi-code-sample-generator/internal/errors"
-	"openapi-code-sample-generator/internal/helper"
+	"openapi-code-sample-generator/internal/log"
+	"openapi-code-sample-generator/internal/types"
 	"strings"
 
 	"github.com/getkin/kin-openapi/openapi3"
 )
 
-type parameter struct {
-	Name  string
-	Value interface{}
-}
-
-func (c *Constructor) getParameters(params openapi3.Parameters) (pathParams []*parameter, queryParams []*parameter, headerParams []*parameter, cookieParams []*parameter, err error) {
+// GetParameters returns the different parameter types
+func GetParameters(params openapi3.Parameters) (pathParams []*types.Parameter, queryParams []*types.Parameter, headerParams []*types.Parameter, cookieParams []*types.Parameter, err error) {
 	err = nil
-	pathParams = make([]*parameter, 0)
-	queryParams = make([]*parameter, 0)
-	headerParams = make([]*parameter, 0)
-	cookieParams = make([]*parameter, 0)
+	pathParams = make([]*types.Parameter, 0)
+	queryParams = make([]*types.Parameter, 0)
+	headerParams = make([]*types.Parameter, 0)
+	cookieParams = make([]*types.Parameter, 0)
 
 	if params == nil {
 		return
@@ -32,15 +29,15 @@ func (c *Constructor) getParameters(params openapi3.Parameters) (pathParams []*p
 
 		// Only use required parameters
 		if ref.Value.Required && !ref.Value.Deprecated {
-			c.logDebug("### Param " + ref.Value.Name + " in " + ref.Value.In)
-			val, err := c.getParamValue(ref.Value)
+			log.Debug("### Param " + ref.Value.Name + " in " + ref.Value.In)
+			val, err := getParamValue(ref.Value)
 			if err != nil {
 				return nil, nil, nil, nil, errors.UnknownParameter
 			}
 
-			c.logDebug(fmt.Sprint("is set to ", val))
+			log.Debug(fmt.Sprint("is set to ", val))
 
-			param := &parameter{
+			param := &types.Parameter{
 				Name:  ref.Value.Name,
 				Value: val,
 			}
@@ -61,14 +58,14 @@ func (c *Constructor) getParameters(params openapi3.Parameters) (pathParams []*p
 	return
 }
 
-func (c *Constructor) getParamValue(param *openapi3.Parameter) (interface{}, error) {
-	if !helper.IsNil(param.Example) {
-		c.logDebug("using param example value")
+func getParamValue(param *openapi3.Parameter) (interface{}, error) {
+	if !IsNil(param.Example) {
+		log.Debug("using param example value")
 		return param.Example, nil
 	}
 
 	if param.Schema != nil && param.Schema.Value != nil {
-		val, err := helper.GetExampleValueForSchema(param.Schema.Value)
+		val, err := GetExampleValueForSchema(param.Schema.Value)
 		if err == nil {
 			return val, nil
 		}
