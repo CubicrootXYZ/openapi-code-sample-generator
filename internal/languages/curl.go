@@ -1,8 +1,7 @@
 package languages
 
 import (
-	"fmt"
-	"net/url"
+	"openapi-code-sample-generator/internal/encoding"
 	"openapi-code-sample-generator/internal/helper"
 	"openapi-code-sample-generator/internal/types"
 	"strings"
@@ -33,8 +32,9 @@ func (c *Curl) GetSample(path string, operation *openapi3.Operation, pathItem *o
 	cmd.WriteString("curl \"")
 	cmd.WriteString(helper.GetURL(operation, pathItem, c.document))
 	cmd.WriteString(helper.GetPath(path, pathParams))
+	cmd.WriteString("?")
+	cmd.WriteString(c.getQueryParams(queryParams))
 	cmd.WriteString("\" ")
-	cmd.WriteString(c.getCurlParams(queryParams))
 
 	return &types.CodeSample{
 		Lang:   types.LanguageCurl,
@@ -43,19 +43,24 @@ func (c *Curl) GetSample(path string, operation *openapi3.Operation, pathItem *o
 	}, nil
 }
 
-func (c *Curl) getCurlParams(params []*types.Parameter) string {
-	cmd := strings.Builder{}
-	cmd.WriteString("-d \"")
-
+func (c *Curl) getQueryParams(params []*types.Parameter) string {
+	query := strings.Builder{}
 	for i, param := range params {
-		if i != 0 {
-			cmd.WriteString("&")
+		encoded, err := encoding.UrlencodeInterface(param.Name, param.Value)
+		if err != nil {
+			continue
 		}
 
-		cmd.WriteString(fmt.Sprintf("%s=%s", url.QueryEscape(param.Name), url.QueryEscape(fmt.Sprint(param.Value))))
+		if i != 0 {
+			query.WriteString("&")
+		}
+
+		query.WriteString(encoded)
 	}
 
-	cmd.WriteString("\"")
+	return query.String()
+}
 
-	return cmd.String()
+func (c *Curl) getRequestBody() string {
+	return ""
 }
