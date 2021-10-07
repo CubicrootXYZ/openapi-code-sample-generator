@@ -42,7 +42,14 @@ func UrlencodeParameter(name string, value interface{}) (string, error) {
 		}
 		encoded.WriteString(deeperLevels)
 	} else {
-		encoded.WriteString(fmt.Sprintf("%s=%s", url.QueryEscape(name), url.QueryEscape(fmt.Sprint(value))))
+		newValue := url.QueryEscape(fmt.Sprint(value))
+		if stringValue, ok := value.(string); ok {
+			if skipParse(stringValue) {
+				newValue = stringValue
+			}
+		}
+
+		encoded.WriteString(fmt.Sprintf("%s=%s", url.QueryEscape(name), newValue))
 	}
 
 	return encoded.String(), nil
@@ -50,6 +57,11 @@ func UrlencodeParameter(name string, value interface{}) (string, error) {
 
 // UrlencodeValue encodes a single value to application/x-www-form-urlencoded
 func UrlencodeValue(value interface{}) (string, error) {
+	if newValue, ok := value.(string); ok {
+		if skipParse(newValue) {
+			return newValue, nil
+		}
+	}
 	return url.QueryEscape(fmt.Sprint(value)), nil
 }
 

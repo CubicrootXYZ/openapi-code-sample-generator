@@ -26,18 +26,30 @@ func NewCurl(document *openapi3.T) types.Generator {
 // GetSample returns a curl sample for the given operation
 func (c *Curl) GetSample(path string, operation *openapi3.Operation, pathItem *openapi3.PathItem) (*types.CodeSample, error) {
 	cmd := strings.Builder{}
-	pathParams, queryParams, headerParams, _, err := helper.GetParameters(operation.Parameters)
+	pathParams, queryParams, headerParams, cookieParams, err := helper.GetParameters(operation.Parameters)
 	if err != nil {
 		return nil, err
 	}
 
+	secQueryParams, secHeadParams, secCookieParams, basicAuth := helper.GetSecurity(operation, c.document)
+
+	queryParams = append(queryParams, secQueryParams...)
+	headerParams = append(headerParams, secHeadParams...)
+	cookieParams = append(cookieParams, secCookieParams...)
+
 	cmd.WriteString("curl \"")
 	cmd.WriteString(helper.GetURL(operation, pathItem, c.document))
 	cmd.WriteString(helper.GetPath(path, pathParams))
-	cmd.WriteString("?")
-	cmd.WriteString(c.getQueryParams(queryParams))
+	if len(queryParams) > 0 {
+		cmd.WriteString("?")
+		cmd.WriteString(c.getQueryParams(queryParams))
+	}
 	cmd.WriteString("\"")
-	cmd.WriteString(c.getHeaderParams(headerParams, operation.Security))
+	if basicAuth {
+		cmd.WriteString(" -u username:password")
+	}
+	cmd.WriteString(c.getHeaderParams(headerParams))
+	cmd.WriteString(c.getCookieParams(cookieParams))
 
 	return &types.CodeSample{
 		Lang:   types.LanguageCurl,
@@ -68,7 +80,7 @@ func (c *Curl) getQueryParams(params []*types.Parameter) string {
 	return query.String()
 }
 
-func (c *Curl) getHeaderParams(params []*types.Parameter, auth *openapi3.SecurityRequirements) string {
+func (c *Curl) getHeaderParams(params []*types.Parameter) string {
 	head := strings.Builder{}
 	for _, param := range params {
 		if param == nil {
@@ -81,15 +93,32 @@ func (c *Curl) getHeaderParams(params []*types.Parameter, auth *openapi3.Securit
 			continue
 		}
 
-		head.WriteString(" - H \"")
+		head.WriteString(" -H \"")
 		head.WriteString(param.Name)
 		head.WriteString(": ")
 		head.WriteString(value)
 		head.WriteString("\"")
 	}
 
-	if auth != nil {
+	return head.String()
+}
 
+func (c *Curl) getCookieParams(params []*types.Parameter) string {
+	head := strings.Builder{}
+	for _, param := range params {
+		if param == nil {
+			continue
+		}
+
+		value, err := encoding.UrlencodeParameter(param.Name, param.Value)
+		if err != nil {
+			log.Info(fmt.Sprintf("Skipped cookie parameter %s due to: %s", param.Name, err.Error()))
+			continue
+		}
+
+		head.WriteString(" -b \"")
+		head.WriteString(value)
+		head.WriteString("\"")
 	}
 
 	return head.String()
