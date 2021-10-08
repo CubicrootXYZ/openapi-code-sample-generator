@@ -50,6 +50,9 @@ func (c *Curl) GetSample(path string, operation *openapi3.Operation, pathItem *o
 	}
 	cmd.WriteString(c.getHeaderParams(headerParams))
 	cmd.WriteString(c.getCookieParams(cookieParams))
+	cmd.WriteString(" -d \"")
+	cmd.WriteString(c.getRequestBody(operation))
+	cmd.WriteString("\"")
 
 	return &types.CodeSample{
 		Lang:   types.LanguageCurl,
@@ -122,4 +125,28 @@ func (c *Curl) getCookieParams(params []*types.Parameter) string {
 	}
 
 	return head.String()
+}
+
+func (c *Curl) getRequestBody(operation *openapi3.Operation) string {
+	if operation.RequestBody == nil || operation.RequestBody.Value == nil {
+		return ""
+	}
+
+	value, format, err := helper.GetRequestBody(operation.RequestBody.Value)
+	if err != nil {
+		log.Warn(fmt.Sprintf("Request body parsing failed: %s", err.Error()))
+		return ""
+	}
+
+	switch format {
+	case "application/x-www-form-urlencoded":
+		newValue, err := encoding.UrlencodeValue(value)
+		if err != nil {
+			log.Warn(fmt.Sprintf("Request body parsing failed: %s", err.Error()))
+			return ""
+		}
+		return newValue
+	}
+
+	return ""
 }

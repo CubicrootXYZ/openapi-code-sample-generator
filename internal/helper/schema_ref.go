@@ -67,6 +67,25 @@ func getExampleValueByType(schema *openapi3.Schema) (interface{}, error) {
 		}
 
 		return []interface{}{}, nil
+	case "object":
+		if schema.Properties != nil {
+			values := make(map[interface{}]interface{})
+			for name, val := range schema.Properties {
+				if val == nil || val.Value == nil {
+					continue
+				}
+				newVal, err := GetExampleValueForSchema(val.Value)
+				if err != nil {
+					continue
+				}
+
+				values[name] = newVal
+			}
+
+			return values, nil
+		}
+
+		return []interface{}{}, nil
 	}
 
 	log.Warn(fmt.Sprintf("Schema of type '%s' and format '%s' unknown", schema.Type, schema.Format))

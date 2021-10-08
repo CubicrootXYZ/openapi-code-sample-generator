@@ -57,12 +57,63 @@ func UrlencodeParameter(name string, value interface{}) (string, error) {
 
 // UrlencodeValue encodes a single value to application/x-www-form-urlencoded
 func UrlencodeValue(value interface{}) (string, error) {
-	if newValue, ok := value.(string); ok {
-		if skipParse(newValue) {
-			return newValue, nil
+	encoded := strings.Builder{}
+
+	if helper.IsSlice(value) {
+		newVal, ok := value.([]interface{})
+		if !ok {
+			log.Info(fmt.Sprintf("Type assertion as slice failed for value: %s", value))
+			return "", errors.TypeAssertionFailed
 		}
+
+		for index, newVa := range newVal {
+			encoded.WriteString(fmt.Sprint(index))
+
+			deeperLevels, err := urlencodeSecondLevelObject(newVa)
+			if err != nil {
+				log.Info(fmt.Sprintf("Can not generate object %s", err.Error()))
+				return "", err
+			}
+			encoded.WriteString(deeperLevels)
+		}
+
+	} else if helper.IsMap(value) {
+		newVal, ok := value.(map[interface{}]interface{})
+		if !ok {
+			log.Info(fmt.Sprintf("Type assertion as map failed for value: %s", value))
+			return "", errors.TypeAssertionFailed
+		}
+
+		i := 0
+		for key, newVa := range newVal {
+			if i != 0 {
+				encoded.WriteString("&")
+			}
+
+			encoded.WriteString(fmt.Sprint(key))
+			deeperLevels, err := urlencodeSecondLevelObject(newVa)
+			if err != nil {
+				log.Info(fmt.Sprintf("Can not generate object: %s", err.Error()))
+				return "", err
+			}
+
+			encoded.WriteString(deeperLevels)
+
+			i++
+		}
+
+	} else {
+		newValue := url.QueryEscape(fmt.Sprint(value))
+		if stringValue, ok := value.(string); ok {
+			if skipParse(stringValue) {
+				newValue = stringValue
+			}
+		}
+
+		encoded.WriteString(fmt.Sprintf("%s", newValue))
 	}
-	return url.QueryEscape(fmt.Sprint(value)), nil
+
+	return encoded.String(), nil
 }
 
 func urlencodeSecondLevelObject(value interface{}) (string, error) {
