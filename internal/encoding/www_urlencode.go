@@ -32,7 +32,7 @@ func (u *URLEncode) EnocdeParameter(name string, value interface{}) (string, err
 		}
 		encoded.WriteString(deeperLevels)
 	} else if helper.IsMap(value) {
-		newVal, ok := value.(map[interface{}]interface{})
+		newVal, ok := value.(map[string]interface{})
 		if !ok {
 			log.Info(fmt.Sprintf("Type assertion as map failed for parameter %s with value: %s", name, value))
 			return "", errors.TypeAssertionFailed
@@ -82,7 +82,7 @@ func (u *URLEncode) EnocdeValue(value interface{}) (string, error) {
 		}
 
 	} else if helper.IsMap(value) {
-		newVal, ok := value.(map[interface{}]interface{})
+		newVal, ok := value.(map[string]interface{})
 		if !ok {
 			log.Info(fmt.Sprintf("Type assertion as map failed for value: %s", value))
 			return "", errors.TypeAssertionFailed

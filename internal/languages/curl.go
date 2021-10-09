@@ -38,6 +38,8 @@ func (c *Curl) GetSample(path string, operation *openapi3.Operation, pathItem *o
 	parameters.Path = append(parameters.Path, secParameters.Path...)
 	parameters.Cookie = append(parameters.Cookie, secParameters.Cookie...)
 
+	body := c.getRequestBody(operation)
+
 	cmd.WriteString("curl \"")
 	cmd.WriteString(c.extractor.GetURL(operation, pathItem, document))
 	cmd.WriteString(c.extractor.GetPathExample(path, parameters.Path))
@@ -52,7 +54,7 @@ func (c *Curl) GetSample(path string, operation *openapi3.Operation, pathItem *o
 	cmd.WriteString(c.getHeaderParams(parameters.Header))
 	cmd.WriteString(c.getCookieParams(parameters.Cookie))
 	cmd.WriteString(" -d \"")
-	cmd.WriteString(c.getRequestBody(operation))
+	cmd.WriteString(body)
 	cmd.WriteString("\"")
 
 	return &types.CodeSample{
@@ -64,10 +66,10 @@ func (c *Curl) GetSample(path string, operation *openapi3.Operation, pathItem *o
 
 func (c *Curl) getQueryParams(params []*types.Parameter) string {
 	query := strings.Builder{}
-	encoder, ok := c.encoders[types.WwwUrlencode]
+	encoder, ok := c.encoders[types.EncodingWwwUrlencode]
 
 	if !ok {
-		log.Warn("Missing encoder for format: " + types.WwwUrlencode)
+		log.Warn("Missing encoder for format: " + types.EncodingWwwUrlencode)
 	}
 
 	for i, param := range params {
@@ -84,7 +86,7 @@ func (c *Curl) getQueryParams(params []*types.Parameter) string {
 			query.WriteString("&")
 		}
 
-		query.WriteString(encoded)
+		query.WriteString(c.escape(encoded))
 	}
 
 	return query.String()
@@ -92,10 +94,10 @@ func (c *Curl) getQueryParams(params []*types.Parameter) string {
 
 func (c *Curl) getHeaderParams(params []*types.Parameter) string {
 	head := strings.Builder{}
-	encoder, ok := c.encoders[types.WwwUrlencode]
+	encoder, ok := c.encoders[types.EncodingWwwUrlencode]
 
 	if !ok {
-		log.Warn("Missing encoder for format: " + types.WwwUrlencode)
+		log.Warn("Missing encoder for format: " + types.EncodingWwwUrlencode)
 	}
 
 	for _, param := range params {
@@ -110,9 +112,9 @@ func (c *Curl) getHeaderParams(params []*types.Parameter) string {
 		}
 
 		head.WriteString(" -H \"")
-		head.WriteString(param.Name)
+		head.WriteString(c.escape(param.Name))
 		head.WriteString(": ")
-		head.WriteString(value)
+		head.WriteString(c.escape(value))
 		head.WriteString("\"")
 	}
 
@@ -121,10 +123,10 @@ func (c *Curl) getHeaderParams(params []*types.Parameter) string {
 
 func (c *Curl) getCookieParams(params []*types.Parameter) string {
 	head := strings.Builder{}
-	encoder, ok := c.encoders[types.WwwUrlencode]
+	encoder, ok := c.encoders[types.EncodingWwwUrlencode]
 
 	if !ok {
-		log.Warn("Missing encoder for format: " + types.WwwUrlencode)
+		log.Warn("Missing encoder for format: " + types.EncodingWwwUrlencode)
 	}
 
 	for _, param := range params {
@@ -139,7 +141,7 @@ func (c *Curl) getCookieParams(params []*types.Parameter) string {
 		}
 
 		head.WriteString(" -b \"")
-		head.WriteString(value)
+		head.WriteString(c.escape(value))
 		head.WriteString("\"")
 	}
 
@@ -163,10 +165,15 @@ func (c *Curl) getRequestBody(operation *openapi3.Operation) string {
 			log.Warn(fmt.Sprintf("Request body parsing failed: %s", err.Error()))
 			return ""
 		}
-		return newValue
+		return c.escape(newValue)
 	} else {
 		log.Warn("Missing encoder for format: " + format)
 	}
 
 	return ""
+}
+
+func (c *Curl) escape(text string) string {
+	text = strings.ReplaceAll(text, `"`, `\"`)
+	return text
 }

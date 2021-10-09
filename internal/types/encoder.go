@@ -7,5 +7,6 @@ type Encoder interface {
 }
 
 const (
-	WwwUrlencode = "application/x-www-form-urlencoded"
+	EncodingWwwUrlencode = "application/x-www-form-urlencoded"
+	EncodingJSON         = "application/json"
 )

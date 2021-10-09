@@ -70,7 +70,7 @@ func (o *openAPIExtractor) getExampleValueByType(schema *openapi3.Schema) (inter
 		return []interface{}{}, nil
 	case "object":
 		if schema.Properties != nil {
-			values := make(map[interface{}]interface{})
+			values := make(map[string]interface{})
 			for name, val := range schema.Properties {
 				if val == nil || val.Value == nil {
 					continue
