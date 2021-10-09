@@ -1,8 +1,9 @@
-package helper
+package extractor
 
 import (
 	"fmt"
 	"openapi-code-sample-generator/internal/errors"
+	"openapi-code-sample-generator/internal/helper"
 	"openapi-code-sample-generator/internal/log"
 	"openapi-code-sample-generator/internal/types"
 	"strings"
@@ -11,15 +12,15 @@ import (
 )
 
 // GetParameters returns the different parameter types
-func GetParameters(params openapi3.Parameters) (pathParams []*types.Parameter, queryParams []*types.Parameter, headerParams []*types.Parameter, cookieParams []*types.Parameter, err error) {
-	err = nil
-	pathParams = make([]*types.Parameter, 0)
-	queryParams = make([]*types.Parameter, 0)
-	headerParams = make([]*types.Parameter, 0)
-	cookieParams = make([]*types.Parameter, 0)
+func (o *openAPIExtractor) GetParameters(params openapi3.Parameters) (types.Parameters, error) {
+	parameters := types.Parameters{}
+	parameters.Path = make([]*types.Parameter, 0)
+	parameters.Query = make([]*types.Parameter, 0)
+	parameters.Header = make([]*types.Parameter, 0)
+	parameters.Cookie = make([]*types.Parameter, 0)
 
 	if params == nil {
-		return
+		return parameters, nil
 	}
 
 	for _, ref := range params {
@@ -30,9 +31,9 @@ func GetParameters(params openapi3.Parameters) (pathParams []*types.Parameter, q
 		// Only use required parameters
 		if ref.Value.Required && !ref.Value.Deprecated {
 			log.Debug("### Param " + ref.Value.Name + " in " + ref.Value.In)
-			val, err := getParamValue(ref.Value)
+			val, err := o.getParamValue(ref.Value)
 			if err != nil {
-				return nil, nil, nil, nil, errors.UnknownParameter
+				return parameters, errors.UnknownParameter
 			}
 
 			log.Debug(fmt.Sprint("is set to ", val))
@@ -44,28 +45,28 @@ func GetParameters(params openapi3.Parameters) (pathParams []*types.Parameter, q
 
 			switch strings.ToLower(ref.Value.In) {
 			case "path":
-				pathParams = append(pathParams, param)
+				parameters.Path = append(parameters.Path, param)
 			case "query":
-				queryParams = append(queryParams, param)
+				parameters.Query = append(parameters.Query, param)
 			case "head", "header":
-				headerParams = append(headerParams, param)
+				parameters.Header = append(parameters.Header, param)
 			case "cookie":
-				cookieParams = append(cookieParams, param)
+				parameters.Cookie = append(parameters.Cookie, param)
 			}
 		}
 	}
 
-	return
+	return parameters, nil
 }
 
-func getParamValue(param *openapi3.Parameter) (interface{}, error) {
-	if !IsNil(param.Example) {
+func (o *openAPIExtractor) getParamValue(param *openapi3.Parameter) (interface{}, error) {
+	if !helper.IsNil(param.Example) {
 		log.Debug("using param example value")
 		return param.Example, nil
 	}
 
 	if param.Schema != nil && param.Schema.Value != nil {
-		val, err := GetExampleValueForSchema(param.Schema.Value)
+		val, err := o.GetExampleValueForSchema(param.Schema.Value)
 		if err == nil {
 			return val, nil
 		}

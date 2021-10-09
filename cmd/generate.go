@@ -2,6 +2,9 @@ package cmd
 
 import (
 	"openapi-code-sample-generator/internal/codesample"
+	"openapi-code-sample-generator/internal/encoding"
+	"openapi-code-sample-generator/internal/extractor"
+	"openapi-code-sample-generator/internal/languages"
 	"openapi-code-sample-generator/internal/log"
 	"openapi-code-sample-generator/internal/types"
 	"os"
@@ -43,15 +46,18 @@ func init() {
 func generate(cmd *cobra.Command, args []string) {
 	log.Verbose = debug
 
-	log.Info("Loading file " + inputFile)
+	encoders := encoding.Encoders()
+	extractor := extractor.NewOpenAPIExtractor()
+	generators := languages.Generators(encoders, extractor)
 
+	log.Info("Loading file " + inputFile)
 	doc, err := openapi.NewLoader().LoadFromFile(inputFile)
 	if err != nil {
 		log.Error("Failed to open file: " + err.Error())
 		os.Exit(1)
 	}
 
-	constructor := codesample.NewConstructor(doc, debug)
+	constructor := codesample.NewConstructor(doc, generators)
 	constructor.AddSamples([]types.Language{types.LanguageCurl})
 
 	json, err := yaml.Marshal(doc)

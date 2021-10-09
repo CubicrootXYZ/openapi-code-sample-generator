@@ -9,8 +9,12 @@ import (
 	"strings"
 )
 
-// UrlencodeParameter encodes the given parameter and its value to application/x-www-form-urlencoded
-func UrlencodeParameter(name string, value interface{}) (string, error) {
+// URLEncode groups urlencoding features
+type URLEncode struct {
+}
+
+// EnocdeParameter encodes the given parameter and its value to application/x-www-form-urlencoded
+func (u *URLEncode) EnocdeParameter(name string, value interface{}) (string, error) {
 	encoded := strings.Builder{}
 
 	if helper.IsSlice(value) {
@@ -21,7 +25,7 @@ func UrlencodeParameter(name string, value interface{}) (string, error) {
 		}
 
 		encoded.WriteString(url.QueryEscape(name))
-		deeperLevels, err := urlencodeSecondLevelObject(newVal)
+		deeperLevels, err := u.urlencodeSecondLevelObject(newVal)
 		if err != nil {
 			log.Info(fmt.Sprintf("Can not generate object %s: %s", name, err.Error()))
 			return "", err
@@ -35,7 +39,7 @@ func UrlencodeParameter(name string, value interface{}) (string, error) {
 		}
 
 		encoded.WriteString(url.QueryEscape(name))
-		deeperLevels, err := urlencodeSecondLevelObject(newVal)
+		deeperLevels, err := u.urlencodeSecondLevelObject(newVal)
 		if err != nil {
 			log.Info(fmt.Sprintf("Can not generate object %s: %s", name, err.Error()))
 			return "", err
@@ -55,8 +59,8 @@ func UrlencodeParameter(name string, value interface{}) (string, error) {
 	return encoded.String(), nil
 }
 
-// UrlencodeValue encodes a single value to application/x-www-form-urlencoded
-func UrlencodeValue(value interface{}) (string, error) {
+// EnocdeValue encodes a single value to application/x-www-form-urlencoded
+func (u *URLEncode) EnocdeValue(value interface{}) (string, error) {
 	encoded := strings.Builder{}
 
 	if helper.IsSlice(value) {
@@ -69,7 +73,7 @@ func UrlencodeValue(value interface{}) (string, error) {
 		for index, newVa := range newVal {
 			encoded.WriteString(fmt.Sprint(index))
 
-			deeperLevels, err := urlencodeSecondLevelObject(newVa)
+			deeperLevels, err := u.urlencodeSecondLevelObject(newVa)
 			if err != nil {
 				log.Info(fmt.Sprintf("Can not generate object %s", err.Error()))
 				return "", err
@@ -91,7 +95,7 @@ func UrlencodeValue(value interface{}) (string, error) {
 			}
 
 			encoded.WriteString(fmt.Sprint(key))
-			deeperLevels, err := urlencodeSecondLevelObject(newVa)
+			deeperLevels, err := u.urlencodeSecondLevelObject(newVa)
 			if err != nil {
 				log.Info(fmt.Sprintf("Can not generate object: %s", err.Error()))
 				return "", err
@@ -116,7 +120,7 @@ func UrlencodeValue(value interface{}) (string, error) {
 	return encoded.String(), nil
 }
 
-func urlencodeSecondLevelObject(value interface{}) (string, error) {
+func (u *URLEncode) urlencodeSecondLevelObject(value interface{}) (string, error) {
 	encoded := strings.Builder{}
 
 	if helper.IsMap(value) {
@@ -132,7 +136,7 @@ func urlencodeSecondLevelObject(value interface{}) (string, error) {
 				encoded.WriteString("=")
 				encoded.WriteString(url.QueryEscape(fmt.Sprint(val)))
 			} else {
-				va, err := urlencodeSecondLevelObject(val)
+				va, err := u.urlencodeSecondLevelObject(val)
 				if err != nil {
 					return "", err
 				}
@@ -150,7 +154,7 @@ func urlencodeSecondLevelObject(value interface{}) (string, error) {
 				encoded.WriteString("=")
 				encoded.WriteString(url.QueryEscape(fmt.Sprint(val)))
 			} else {
-				va, err := urlencodeSecondLevelObject(val)
+				va, err := u.urlencodeSecondLevelObject(val)
 				if err != nil {
 					return "", err
 				}

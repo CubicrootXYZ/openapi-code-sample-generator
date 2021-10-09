@@ -1,4 +1,4 @@
-package helper
+package extractor
 
 import (
 	"openapi-code-sample-generator/internal/errors"
@@ -8,12 +8,12 @@ import (
 )
 
 // GetURL returns the url with multiple fallback strategies
-func GetURL(operation *openapi3.Operation, pathItem *openapi3.PathItem, document *openapi3.T) string {
-	url, err := getURLfromOperation(operation)
+func (o *openAPIExtractor) GetURL(operation *openapi3.Operation, pathItem *openapi3.PathItem, document *openapi3.T) string {
+	url, err := o.getURLfromOperation(operation)
 	if err != nil {
-		url, err := getURLfromPath(pathItem)
+		url, err := o.getURLfromPath(pathItem)
 		if err != nil {
-			url, err := getURLfromDocument(document)
+			url, err := o.getURLfromDocument(document)
 			if err != nil {
 				return "domain.tld"
 			}
@@ -25,7 +25,7 @@ func GetURL(operation *openapi3.Operation, pathItem *openapi3.PathItem, document
 	return url
 }
 
-func getURLfromOperation(operation *openapi3.Operation) (string, error) {
+func (o *openAPIExtractor) getURLfromOperation(operation *openapi3.Operation) (string, error) {
 	if operation.Servers == nil {
 		return "", errors.NoServer
 	}
@@ -39,7 +39,7 @@ func getURLfromOperation(operation *openapi3.Operation) (string, error) {
 	return "", errors.NoServer
 }
 
-func getURLfromPath(pathItem *openapi3.PathItem) (string, error) {
+func (o *openAPIExtractor) getURLfromPath(pathItem *openapi3.PathItem) (string, error) {
 	if pathItem.Servers == nil {
 		return "", errors.NoServer
 	}
@@ -53,7 +53,7 @@ func getURLfromPath(pathItem *openapi3.PathItem) (string, error) {
 	return "", errors.NoServer
 }
 
-func getURLfromDocument(document *openapi3.T) (string, error) {
+func (o *openAPIExtractor) getURLfromDocument(document *openapi3.T) (string, error) {
 	if document.Servers == nil {
 		return "", errors.NoServer
 	}

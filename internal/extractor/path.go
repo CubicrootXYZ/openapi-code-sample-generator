@@ -1,4 +1,4 @@
-package helper
+package extractor
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 )
 
 // GetPath returns the path with sample params set
-func GetPath(path string, params []*types.Parameter) string {
+func (o *openAPIExtractor) GetPathExample(path string, params []*types.Parameter) string {
 	for _, param := range params {
 		if param == nil {
 			continue

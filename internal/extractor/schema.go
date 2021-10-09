@@ -1,8 +1,9 @@
-package helper
+package extractor
 
 import (
 	"fmt"
 	"openapi-code-sample-generator/internal/errors"
+	"openapi-code-sample-generator/internal/helper"
 	"openapi-code-sample-generator/internal/log"
 	"time"
 
@@ -10,25 +11,25 @@ import (
 )
 
 // GetExampleValueForSchema returns an example value for the given schema
-func GetExampleValueForSchema(schema *openapi3.Schema) (interface{}, error) {
-	if !IsNil(schema.Example) {
+func (o *openAPIExtractor) GetExampleValueForSchema(schema *openapi3.Schema) (interface{}, error) {
+	if !helper.IsNil(schema.Example) {
 		log.Debug("example")
 		return schema.Example, nil
 	}
 
-	if !IsNil(schema.Default) {
+	if !helper.IsNil(schema.Default) {
 		log.Debug("default")
 		return schema.Default, nil
 	}
 
 	for _, value := range schema.Enum {
-		if !IsNil(value) {
+		if !helper.IsNil(value) {
 			log.Debug("enum")
 			return value, nil
 		}
 	}
 
-	val, err := getExampleValueByType(schema)
+	val, err := o.getExampleValueByType(schema)
 	if err == nil {
 		return val, nil
 	}
@@ -36,7 +37,7 @@ func GetExampleValueForSchema(schema *openapi3.Schema) (interface{}, error) {
 	return nil, errors.UnknownSchema
 }
 
-func getExampleValueByType(schema *openapi3.Schema) (interface{}, error) {
+func (o *openAPIExtractor) getExampleValueByType(schema *openapi3.Schema) (interface{}, error) {
 	log.Debug(fmt.Sprintf("Schema of type '%s' and format '%s' received", schema.Type, schema.Format))
 	switch schema.Type {
 	case "integer":
@@ -60,7 +61,7 @@ func getExampleValueByType(schema *openapi3.Schema) (interface{}, error) {
 		return false, nil
 	case "array":
 		if schema.Items != nil && schema.Items.Value != nil {
-			val, err := GetExampleValueForSchema(schema.Items.Value)
+			val, err := o.GetExampleValueForSchema(schema.Items.Value)
 			if err == nil {
 				return []interface{}{val}, nil
 			}
@@ -74,7 +75,7 @@ func getExampleValueByType(schema *openapi3.Schema) (interface{}, error) {
 				if val == nil || val.Value == nil {
 					continue
 				}
-				newVal, err := GetExampleValueForSchema(val.Value)
+				newVal, err := o.GetExampleValueForSchema(val.Value)
 				if err != nil {
 					continue
 				}

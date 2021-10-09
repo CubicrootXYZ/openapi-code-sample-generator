@@ -2,8 +2,6 @@ package languages
 
 import (
 	"fmt"
-	"openapi-code-sample-generator/internal/encoding"
-	"openapi-code-sample-generator/internal/helper"
 	"openapi-code-sample-generator/internal/log"
 	"openapi-code-sample-generator/internal/types"
 	"strings"
@@ -13,43 +11,46 @@ import (
 
 // Curl holds information for curl samples
 type Curl struct {
-	document *openapi3.T
+	encoders  map[string]types.Encoder
+	extractor types.Extractor
 }
 
 // NewCurl returns a new curl object
-func NewCurl(document *openapi3.T) types.Generator {
+func NewCurl(encoders map[string]types.Encoder, extractor types.Extractor) types.Generator {
 	return &Curl{
-		document: document,
+		encoders:  encoders,
+		extractor: extractor,
 	}
 }
 
 // GetSample returns a curl sample for the given operation
-func (c *Curl) GetSample(path string, operation *openapi3.Operation, pathItem *openapi3.PathItem) (*types.CodeSample, error) {
+func (c *Curl) GetSample(path string, operation *openapi3.Operation, pathItem *openapi3.PathItem, document *openapi3.T) (*types.CodeSample, error) {
 	cmd := strings.Builder{}
-	pathParams, queryParams, headerParams, cookieParams, err := helper.GetParameters(operation.Parameters)
+	parameters, err := c.extractor.GetParameters(operation.Parameters)
 	if err != nil {
 		return nil, err
 	}
 
-	secQueryParams, secHeadParams, secCookieParams, basicAuth := helper.GetSecurity(operation, c.document)
+	secParameters, basicAuth, err := c.extractor.GetSecurity(operation, document)
 
-	queryParams = append(queryParams, secQueryParams...)
-	headerParams = append(headerParams, secHeadParams...)
-	cookieParams = append(cookieParams, secCookieParams...)
+	parameters.Query = append(parameters.Query, secParameters.Query...)
+	parameters.Header = append(parameters.Header, secParameters.Header...)
+	parameters.Path = append(parameters.Path, secParameters.Path...)
+	parameters.Cookie = append(parameters.Cookie, secParameters.Cookie...)
 
 	cmd.WriteString("curl \"")
-	cmd.WriteString(helper.GetURL(operation, pathItem, c.document))
-	cmd.WriteString(helper.GetPath(path, pathParams))
-	if len(queryParams) > 0 {
+	cmd.WriteString(c.extractor.GetURL(operation, pathItem, document))
+	cmd.WriteString(c.extractor.GetPathExample(path, parameters.Path))
+	if len(parameters.Query) > 0 {
 		cmd.WriteString("?")
-		cmd.WriteString(c.getQueryParams(queryParams))
+		cmd.WriteString(c.getQueryParams(parameters.Query))
 	}
 	cmd.WriteString("\"")
 	if basicAuth {
 		cmd.WriteString(" -u username:password")
 	}
-	cmd.WriteString(c.getHeaderParams(headerParams))
-	cmd.WriteString(c.getCookieParams(cookieParams))
+	cmd.WriteString(c.getHeaderParams(parameters.Header))
+	cmd.WriteString(c.getCookieParams(parameters.Cookie))
 	cmd.WriteString(" -d \"")
 	cmd.WriteString(c.getRequestBody(operation))
 	cmd.WriteString("\"")
@@ -63,12 +64,18 @@ func (c *Curl) GetSample(path string, operation *openapi3.Operation, pathItem *o
 
 func (c *Curl) getQueryParams(params []*types.Parameter) string {
 	query := strings.Builder{}
+	encoder, ok := c.encoders[types.WwwUrlencode]
+
+	if !ok {
+		log.Warn("Missing encoder for format: " + types.WwwUrlencode)
+	}
+
 	for i, param := range params {
 		if param == nil {
 			continue
 		}
 
-		encoded, err := encoding.UrlencodeParameter(param.Name, param.Value)
+		encoded, err := encoder.EnocdeParameter(param.Name, param.Value)
 		if err != nil {
 			continue
 		}
@@ -85,12 +92,18 @@ func (c *Curl) getQueryParams(params []*types.Parameter) string {
 
 func (c *Curl) getHeaderParams(params []*types.Parameter) string {
 	head := strings.Builder{}
+	encoder, ok := c.encoders[types.WwwUrlencode]
+
+	if !ok {
+		log.Warn("Missing encoder for format: " + types.WwwUrlencode)
+	}
+
 	for _, param := range params {
 		if param == nil {
 			continue
 		}
 
-		value, err := encoding.UrlencodeValue(param.Value)
+		value, err := encoder.EnocdeValue(param.Value)
 		if err != nil {
 			log.Info(fmt.Sprintf("Skipped header parameter %s due to: %s", param.Name, err.Error()))
 			continue
@@ -108,12 +121,18 @@ func (c *Curl) getHeaderParams(params []*types.Parameter) string {
 
 func (c *Curl) getCookieParams(params []*types.Parameter) string {
 	head := strings.Builder{}
+	encoder, ok := c.encoders[types.WwwUrlencode]
+
+	if !ok {
+		log.Warn("Missing encoder for format: " + types.WwwUrlencode)
+	}
+
 	for _, param := range params {
 		if param == nil {
 			continue
 		}
 
-		value, err := encoding.UrlencodeParameter(param.Name, param.Value)
+		value, err := encoder.EnocdeParameter(param.Name, param.Value)
 		if err != nil {
 			log.Info(fmt.Sprintf("Skipped cookie parameter %s due to: %s", param.Name, err.Error()))
 			continue
@@ -132,20 +151,21 @@ func (c *Curl) getRequestBody(operation *openapi3.Operation) string {
 		return ""
 	}
 
-	value, format, err := helper.GetRequestBody(operation.RequestBody.Value)
+	value, format, err := c.extractor.GetRequestBody(operation.RequestBody.Value)
 	if err != nil {
 		log.Warn(fmt.Sprintf("Request body parsing failed: %s", err.Error()))
 		return ""
 	}
 
-	switch format {
-	case "application/x-www-form-urlencoded":
-		newValue, err := encoding.UrlencodeValue(value)
+	if encoder, ok := c.encoders[strings.ToLower(format)]; ok {
+		newValue, err := encoder.EnocdeValue(value)
 		if err != nil {
 			log.Warn(fmt.Sprintf("Request body parsing failed: %s", err.Error()))
 			return ""
 		}
 		return newValue
+	} else {
+		log.Warn("Missing encoder for format: " + format)
 	}
 
 	return ""

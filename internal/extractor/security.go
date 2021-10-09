@@ -1,4 +1,4 @@
-package helper
+package extractor
 
 import (
 	"openapi-code-sample-generator/internal/types"
@@ -8,9 +8,12 @@ import (
 )
 
 // GetSecurity returns security related parameters
-func GetSecurity(operation *openapi3.Operation, document *openapi3.T) (queryParameters []*types.Parameter, headerParameters []*types.Parameter, cookieParameters []*types.Parameter, basicAuth bool) {
-	queryParameters = make([]*types.Parameter, 0)
-	headerParameters = make([]*types.Parameter, 0)
+func (o *openAPIExtractor) GetSecurity(operation *openapi3.Operation, document *openapi3.T) (parameters types.Parameters, basicAuth bool, err error) {
+	params := types.Parameters{}
+	params.Query = make([]*types.Parameter, 0)
+	params.Header = make([]*types.Parameter, 0)
+	params.Path = make([]*types.Parameter, 0)
+	params.Cookie = make([]*types.Parameter, 0)
 	basicAuth = false
 
 	requirements := operation.Security
@@ -18,7 +21,7 @@ func GetSecurity(operation *openapi3.Operation, document *openapi3.T) (queryPara
 	if requirements != nil {
 		for _, requirement := range *requirements {
 			for name := range requirement {
-				security := getSecuritySchema(name, document)
+				security := o.getSecuritySchema(name, document)
 				if security == nil {
 					continue
 				}
@@ -28,7 +31,7 @@ func GetSecurity(operation *openapi3.Operation, document *openapi3.T) (queryPara
 					case "basic":
 						basicAuth = true
 					case "bearer":
-						headerParameters = append(headerParameters, &types.Parameter{
+						params.Header = append(params.Header, &types.Parameter{
 							Name:  "Authorization",
 							Value: "Bearer ${TOKEN}",
 						})
@@ -36,23 +39,23 @@ func GetSecurity(operation *openapi3.Operation, document *openapi3.T) (queryPara
 				case "apikey":
 					switch strings.ToLower(security.In) {
 					case "query":
-						queryParameters = append(queryParameters, &types.Parameter{
+						params.Query = append(params.Query, &types.Parameter{
 							Name:  security.Name,
 							Value: "${TOKEN}",
 						})
 					case "cookie":
-						cookieParameters = append(cookieParameters, &types.Parameter{
+						params.Cookie = append(params.Cookie, &types.Parameter{
 							Name:  security.Name,
 							Value: "${TOKEN}",
 						})
 					case "header":
-						headerParameters = append(headerParameters, &types.Parameter{
+						params.Header = append(params.Header, &types.Parameter{
 							Name:  security.Name,
 							Value: "${TOKEN}",
 						})
 					}
 				case "openidconnect", "oauth2":
-					headerParameters = append(headerParameters, &types.Parameter{
+					params.Header = append(params.Header, &types.Parameter{
 						Name:  "Authorization",
 						Value: "Bearer ${TOKEN}",
 					})
@@ -64,7 +67,7 @@ func GetSecurity(operation *openapi3.Operation, document *openapi3.T) (queryPara
 	return
 }
 
-func getSecuritySchema(name string, document *openapi3.T) *openapi3.SecurityScheme {
+func (o *openAPIExtractor) getSecuritySchema(name string, document *openapi3.T) *openapi3.SecurityScheme {
 	for name, ref := range document.Components.SecuritySchemes {
 		if name == name {
 			return ref.Value
