@@ -40,5 +40,5 @@ func (o *openAPIExtractor) getMediaTypeValue(mediaType *openapi3.MediaType, form
 		}
 	}
 
-	return nil, errors.UnknownMediaType
+	return nil, errors.ErrUnknownMediaType
 }

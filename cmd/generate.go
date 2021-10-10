@@ -63,5 +63,8 @@ func generate(cmd *cobra.Command, args []string) {
 	executor.AddSamples([]types.Language{types.LanguageCurl})
 
 	json, err := yaml.Marshal(doc)
+	if err != nil {
+		log.Error(err.Error())
+	}
 	os.WriteFile(outputFile, json, 0666)
 }

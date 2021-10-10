@@ -22,7 +22,7 @@ func (u *URLEncode) EnocdeParameter(name string, value interface{}) (string, err
 		newVal, ok := value.([]interface{})
 		if !ok {
 			log.Info(fmt.Sprintf("Type assertion as slice failed for parameter %s with value: %s", name, value))
-			return "", errors.TypeAssertionFailed
+			return "", errors.ErrTypeAssertionFailed
 		}
 
 		encoded.WriteString(url.QueryEscape(name))
@@ -36,7 +36,7 @@ func (u *URLEncode) EnocdeParameter(name string, value interface{}) (string, err
 		newVal, ok := value.(map[string]interface{})
 		if !ok {
 			log.Info(fmt.Sprintf("Type assertion as map failed for parameter %s with value: %s", name, value))
-			return "", errors.TypeAssertionFailed
+			return "", errors.ErrTypeAssertionFailed
 		}
 
 		encoded.WriteString(url.QueryEscape(name))
@@ -68,7 +68,7 @@ func (u *URLEncode) EnocdeValue(ref string, value interface{}) (string, error) {
 		newVal, ok := value.([]interface{})
 		if !ok {
 			log.Info(fmt.Sprintf("Type assertion as slice failed for value: %s", value))
-			return "", errors.TypeAssertionFailed
+			return "", errors.ErrTypeAssertionFailed
 		}
 
 		for index, newVa := range newVal {
@@ -86,7 +86,7 @@ func (u *URLEncode) EnocdeValue(ref string, value interface{}) (string, error) {
 		newVal, ok := value.(map[string]interface{})
 		if !ok {
 			log.Info(fmt.Sprintf("Type assertion as map failed for value: %s", value))
-			return "", errors.TypeAssertionFailed
+			return "", errors.ErrTypeAssertionFailed
 		}
 
 		i := 0
@@ -115,7 +115,7 @@ func (u *URLEncode) EnocdeValue(ref string, value interface{}) (string, error) {
 			}
 		}
 
-		encoded.WriteString(fmt.Sprintf("%s", newValue))
+		encoded.WriteString(newValue)
 	}
 
 	return encoded.String(), nil
@@ -127,7 +127,7 @@ func (u *URLEncode) urlencodeSecondLevelObject(value interface{}) (string, error
 	if helper.IsMap(value) {
 		newVal, ok := value.(map[interface{}]interface{})
 		if !ok {
-			return "", errors.TypeAssertionFailed
+			return "", errors.ErrTypeAssertionFailed
 		}
 		for key, val := range newVal {
 			encoded.WriteString("%5B")
@@ -141,13 +141,13 @@ func (u *URLEncode) urlencodeSecondLevelObject(value interface{}) (string, error
 				if err != nil {
 					return "", err
 				}
-				encoded.WriteString(fmt.Sprintf(va))
+				encoded.WriteString(va)
 			}
 		}
 	} else if helper.IsSlice(value) {
 		newVal, ok := value.([]interface{})
 		if !ok {
-			return "", errors.TypeAssertionFailed
+			return "", errors.ErrTypeAssertionFailed
 		}
 		for _, val := range newVal {
 			encoded.WriteString("%5B%5D")
@@ -159,7 +159,7 @@ func (u *URLEncode) urlencodeSecondLevelObject(value interface{}) (string, error
 				if err != nil {
 					return "", err
 				}
-				encoded.WriteString(fmt.Sprintf(va))
+				encoded.WriteString(va)
 			}
 		}
 	} else {

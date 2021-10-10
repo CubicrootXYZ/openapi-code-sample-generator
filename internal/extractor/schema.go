@@ -36,7 +36,7 @@ func (o *openAPIExtractor) GetExampleValueForSchema(schema *openapi3.Schema, for
 		return val, nil
 	}
 
-	return nil, errors.UnknownSchema
+	return nil, errors.ErrUnknownSchema
 }
 
 func (o *openAPIExtractor) getExampleValueByType(schema *openapi3.Schema, format string) (interface{}, error) {
@@ -117,5 +117,5 @@ func (o *openAPIExtractor) getExampleValueByType(schema *openapi3.Schema, format
 	}
 
 	log.Warn(fmt.Sprintf("Schema of type '%s' and format '%s' unknown", schema.Type, schema.Format))
-	return nil, errors.UnknownSchema
+	return nil, errors.ErrUnknownSchema
 }

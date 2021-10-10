@@ -68,7 +68,7 @@ func (o *Executor) getSamples(languages []types.Language, httpVerb, path string,
 func (o *Executor) getSample(lang types.Language, httpVerb, path string, pathItem *openapi3.PathItem, operation *openapi3.Operation) (*types.CodeSample, error) {
 	generator, ok := o.generators[lang]
 	if !ok {
-		return nil, errors.UnknownLanguage
+		return nil, errors.ErrUnknownLanguage
 	}
 
 	return generator.GetSample(httpVerb, path, operation, pathItem, o.document)

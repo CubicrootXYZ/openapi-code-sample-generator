@@ -28,7 +28,7 @@ func (o *openAPIExtractor) GetURL(operation *openapi3.Operation, pathItem *opena
 
 func (o *openAPIExtractor) getURLfromOperation(operation *openapi3.Operation) (string, error) {
 	if operation.Servers == nil {
-		return "", errors.NoServer
+		return "", errors.ErrNoServer
 	}
 
 	for _, server := range *operation.Servers {
@@ -37,12 +37,12 @@ func (o *openAPIExtractor) getURLfromOperation(operation *openapi3.Operation) (s
 		}
 	}
 
-	return "", errors.NoServer
+	return "", errors.ErrNoServer
 }
 
 func (o *openAPIExtractor) getURLfromPath(pathItem *openapi3.PathItem) (string, error) {
 	if pathItem.Servers == nil {
-		return "", errors.NoServer
+		return "", errors.ErrNoServer
 	}
 
 	for _, server := range pathItem.Servers {
@@ -51,12 +51,12 @@ func (o *openAPIExtractor) getURLfromPath(pathItem *openapi3.PathItem) (string, 
 		}
 	}
 
-	return "", errors.NoServer
+	return "", errors.ErrNoServer
 }
 
 func (o *openAPIExtractor) getURLfromDocument(document *openapi3.T) (string, error) {
 	if document.Servers == nil {
-		return "", errors.NoServer
+		return "", errors.ErrNoServer
 	}
 
 	for _, server := range document.Servers {
@@ -65,5 +65,5 @@ func (o *openAPIExtractor) getURLfromDocument(document *openapi3.T) (string, err
 		}
 	}
 
-	return "", errors.NoServer
+	return "", errors.ErrNoServer
 }

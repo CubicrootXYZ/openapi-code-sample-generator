@@ -33,6 +33,9 @@ func (c *Curl) GetSample(httpVerb string, path string, operation *openapi3.Opera
 	}
 
 	secParameters, basicAuth, err := c.extractor.GetSecurity(operation, document)
+	if err != nil {
+		return nil, err
+	}
 
 	parameters.Query = append(parameters.Query, secParameters.Query...)
 	parameters.Header = append(parameters.Header, secParameters.Header...)

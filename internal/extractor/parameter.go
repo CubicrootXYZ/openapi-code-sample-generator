@@ -34,7 +34,7 @@ func (o *openAPIExtractor) GetParameters(params openapi3.Parameters) (types.Para
 			log.Debug("### Param " + ref.Value.Name + " in " + ref.Value.In)
 			val, err := o.getParamValue(ref.Value)
 			if err != nil {
-				return parameters, errors.UnknownParameter
+				return parameters, errors.ErrUnknownParameter
 			}
 
 			log.Debug(fmt.Sprint("is set to ", val))
@@ -73,5 +73,5 @@ func (o *openAPIExtractor) getParamValue(param *openapi3.Parameter) (interface{}
 		}
 	}
 
-	return nil, errors.UnknownParameter
+	return nil, errors.ErrUnknownParameter
 }
