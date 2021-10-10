@@ -3,6 +3,7 @@ module openapi-code-sample-generator
 go 1.16
 
 require (
+	github.com/clbanning/anyxml v1.2.2
 	github.com/getkin/kin-openapi v0.76.0
 	github.com/ghodss/yaml v1.0.0
 	github.com/gorilla/schema v1.2.0

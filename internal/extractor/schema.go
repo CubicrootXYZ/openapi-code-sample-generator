@@ -5,13 +5,14 @@ import (
 	"openapi-code-sample-generator/internal/errors"
 	"openapi-code-sample-generator/internal/helper"
 	"openapi-code-sample-generator/internal/log"
+	"openapi-code-sample-generator/internal/types"
 	"time"
 
 	"github.com/getkin/kin-openapi/openapi3"
 )
 
 // GetExampleValueForSchema returns an example value for the given schema
-func (o *openAPIExtractor) GetExampleValueForSchema(schema *openapi3.Schema) (interface{}, error) {
+func (o *openAPIExtractor) GetExampleValueForSchema(schema *openapi3.Schema, format string) (interface{}, error) {
 	if !helper.IsNil(schema.Example) {
 		log.Debug("example")
 		return schema.Example, nil
@@ -29,7 +30,7 @@ func (o *openAPIExtractor) GetExampleValueForSchema(schema *openapi3.Schema) (in
 		}
 	}
 
-	val, err := o.getExampleValueByType(schema)
+	val, err := o.getExampleValueByType(schema, format)
 	if err == nil {
 		return val, nil
 	}
@@ -37,7 +38,7 @@ func (o *openAPIExtractor) GetExampleValueForSchema(schema *openapi3.Schema) (in
 	return nil, errors.UnknownSchema
 }
 
-func (o *openAPIExtractor) getExampleValueByType(schema *openapi3.Schema) (interface{}, error) {
+func (o *openAPIExtractor) getExampleValueByType(schema *openapi3.Schema, format string) (interface{}, error) {
 	log.Debug(fmt.Sprintf("Schema of type '%s' and format '%s' received", schema.Type, schema.Format))
 	switch schema.Type {
 	case "integer":
@@ -61,7 +62,23 @@ func (o *openAPIExtractor) getExampleValueByType(schema *openapi3.Schema) (inter
 		return false, nil
 	case "array":
 		if schema.Items != nil && schema.Items.Value != nil {
-			val, err := o.GetExampleValueForSchema(schema.Items.Value)
+			val, err := o.GetExampleValueForSchema(schema.Items.Value, format)
+
+			// Handle wrapping
+			if xmlInfo, ok := schema.XML.(map[string]interface{}); ok && format == types.EncodingXML {
+				if wrapped, ok := xmlInfo["wrapped"]; ok {
+					if fmt.Sprint(wrapped) == "true" || fmt.Sprint(wrapped) == "True" {
+						// Check child for tag names
+						if xmlChildInfo, ok := schema.Items.Value.XML.(map[string]interface{}); ok && format == types.EncodingXML {
+							if wrappedName, ok := xmlChildInfo["name"]; ok {
+								log.Debug(fmt.Sprintf("Wrapping with tag names: %s", fmt.Sprint(wrappedName)))
+								return map[string]interface{}{fmt.Sprint(wrappedName): val}, nil
+							}
+						}
+					}
+				}
+			}
+
 			if err == nil {
 				return []interface{}{val}, nil
 			}
@@ -73,11 +90,20 @@ func (o *openAPIExtractor) getExampleValueByType(schema *openapi3.Schema) (inter
 			values := make(map[string]interface{})
 			for name, val := range schema.Properties {
 				if val == nil || val.Value == nil {
+					log.Debug(fmt.Sprintf("Skipping %s with empty value", name))
 					continue
 				}
-				newVal, err := o.GetExampleValueForSchema(val.Value)
+				newVal, err := o.GetExampleValueForSchema(val.Value, format)
 				if err != nil {
+					log.Debug(fmt.Sprintf("Skipping %s with: %s", name, err.Error()))
 					continue
+				}
+
+				if xmlInfo, ok := val.Value.XML.(map[string]interface{}); ok && format == types.EncodingXML {
+					if value, ok := xmlInfo["name"]; ok {
+						log.Debug(fmt.Sprintf("Overriding xml tag %s to: %s", name, value))
+						name = fmt.Sprint(value)
+					}
 				}
 
 				values[name] = newVal

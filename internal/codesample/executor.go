@@ -8,22 +8,22 @@ import (
 	"github.com/getkin/kin-openapi/openapi3"
 )
 
-// Orchestrator orchestrates the sample generation
-type Orchestrator struct {
+// Executor orchestrates the sample generation
+type Executor struct {
 	document   *openapi3.T
 	generators map[types.Language]types.Generator
 }
 
-// NewConstructor returns a new constructor
-func NewConstructor(document *openapi3.T, generators map[types.Language]types.Generator) *Orchestrator {
-	return &Orchestrator{
+// NewExecutor returns a new constructor
+func NewExecutor(document *openapi3.T, generators map[types.Language]types.Generator) *Executor {
+	return &Executor{
 		document:   document,
 		generators: generators,
 	}
 }
 
 // AddSamples adds all samples to the document
-func (o *Orchestrator) AddSamples(languages []types.Language) error {
+func (o *Executor) AddSamples(languages []types.Language) error {
 	// Iterate over paths
 	for path, pathItem := range o.document.Paths {
 		// Iterate over operations
@@ -48,7 +48,7 @@ func (o *Orchestrator) AddSamples(languages []types.Language) error {
 	return nil
 }
 
-func (o *Orchestrator) getSamples(languages []types.Language, path string, pathItem *openapi3.PathItem, operation *openapi3.Operation) ([]*types.CodeSample, error) {
+func (o *Executor) getSamples(languages []types.Language, path string, pathItem *openapi3.PathItem, operation *openapi3.Operation) ([]*types.CodeSample, error) {
 	samples := make([]*types.CodeSample, 0)
 
 	for _, lang := range languages {
@@ -65,7 +65,7 @@ func (o *Orchestrator) getSamples(languages []types.Language, path string, pathI
 	return samples, nil
 }
 
-func (o *Orchestrator) getSample(lang types.Language, path string, pathItem *openapi3.PathItem, operation *openapi3.Operation) (*types.CodeSample, error) {
+func (o *Executor) getSample(lang types.Language, path string, pathItem *openapi3.PathItem, operation *openapi3.Operation) (*types.CodeSample, error) {
 	generator, ok := o.generators[lang]
 	if !ok {
 		return nil, errors.UnknownLanguage

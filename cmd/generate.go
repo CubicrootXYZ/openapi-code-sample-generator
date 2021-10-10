@@ -57,8 +57,8 @@ func generate(cmd *cobra.Command, args []string) {
 		os.Exit(1)
 	}
 
-	constructor := codesample.NewConstructor(doc, generators)
-	constructor.AddSamples([]types.Language{types.LanguageCurl})
+	executor := codesample.NewExecutor(doc, generators)
+	executor.AddSamples([]types.Language{types.LanguageCurl})
 
 	json, err := yaml.Marshal(doc)
 	os.WriteFile(outputFile, json, 0666)

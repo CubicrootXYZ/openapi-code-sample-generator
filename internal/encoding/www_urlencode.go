@@ -60,7 +60,7 @@ func (u *URLEncode) EnocdeParameter(name string, value interface{}) (string, err
 }
 
 // EnocdeValue encodes a single value to application/x-www-form-urlencoded
-func (u *URLEncode) EnocdeValue(value interface{}) (string, error) {
+func (u *URLEncode) EnocdeValue(ref string, value interface{}) (string, error) {
 	encoded := strings.Builder{}
 
 	if helper.IsSlice(value) {

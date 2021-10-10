@@ -66,7 +66,7 @@ func (o *openAPIExtractor) getParamValue(param *openapi3.Parameter) (interface{}
 	}
 
 	if param.Schema != nil && param.Schema.Value != nil {
-		val, err := o.GetExampleValueForSchema(param.Schema.Value)
+		val, err := o.GetExampleValueForSchema(param.Schema.Value, "")
 		if err == nil {
 			return val, nil
 		}

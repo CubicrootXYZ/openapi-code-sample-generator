@@ -105,7 +105,7 @@ func (c *Curl) getHeaderParams(params []*types.Parameter) string {
 			continue
 		}
 
-		value, err := encoder.EnocdeValue(param.Value)
+		value, err := encoder.EnocdeValue("", param.Value)
 		if err != nil {
 			log.Info(fmt.Sprintf("Skipped header parameter %s due to: %s", param.Name, err.Error()))
 			continue
@@ -160,7 +160,7 @@ func (c *Curl) getRequestBody(operation *openapi3.Operation) string {
 	}
 
 	if encoder, ok := c.encoders[strings.ToLower(format)]; ok {
-		newValue, err := encoder.EnocdeValue(value)
+		newValue, err := encoder.EnocdeValue(operation.RequestBody.Ref, value)
 		if err != nil {
 			log.Warn(fmt.Sprintf("Request body parsing failed: %s", err.Error()))
 			return ""

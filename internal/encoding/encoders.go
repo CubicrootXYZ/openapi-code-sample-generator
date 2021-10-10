@@ -7,6 +7,7 @@ func Encoders() map[string]types.Encoder {
 	encoders := make(map[string]types.Encoder)
 	encoders[types.EncodingWwwUrlencode] = &URLEncode{}
 	encoders[types.EncodingJSON] = &JSONEncode{}
+	encoders[types.EncodingXML] = &XMLEncode{}
 
 	return encoders
 }

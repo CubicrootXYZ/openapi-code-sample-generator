@@ -8,6 +8,6 @@ type Extractor interface {
 	GetPathExample(path string, params []*Parameter) string
 	GetURL(operation *openapi3.Operation, pathItem *openapi3.PathItem, document *openapi3.T) string
 	GetRequestBody(body *openapi3.RequestBody) (value interface{}, format string, err error)
-	GetExampleValueForSchema(schema *openapi3.Schema) (interface{}, error)
+	GetExampleValueForSchema(schema *openapi3.Schema, format string) (interface{}, error)
 	GetSecurity(operation *openapi3.Operation, document *openapi3.T) (params Parameters, basicAuth bool, err error)
 }

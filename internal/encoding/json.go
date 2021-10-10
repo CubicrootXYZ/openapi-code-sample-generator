@@ -5,12 +5,12 @@ import (
 	"fmt"
 )
 
-// JSONEncode groups urlencoding features
+// JSONEncode groups json features
 type JSONEncode struct {
 }
 
 // EnocdeParameter encodes the given parameter and its value to application/x-www-form-urlencoded
-func (u *JSONEncode) EnocdeParameter(name string, value interface{}) (string, error) {
+func (j *JSONEncode) EnocdeParameter(name string, value interface{}) (string, error) {
 	if newValue, ok := value.(map[interface{}]interface{}); ok {
 		newMap := make(map[string]interface{})
 		for key, val := range newValue {
@@ -25,7 +25,7 @@ func (u *JSONEncode) EnocdeParameter(name string, value interface{}) (string, er
 }
 
 // EnocdeValue encodes a single value to application/x-www-form-urlencoded
-func (u *JSONEncode) EnocdeValue(value interface{}) (string, error) {
+func (j *JSONEncode) EnocdeValue(ref string, value interface{}) (string, error) {
 	if newValue, ok := value.(map[interface{}]interface{}); ok {
 		newMap := make(map[string]interface{})
 		for key, val := range newValue {
