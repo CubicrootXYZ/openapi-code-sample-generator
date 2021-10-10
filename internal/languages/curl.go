@@ -24,7 +24,7 @@ func NewCurl(encoders map[string]types.Encoder, extractor types.Extractor) types
 }
 
 // GetSample returns a curl sample for the given operation
-func (c *Curl) GetSample(path string, operation *openapi3.Operation, pathItem *openapi3.PathItem, document *openapi3.T) (*types.CodeSample, error) {
+func (c *Curl) GetSample(httpVerb string, path string, operation *openapi3.Operation, pathItem *openapi3.PathItem, document *openapi3.T) (*types.CodeSample, error) {
 	cmd := strings.Builder{}
 	parameters, err := c.extractor.GetParameters(operation.Parameters)
 	if err != nil {
@@ -55,7 +55,9 @@ func (c *Curl) GetSample(path string, operation *openapi3.Operation, pathItem *o
 	cmd.WriteString(c.getCookieParams(parameters.Cookie))
 	cmd.WriteString(" -d \"")
 	cmd.WriteString(body)
-	cmd.WriteString("\"")
+	cmd.WriteString("\" ")
+	cmd.WriteString("-X ")
+	cmd.WriteString(strings.ToUpper(httpVerb))
 
 	return &types.CodeSample{
 		Lang:   types.LanguageCurl,
