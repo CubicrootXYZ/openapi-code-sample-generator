@@ -1,6 +1,6 @@
 package extractor
 
-import "openapi-code-sample-generator/internal/types"
+import "github.com/CubicrootXYZ/openapi-code-sample-generator/internal/types"
 
 type openAPIExtractor struct {
 }

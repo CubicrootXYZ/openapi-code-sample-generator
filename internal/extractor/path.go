@@ -2,8 +2,9 @@ package extractor
 
 import (
 	"fmt"
-	"openapi-code-sample-generator/internal/types"
 	"strings"
+
+	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/types"
 )
 
 // GetPath returns the path with sample params set

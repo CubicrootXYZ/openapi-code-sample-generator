@@ -1,8 +1,9 @@
 package extractor
 
 import (
-	"openapi-code-sample-generator/internal/errors"
 	"strings"
+
+	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/errors"
 
 	"github.com/getkin/kin-openapi/openapi3"
 )

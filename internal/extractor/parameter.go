@@ -2,11 +2,12 @@ package extractor
 
 import (
 	"fmt"
-	"openapi-code-sample-generator/internal/errors"
-	"openapi-code-sample-generator/internal/helper"
-	"openapi-code-sample-generator/internal/log"
-	"openapi-code-sample-generator/internal/types"
 	"strings"
+
+	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/errors"
+	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/helper"
+	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/log"
+	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/types"
 
 	"github.com/getkin/kin-openapi/openapi3"
 )

@@ -1,4 +1,4 @@
-module openapi-code-sample-generator
+module github.com/CubicrootXYZ/openapi-code-sample-generator
 
 go 1.16
 

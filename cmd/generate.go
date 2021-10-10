@@ -1,13 +1,15 @@
 package cmd
 
 import (
-	"openapi-code-sample-generator/internal/codesample"
-	"openapi-code-sample-generator/internal/encoding"
-	"openapi-code-sample-generator/internal/extractor"
-	"openapi-code-sample-generator/internal/languages"
-	"openapi-code-sample-generator/internal/log"
-	"openapi-code-sample-generator/internal/types"
 	"os"
+
+	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/encoding"
+	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/extractor"
+	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/languages"
+	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/log"
+	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/types"
+
+	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/codesample"
 
 	openapi "github.com/getkin/kin-openapi/openapi3"
 	"github.com/ghodss/yaml"

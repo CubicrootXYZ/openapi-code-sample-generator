@@ -1,7 +1,7 @@
 package languages
 
 import (
-	"openapi-code-sample-generator/internal/types"
+	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/types"
 )
 
 // Generators returns all available generators

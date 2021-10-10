@@ -1,6 +1,6 @@
 package encoding
 
-import "openapi-code-sample-generator/internal/types"
+import "github.com/CubicrootXYZ/openapi-code-sample-generator/internal/types"
 
 // Encoders returns all available encoders
 func Encoders() map[string]types.Encoder {
