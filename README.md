@@ -72,7 +72,7 @@ $GOPATH/bin
 To add code samples: 
 
 ```
-$ openapi-code-sample-generator generate --input-file example.yaml --output-file index.html
+$ openapi-code-sample-generator generate --input-file example.yaml --output-file out.yaml
 ```
 
 For getting help:
