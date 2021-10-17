@@ -12,6 +12,24 @@ Tools like [redoc](https://github.com/Redocly/redoc) will provide those examples
 
 * curl
 
+### Supported Content-Types
+
+* application/xml
+* text/xml
+* application/json
+* text/json
+* application/x-www-form-urlencoded
+* multipart/form-data
+
+### Supported authentication
+
+* basic
+* apikey
+* cookie
+* header
+* openidconnect
+* oauth2
+
 ## 🔍 Example
 
 ```
