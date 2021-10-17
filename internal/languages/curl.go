@@ -42,7 +42,7 @@ func (c *Curl) GetSample(httpVerb string, path string, operation *openapi3.Opera
 	parameters.Path = append(parameters.Path, secParameters.Path...)
 	parameters.Cookie = append(parameters.Cookie, secParameters.Cookie...)
 
-	body := c.getRequestBody(operation)
+	body, meta := c.getRequestBody(operation)
 
 	cmd.WriteString("curl \"")
 	cmd.WriteString(c.extractor.GetURL(operation, pathItem, document))
@@ -60,6 +60,9 @@ func (c *Curl) GetSample(httpVerb string, path string, operation *openapi3.Opera
 	cmd.WriteString(" -d \"")
 	cmd.WriteString(body)
 	cmd.WriteString("\" ")
+	if meta != nil {
+		cmd.WriteString(c.writeFormatMeta(meta))
+	}
 	cmd.WriteString("-X ")
 	cmd.WriteString(strings.ToUpper(httpVerb))
 
@@ -95,6 +98,8 @@ func (c *Curl) getQueryParams(params []*types.Parameter) string {
 		query.WriteString(c.escape(encoded))
 	}
 
+	log.Debug(fmt.Sprintf("Wrote %d parameters to query", len(params)))
+
 	return query.String()
 }
 
@@ -111,7 +116,7 @@ func (c *Curl) getHeaderParams(params []*types.Parameter) string {
 			continue
 		}
 
-		value, err := encoder.EnocdeValue("", param.Value)
+		value, err := encoder.EnocdeValue("", param.Value, nil)
 		if err != nil {
 			log.Info(fmt.Sprintf("Skipped header parameter %s due to: %s", param.Name, err.Error()))
 			continue
@@ -154,32 +159,54 @@ func (c *Curl) getCookieParams(params []*types.Parameter) string {
 	return head.String()
 }
 
-func (c *Curl) getRequestBody(operation *openapi3.Operation) string {
+func (c *Curl) getRequestBody(operation *openapi3.Operation) (string, *types.FormattingMeta) {
+	meta := &types.FormattingMeta{}
 	if operation.RequestBody == nil || operation.RequestBody.Value == nil {
-		return ""
+		return "", meta
 	}
 
 	value, format, err := c.extractor.GetRequestBody(operation.RequestBody.Value)
 	if err != nil {
 		log.Warn(fmt.Sprintf("Request body parsing failed: %s", err.Error()))
-		return ""
+		return "", meta
 	}
 
+	meta.Format = format
+
 	if encoder, ok := c.encoders[strings.ToLower(format)]; ok {
-		newValue, err := encoder.EnocdeValue(operation.RequestBody.Ref, value)
+		newValue, err := encoder.EnocdeValue(operation.RequestBody.Ref, value, meta)
 		if err != nil {
 			log.Warn(fmt.Sprintf("Request body parsing failed: %s", err.Error()))
-			return ""
+			return "", meta
 		}
-		return c.escape(newValue)
+		return c.escape(newValue), meta
 	} else {
 		log.Warn("Missing encoder for format: " + format)
 	}
 
-	return ""
+	return "", meta
 }
 
 func (c *Curl) escape(text string) string {
 	text = strings.ReplaceAll(text, `"`, `\"`)
+	text = strings.ReplaceAll(text, "\r\n", "\\r\\n")
 	return text
+}
+
+func (c *Curl) writeFormatMeta(meta *types.FormattingMeta) string {
+	if meta == nil {
+		return ""
+	}
+
+	cmd := strings.Builder{}
+
+	cmd.WriteString("-H \"Content-Type: ")
+	cmd.WriteString(meta.Format)
+	if meta.FormData.OuterBoundary != nil {
+		cmd.WriteString(" boundary=")
+		cmd.WriteString(*meta.FormData.OuterBoundary)
+	}
+	cmd.WriteString("\" ")
+
+	return cmd.String()
 }

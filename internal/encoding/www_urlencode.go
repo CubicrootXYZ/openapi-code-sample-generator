@@ -8,6 +8,7 @@ import (
 	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/errors"
 	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/helper"
 	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/log"
+	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/types"
 )
 
 // URLEncode groups urlencoding features
@@ -61,7 +62,7 @@ func (u *URLEncode) EnocdeParameter(name string, value interface{}) (string, err
 }
 
 // EnocdeValue encodes a single value to application/x-www-form-urlencoded
-func (u *URLEncode) EnocdeValue(ref string, value interface{}) (string, error) {
+func (u *URLEncode) EnocdeValue(ref string, value interface{}, meta *types.FormattingMeta) (string, error) {
 	encoded := strings.Builder{}
 
 	if helper.IsSlice(value) {

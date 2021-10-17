@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/types"
 	"github.com/clbanning/anyxml"
 )
 
@@ -11,13 +12,13 @@ import (
 type XMLEncode struct {
 }
 
-// EnocdeParameter encodes the given parameter and its value to application/x-www-form-urlencoded
+// EnocdeParameter encodes the given parameter and its value to xml
 func (x *XMLEncode) EnocdeParameter(name string, value interface{}) (string, error) {
-	return x.EnocdeValue("", map[string]interface{}{name: value})
+	return x.EnocdeValue("", map[string]interface{}{name: value}, nil)
 }
 
-// EnocdeValue encodes a single value to application/x-www-form-urlencoded
-func (x *XMLEncode) EnocdeValue(ref string, value interface{}) (string, error) {
+// EnocdeValue encodes a single value to xml
+func (x *XMLEncode) EnocdeValue(ref string, value interface{}, meta *types.FormattingMeta) (string, error) {
 	root := x.rootTag(ref)
 
 	if newValue, ok := value.(map[interface{}]interface{}); ok {

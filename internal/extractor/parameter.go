@@ -44,6 +44,8 @@ func (o *openAPIExtractor) GetParameters(params openapi3.Parameters) (types.Para
 				Value: val,
 			}
 
+			log.Debug(fmt.Sprintf("Adding parameter %s in %s", param.Name, ref.Value.In))
+
 			switch strings.ToLower(ref.Value.In) {
 			case "path":
 				parameters.Path = append(parameters.Path, param)
