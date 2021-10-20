@@ -40,7 +40,7 @@ func convert(cmd *cobra.Command, args []string) {
 
 	if fromVersion != 2 || toVersion != 3 {
 		log.Warn("Only the following conversions are supported: \n2 ==> 3")
-		return
+		os.Exit(1)
 	}
 
 	log.Info("Loading file " + inputFile)
@@ -56,6 +56,10 @@ func convert(cmd *cobra.Command, args []string) {
 	}
 
 	newDoc, err := openapi2conv.ToV3(&doc)
+	if err != nil {
+		log.Error(err.Error())
+		os.Exit(1)
+	}
 
 	log.Info("Writting file " + outputFile)
 	json, err := yaml.Marshal(newDoc)
