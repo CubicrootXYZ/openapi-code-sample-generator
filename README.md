@@ -75,11 +75,18 @@ To add code samples:
 $ openapi-code-sample-generator generate --input-file example.yaml --output-file out.yaml
 ```
 
+To convert OpenAPI 2 specifications to OpenAPI 3: 
+
+```
+$ openapi-code-sample-generator convert --file example.yaml --output-file out.yaml
+```
+
 For getting help:
 
 ```
 $ openapi-code-sample-generator --help
 $ openapi-code-sample-generator generate --help
+$ openapi-code-sample-generator convert --help
 ```
 
 ## 🛠 Troubleshooting
