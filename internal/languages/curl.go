@@ -200,8 +200,11 @@ func (c *Curl) writeFormatMeta(meta *types.FormattingMeta) string {
 
 	cmd := strings.Builder{}
 
-	cmd.WriteString("-H \"Content-Type: ")
-	cmd.WriteString(meta.Format)
+	if meta.Format != "" {
+		cmd.WriteString("-H \"Content-Type: ")
+		cmd.WriteString(meta.Format)
+	}
+
 	if meta.FormData.OuterBoundary != nil {
 		cmd.WriteString(" boundary=")
 		cmd.WriteString(*meta.FormData.OuterBoundary)

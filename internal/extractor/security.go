@@ -24,7 +24,7 @@ func (o *openAPIExtractor) GetSecurity(operation *openapi3.Operation, document *
 			for name := range requirement {
 				security := o.getSecuritySchema(name, document)
 				if security == nil {
-					log.Error("Not found")
+					log.Error("security schema not found: " + name)
 					continue
 				}
 				switch strings.ToLower(security.Type) {

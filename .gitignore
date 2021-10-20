@@ -14,8 +14,7 @@
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
-example.yaml
+example*.yaml
 index.html
 swagger-out.yaml
 openapi-code-sample-generator
-example2.yaml
