@@ -4,7 +4,7 @@ go 1.16
 
 require (
 	github.com/clbanning/anyxml v1.2.2
-	github.com/getkin/kin-openapi v0.76.0
+	github.com/getkin/kin-openapi v0.80.0
 	github.com/ghodss/yaml v1.0.0
 	github.com/gorilla/schema v1.2.0
 	github.com/kr/pretty v0.2.0 // indirect
