@@ -203,13 +203,13 @@ func (c *Curl) writeFormatMeta(meta *types.FormattingMeta) string {
 	if meta.Format != "" {
 		cmd.WriteString("-H \"Content-Type: ")
 		cmd.WriteString(meta.Format)
-	}
 
-	if meta.FormData.OuterBoundary != nil {
-		cmd.WriteString(" boundary=")
-		cmd.WriteString(*meta.FormData.OuterBoundary)
+		if meta.FormData.OuterBoundary != nil {
+			cmd.WriteString(" boundary=")
+			cmd.WriteString(*meta.FormData.OuterBoundary)
+		}
+		cmd.WriteString("\" ")
 	}
-	cmd.WriteString("\" ")
 
 	return cmd.String()
 }
