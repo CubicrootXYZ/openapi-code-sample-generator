@@ -1,0 +1,59 @@
+components:
+  schemas:
+    Data:
+      properties:
+        field1:
+          $ref: '#/components/schemas/Tag1'
+        field2:
+          $ref: '#/components/schemas/Tag2'
+      required:
+      - field1
+      - field2
+      type: object
+    Tag:
+      oneOf:
+      - properties:
+          category:
+            type: string
+        required:
+        - category
+        type: object
+      - $ref: '#/components/schemas/Tag1'
+      - $ref: '#/components/schemas/Tag2'
+      type: object
+    Tag1:
+      properties:
+        name:
+          type: string
+      required:
+      - name
+      type: object
+    Tag2:
+      properties:
+        name:
+          type: integer
+      required:
+      - name
+      type: object
+info:
+  description: A brand new API with no content.  Go nuts!
+  title: New API
+  version: 1.0.0
+openapi: 3.0.2
+paths:
+  /data:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Data'
+        required: true
+      responses: null
+      x-codeSamples:
+      - label: curl
+        lang: curl
+        source: 'curl "example.tld/data" -d "{\"field1\":{\"name\":\"example-string\"},\"field2\":{\"name\":1234}}"
+          -H "Content-Type: application/json" -X POST'
+servers:
+- url: example.tld

@@ -87,35 +87,85 @@ func (o *openAPIExtractor) getExampleValueByType(schema *openapi3.Schema, format
 
 		return []interface{}{}, nil
 	case "object":
-		if schema.Properties != nil {
-			values := make(map[string]interface{})
-			for name, val := range schema.Properties {
-				if val == nil || val.Value == nil {
-					log.Debug(fmt.Sprintf("Skipping %s with empty value", name))
-					continue
-				}
-				newVal, err := o.GetExampleValueForSchema(val.Value, format)
-				if err != nil {
-					log.Debug(fmt.Sprintf("Skipping %s with: %s", name, err.Error()))
-					continue
-				}
-
-				if xmlInfo, ok := val.Value.XML.(map[string]interface{}); ok && format == types.EncodingXML {
-					if value, ok := xmlInfo["name"]; ok {
-						log.Debug(fmt.Sprintf("Overriding xml tag %s to: %s", name, value))
-						name = fmt.Sprint(value)
-					}
-				}
-
-				values[name] = newVal
-			}
-
-			return values, nil
-		}
-
-		return []interface{}{}, nil
+		return o.getExampleValueForObject(schema, format)
 	}
 
 	log.Warn(fmt.Sprintf("Schema of type '%s' and format '%s' unknown", schema.Type, schema.Format))
 	return nil, errors.ErrUnknownSchema
+}
+
+// Objects are way more complex then primitive values
+// We need to consider embedding here
+func (o *openAPIExtractor) getExampleValueForObject(schema *openapi3.Schema, format string) (map[string]interface{}, error) {
+	values := make(map[string]interface{})
+
+	log.Debug(fmt.Sprint(schema))
+
+	if schema.Properties != nil {
+		for name, val := range schema.Properties {
+			if val == nil || val.Value == nil {
+				log.Debug(fmt.Sprintf("Skipping %s with empty value", name))
+				continue
+			}
+			newVal, err := o.GetExampleValueForSchema(val.Value, format)
+			if err != nil {
+				log.Debug(fmt.Sprintf("Skipping %s with: %s", name, err.Error()))
+				continue
+			}
+
+			if xmlInfo, ok := val.Value.XML.(map[string]interface{}); ok && format == types.EncodingXML {
+				if value, ok := xmlInfo["name"]; ok {
+					log.Debug(fmt.Sprintf("Overriding xml tag %s to: %s", name, value))
+					name = fmt.Sprint(value)
+				}
+			}
+
+			values[name] = newVal
+		}
+
+	}
+
+	// oneOf: pick the first one, 0 is a pointer to the main schema itself
+	if schema.OneOf != nil && len(schema.OneOf) > 1 && schema.OneOf[1].Value != nil {
+		log.Debug("Embedded values 'oneOf' found")
+		additionalValues, err := o.getExampleValueForObject(schema.OneOf[1].Value, format)
+		if err == nil {
+			for name, value := range additionalValues {
+				values[name] = value
+			}
+		}
+	}
+
+	// anyOf: pick the first one, 0 is a pointer to the main schema itself
+	if schema.AnyOf != nil && len(schema.AnyOf) > 1 && schema.AnyOf[1].Value != nil {
+		log.Debug("Embedded values 'anyOf' found")
+		log.Debug("Adding schema " + schema.AnyOf[1].Ref)
+		additionalValues, err := o.getExampleValueForObject(schema.AnyOf[1].Value, format)
+		if err == nil {
+			for name, value := range additionalValues {
+				values[name] = value
+			}
+		}
+	}
+
+	// allOf: add all schemas, 0 is a pointer to the main schema itself
+	if schema.AllOf != nil {
+		log.Debug("Embedded values 'allOf' found")
+		for i, additionalSchema := range schema.AllOf {
+			if additionalSchema.Value == nil || i == 0 {
+				continue
+			}
+
+			additionalValues, err := o.getExampleValueForObject(additionalSchema.Value, format)
+			if err == nil {
+				for name, value := range additionalValues {
+					values[name] = value
+				}
+			}
+		}
+	}
+
+	log.Debug(fmt.Sprint(values))
+
+	return values, nil
 }

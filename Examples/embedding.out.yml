@@ -1,0 +1,122 @@
+components:
+  schemas:
+    data1:
+      properties:
+        field1:
+          type: string
+        field2:
+          type: string
+      required:
+      - field1
+      - field2
+      type: object
+    data2:
+      properties:
+        section1:
+          type: integer
+        section2:
+          type: integer
+      required:
+      - section1
+      - section2
+      type: object
+    data3:
+      properties:
+        property1:
+          type: boolean
+        property2:
+          type: boolean
+      required:
+      - property1
+      - property2
+      type: object
+    dataAllOf:
+      allOf:
+      - properties:
+          name:
+            type: string
+        required:
+        - name
+        type: object
+      - $ref: '#/components/schemas/data1'
+      - $ref: '#/components/schemas/data2'
+      - $ref: '#/components/schemas/data3'
+      type: object
+    dataAnyOf:
+      anyOf:
+      - properties:
+          name:
+            type: string
+        required:
+        - name
+        type: object
+      - $ref: '#/components/schemas/data1'
+      - $ref: '#/components/schemas/data2'
+      - $ref: '#/components/schemas/data3'
+      type: object
+    dataOneOf:
+      oneOf:
+      - properties:
+          name:
+            type: string
+        required:
+        - name
+        type: object
+      - $ref: '#/components/schemas/data1'
+      - $ref: '#/components/schemas/data2'
+      - $ref: '#/components/schemas/data3'
+      type: object
+info:
+  description: A brand new API with no content.  Go nuts!
+  title: New API
+  version: 1.0.0
+openapi: 3.0.2
+paths:
+  /all-of-test:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/dataAllOf'
+        required: true
+      responses:
+        "200":
+          description: ok
+      x-codeSamples:
+      - label: curl
+        lang: curl
+        source: 'curl "domain.tld/all-of-test" -d "{\"field1\":\"example-string\",\"field2\":\"example-string\",\"property1\":false,\"property2\":false,\"section1\":1234,\"section2\":1234}"
+          -H "Content-Type: application/json" -X POST'
+  /any-of-test:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/dataAnyOf'
+        required: true
+      responses:
+        "200":
+          description: ok
+      x-codeSamples:
+      - label: curl
+        lang: curl
+        source: 'curl "domain.tld/any-of-test" -d "{\"field1\":\"example-string\",\"field2\":\"example-string\"}"
+          -H "Content-Type: application/json" -X POST'
+  /one-of-test:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/dataOneOf'
+        required: true
+      responses:
+        "200":
+          description: ok
+      x-codeSamples:
+      - label: curl
+        lang: curl
+        source: 'curl "domain.tld/one-of-test" -d "{\"field1\":\"example-string\",\"field2\":\"example-string\"}"
+          -H "Content-Type: application/json" -X POST'

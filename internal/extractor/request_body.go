@@ -33,7 +33,11 @@ func (o *openAPIExtractor) getMediaTypeValue(mediaType *openapi3.MediaType, form
 		return mediaType.Example, nil
 	}
 
-	if mediaType.Schema != nil && mediaType.Schema.Value != nil {
+	if mediaType.Schema == nil {
+		return nil, errors.ErrEmptySchema
+	}
+
+	if mediaType.Schema.Value != nil {
 		val, err := o.GetExampleValueForSchema(mediaType.Schema.Value, format)
 		if err == nil {
 			return val, nil

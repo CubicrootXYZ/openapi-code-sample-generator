@@ -7,6 +7,7 @@ var ErrUnknownLanguage = errors.New("unknown language")
 var ErrNoServer = errors.New("no server found")
 
 var ErrUnknownSchema = errors.New("unknown schema")
+var ErrEmptySchema = errors.New("empty schema")
 var ErrUnknownParameter = errors.New("unknown parameter")
 var ErrUnknownMediaType = errors.New("unknown media type")
 var ErrUnsupportedDataType = errors.New("data type is not supported")

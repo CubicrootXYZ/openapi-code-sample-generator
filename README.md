@@ -8,7 +8,9 @@ Generates sample code for different languages and inserts them in you OpenApi sp
 
 Tools like [redoc](https://github.com/Redocly/redoc) will provide those examples in the documentation.
 
-## 📋 Supported Languages
+## 📋 Supported features
+
+### Languages
 
 * curl
 
@@ -30,6 +32,13 @@ Tools like [redoc](https://github.com/Redocly/redoc) will provide those examples
 * openidconnect
 * oauth2
 
+### OpenAPI features
+
+* Embedding
+  * AnyOf
+  * AllOf
+  * OneOf
+
 ## 🔍 Example
 
 ```
@@ -42,6 +51,8 @@ Tools like [redoc](https://github.com/Redocly/redoc) will provide those examples
         source: 'curl "http://petstore.swagger.io/v2/pet/findByTags?tags%5B%5D=example-string"
           -H "Authorization: Bearer ${TOKEN}" -d "" -X GET'
 ```
+
+You can find more examples in the `Examples` folder. 
 
 ## 📥 Installation
 

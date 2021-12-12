@@ -1,0 +1,67 @@
+openapi: 3.0.2
+info:
+    title: New API
+    version: 1.0.0
+    description: A brand new API with no content.  Go nuts!
+servers:
+    -
+        url: example.tld
+        description: ''
+paths:
+    /data:
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Data'
+                required: true
+components:
+    schemas:
+        Data:
+            description: ''
+            required:
+                - field1
+                - field2
+            type: object
+            properties:
+                field1:
+                    $ref: '#/components/schemas/Tag1'
+                    description: ''
+                field2:
+                    $ref: '#/components/schemas/Tag2'
+                    description: ''
+        Tag1:
+            description: ''
+            required:
+                - name
+            type: object
+            properties:
+                name:
+                    description: ''
+                    type: string
+        Tag2:
+            description: ''
+            required:
+                - name
+            type: object
+            properties:
+                name:
+                    description: ''
+                    type: integer
+        Tag:
+            oneOf:
+                -
+                    required:
+                        - category
+                    type: object
+                    properties:
+                        category:
+                            description: ''
+                            type: string
+                -
+                    $ref: '#/components/schemas/Tag1'
+                -
+                    $ref: '#/components/schemas/Tag2'
+            description: ''
+            type: object

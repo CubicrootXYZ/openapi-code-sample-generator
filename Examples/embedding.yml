@@ -1,0 +1,134 @@
+openapi: 3.0.2
+info:
+    title: New API
+    version: 1.0.0
+    description: A brand new API with no content.  Go nuts!
+paths:
+    /all-of-test:
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/dataAllOf'
+                required: true
+            responses:
+                '200':
+                    description: ok
+    /any-of-test:
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/dataAnyOf'
+                required: true
+            responses:
+                '200':
+                    description: ok
+    /one-of-test:
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/dataOneOf'
+                required: true
+            responses:
+                '200':
+                    description: ok
+components:
+    schemas:
+        dataAllOf:
+            description: ''
+            type: object
+            allOf:
+                -
+                    required:
+                        - name
+                    type: object
+                    properties:
+                        name:
+                            description: ''
+                            type: string
+                -
+                    $ref: '#/components/schemas/data1'
+                -
+                    $ref: '#/components/schemas/data2'
+                -
+                    $ref: '#/components/schemas/data3'
+        data1:
+            description: ''
+            required:
+                - field1
+                - field2
+            type: object
+            properties:
+                field1:
+                    description: ''
+                    type: string
+                field2:
+                    description: ''
+                    type: string
+        data2:
+            description: ''
+            required:
+                - section1
+                - section2
+            type: object
+            properties:
+                section1:
+                    description: ''
+                    type: integer
+                section2:
+                    description: ''
+                    type: integer
+        data3:
+            description: ''
+            required:
+                - property1
+                - property2
+            type: object
+            properties:
+                property1:
+                    description: ''
+                    type: boolean
+                property2:
+                    description: ''
+                    type: boolean
+        dataOneOf:
+            oneOf:
+                -
+                    required:
+                        - name
+                    type: object
+                    properties:
+                        name:
+                            description: ''
+                            type: string
+                -
+                    $ref: '#/components/schemas/data1'
+                -
+                    $ref: '#/components/schemas/data2'
+                -
+                    $ref: '#/components/schemas/data3'
+            description: ''
+            type: object
+        dataAnyOf:
+            anyOf:
+                -
+                    required:
+                        - name
+                    type: object
+                    properties:
+                        name:
+                            description: ''
+                            type: string
+                -
+                    $ref: '#/components/schemas/data1'
+                -
+                    $ref: '#/components/schemas/data2'
+                -
+                    $ref: '#/components/schemas/data3'
+            description: ''
+            type: object
