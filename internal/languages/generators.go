@@ -8,5 +8,6 @@ import (
 func Generators(encoders map[string]types.Encoder, extractor types.Extractor) map[types.Language]types.Generator {
 	generators := make(map[types.Language]types.Generator)
 	generators[types.LanguageCurl] = NewCurl(encoders, extractor)
+	generators[types.LanguagePhp] = NewPhp(encoders, extractor)
 	return generators
 }

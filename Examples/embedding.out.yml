@@ -88,6 +88,23 @@ paths:
         lang: curl
         source: 'curl "domain.tld/all-of-test" -d "{\"field1\":\"example-string\",\"field2\":\"example-string\",\"property1\":false,\"property2\":false,\"section1\":1234,\"section2\":1234}"
           -H "Content-Type: application/json" -X POST'
+      - label: PHP
+        lang: php
+        source: |-
+          <?php
+          $url = "domain.tld/all-of-test";
+          $data = "{\"field1\":\"example-string\",\"field2\":\"example-string\",\"property1\":false,\"property2\":false,\"section1\":1234,\"section2\":1234}";
+          $headers = array(
+          "Content-Type: application/json",
+          );
+
+
+          $curl = curl_init($url);
+          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+          curl_setopt($curl, CURLOPT_POSTFIELDS, $data);curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+          curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'POST');
+          var_dump(curl_exec($curl)); // Dumps the response
+          curl_close($curl);
   /any-of-test:
     post:
       requestBody:
@@ -104,6 +121,23 @@ paths:
         lang: curl
         source: 'curl "domain.tld/any-of-test" -d "{\"field1\":\"example-string\",\"field2\":\"example-string\"}"
           -H "Content-Type: application/json" -X POST'
+      - label: PHP
+        lang: php
+        source: |-
+          <?php
+          $url = "domain.tld/any-of-test";
+          $data = "{\"field1\":\"example-string\",\"field2\":\"example-string\"}";
+          $headers = array(
+          "Content-Type: application/json",
+          );
+
+
+          $curl = curl_init($url);
+          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+          curl_setopt($curl, CURLOPT_POSTFIELDS, $data);curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+          curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'POST');
+          var_dump(curl_exec($curl)); // Dumps the response
+          curl_close($curl);
   /one-of-test:
     post:
       requestBody:
@@ -120,3 +154,20 @@ paths:
         lang: curl
         source: 'curl "domain.tld/one-of-test" -d "{\"field1\":\"example-string\",\"field2\":\"example-string\"}"
           -H "Content-Type: application/json" -X POST'
+      - label: PHP
+        lang: php
+        source: |-
+          <?php
+          $url = "domain.tld/one-of-test";
+          $data = "{\"field1\":\"example-string\",\"field2\":\"example-string\"}";
+          $headers = array(
+          "Content-Type: application/json",
+          );
+
+
+          $curl = curl_init($url);
+          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+          curl_setopt($curl, CURLOPT_POSTFIELDS, $data);curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+          curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'POST');
+          var_dump(curl_exec($curl)); // Dumps the response
+          curl_close($curl);
