@@ -93,7 +93,7 @@ paths:
         source: |-
           <?php
           $url = "domain.tld/all-of-test";
-          $data = "{\"field1\":\"example-string\",\"field2\":\"example-string\",\"property1\":false,\"property2\":false,\"section1\":1234,\"section2\":1234}";
+          $data = json_encode(array("section1" => "1234","section2" => "1234","property1" => false,"property2" => false,"field2" => "example-string","field1" => "example-string",));
           $headers = array(
           "Content-Type: application/json",
           );
@@ -126,7 +126,7 @@ paths:
         source: |-
           <?php
           $url = "domain.tld/any-of-test";
-          $data = "{\"field1\":\"example-string\",\"field2\":\"example-string\"}";
+          $data = json_encode(array("field1" => "example-string","field2" => "example-string",));
           $headers = array(
           "Content-Type: application/json",
           );
@@ -142,7 +142,7 @@ paths:
     post:
       requestBody:
         content:
-          application/json:
+          application/xml:
             schema:
               $ref: '#/components/schemas/dataOneOf'
         required: true
@@ -152,16 +152,16 @@ paths:
       x-codeSamples:
       - label: curl
         lang: curl
-        source: 'curl "domain.tld/one-of-test" -d "{\"field1\":\"example-string\",\"field2\":\"example-string\"}"
-          -H "Content-Type: application/json" -X POST'
+        source: 'curl "domain.tld/one-of-test" -d "<?xml version=\"1.0\" encoding=\"UTF-8\"?><doc><field1>example-string</field1><field2>example-string</field2></doc>"
+          -H "Content-Type: application/xml" -X POST'
       - label: PHP
         lang: php
         source: |-
           <?php
           $url = "domain.tld/one-of-test";
-          $data = "{\"field1\":\"example-string\",\"field2\":\"example-string\"}";
+          $data = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><doc><field1>example-string</field1><field2>example-string</field2></doc>";
           $headers = array(
-          "Content-Type: application/json",
+          "Content-Type: application/xml",
           );
 
 

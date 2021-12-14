@@ -64,9 +64,9 @@ func (p *Php) GetSample(httpVerb string, path string, operation *openapi3.Operat
 	// Set request body
 	if body != "" {
 		// TODO use php arrays where possible and json_encode
-		codeInit.WriteString("$data = \"")
+		codeInit.WriteString("$data = ")
 		codeInit.WriteString(body)
-		codeInit.WriteString("\";\n")
+		codeInit.WriteString(";\n")
 
 		codeExec.WriteString("curl_setopt($curl, CURLOPT_POSTFIELDS, $data);")
 	}
@@ -220,13 +220,26 @@ func (p *Php) getRequestBody(operation *openapi3.Operation) (string, *types.Form
 
 	meta.Format = format
 
-	if encoder, ok := p.encoders[strings.ToLower(format)]; ok {
+	addQuotes := false
+	encoder, ok := p.encoders[strings.ToLower(format)+"/php"]
+	if !ok {
+		addQuotes = true
+		log.Debug("No PHP specific encoder, falling back to: " + format)
+		encoder, ok = p.encoders[strings.ToLower(format)]
+	}
+
+	if ok {
 		newValue, err := encoder.EnocdeValue(operation.RequestBody.Ref, value, meta)
 		if err != nil {
 			log.Warn(fmt.Sprintf("Request body parsing failed: %s", err.Error()))
 			return "", meta
 		}
-		return p.escape(newValue), meta
+
+		if !addQuotes {
+			return newValue, meta
+		}
+
+		return "\"" + p.escape(newValue) + "\"", meta
 	} else {
 		log.Warn("Missing encoder for format: " + format)
 	}
@@ -237,6 +250,7 @@ func (p *Php) getRequestBody(operation *openapi3.Operation) (string, *types.Form
 func (p *Php) escape(text string) string {
 	text = strings.ReplaceAll(text, `"`, `\"`)
 	text = strings.ReplaceAll(text, "\r\n", "\\r\\n")
+
 	return text
 }
 
