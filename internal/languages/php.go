@@ -68,7 +68,7 @@ func (p *Php) GetSample(httpVerb string, path string, operation *openapi3.Operat
 		codeInit.WriteString(body)
 		codeInit.WriteString(";\n")
 
-		codeExec.WriteString("curl_setopt($curl, CURLOPT_POSTFIELDS, $data);")
+		codeExec.WriteString("curl_setopt($curl, CURLOPT_POSTFIELDS, $data);\n")
 	}
 
 	// Set request headers
@@ -168,7 +168,7 @@ func (p *Php) getHeaderParams(params []*types.Parameter, meta *types.FormattingM
 		head.WriteString("\",\n")
 	}
 
-	head.WriteString("\"")
+	head.WriteString("\t\"")
 	head.WriteString(p.writeFormatMeta(meta))
 	head.WriteString("\",\n")
 

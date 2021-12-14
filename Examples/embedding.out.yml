@@ -90,21 +90,13 @@ paths:
           -H "Content-Type: application/json" -X POST'
       - label: PHP
         lang: php
-        source: |-
-          <?php
-          $url = "domain.tld/all-of-test";
-          $data = json_encode(array("section1" => "1234","section2" => "1234","property1" => false,"property2" => false,"field2" => "example-string","field1" => "example-string",));
-          $headers = array(
-          "Content-Type: application/json",
-          );
-
-
-          $curl = curl_init($url);
-          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-          curl_setopt($curl, CURLOPT_POSTFIELDS, $data);curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-          curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'POST');
-          var_dump(curl_exec($curl)); // Dumps the response
-          curl_close($curl);
+        source: "<?php\n$url = \"domain.tld/all-of-test\";\n$data = json_encode(array(\"property2\"
+          => false,\"field1\" => \"example-string\",\"field2\" => \"example-string\",\"section2\"
+          => \"1234\",\"section1\" => \"1234\",\"property1\" => false,));\n$headers
+          = array(\n\t\"Content-Type: application/json\",\n);\n\n\n$curl = curl_init($url);\ncurl_setopt($curl,
+          CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($curl, CURLOPT_POSTFIELDS, $data);\ncurl_setopt($curl,
+          CURLOPT_HTTPHEADER, $headers);\ncurl_setopt($curl, CURLOPT_CUSTOMREQUEST,
+          'POST');\nvar_dump(curl_exec($curl)); // Dumps the response\ncurl_close($curl);"
   /any-of-test:
     post:
       requestBody:
@@ -123,21 +115,12 @@ paths:
           -H "Content-Type: application/json" -X POST'
       - label: PHP
         lang: php
-        source: |-
-          <?php
-          $url = "domain.tld/any-of-test";
-          $data = json_encode(array("field1" => "example-string","field2" => "example-string",));
-          $headers = array(
-          "Content-Type: application/json",
-          );
-
-
-          $curl = curl_init($url);
-          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-          curl_setopt($curl, CURLOPT_POSTFIELDS, $data);curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-          curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'POST');
-          var_dump(curl_exec($curl)); // Dumps the response
-          curl_close($curl);
+        source: "<?php\n$url = \"domain.tld/any-of-test\";\n$data = json_encode(array(\"field2\"
+          => \"example-string\",\"field1\" => \"example-string\",));\n$headers = array(\n\t\"Content-Type:
+          application/json\",\n);\n\n\n$curl = curl_init($url);\ncurl_setopt($curl,
+          CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($curl, CURLOPT_POSTFIELDS, $data);\ncurl_setopt($curl,
+          CURLOPT_HTTPHEADER, $headers);\ncurl_setopt($curl, CURLOPT_CUSTOMREQUEST,
+          'POST');\nvar_dump(curl_exec($curl)); // Dumps the response\ncurl_close($curl);"
   /one-of-test:
     post:
       requestBody:
@@ -156,18 +139,9 @@ paths:
           -H "Content-Type: application/xml" -X POST'
       - label: PHP
         lang: php
-        source: |-
-          <?php
-          $url = "domain.tld/one-of-test";
-          $data = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><doc><field1>example-string</field1><field2>example-string</field2></doc>";
-          $headers = array(
-          "Content-Type: application/xml",
-          );
-
-
-          $curl = curl_init($url);
-          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-          curl_setopt($curl, CURLOPT_POSTFIELDS, $data);curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-          curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'POST');
-          var_dump(curl_exec($curl)); // Dumps the response
-          curl_close($curl);
+        source: "<?php\n$url = \"domain.tld/one-of-test\";\n$data = \"<?xml version=\\\"1.0\\\"
+          encoding=\\\"UTF-8\\\"?><doc><field1>example-string</field1><field2>example-string</field2></doc>\";\n$headers
+          = array(\n\t\"Content-Type: application/xml\",\n);\n\n\n$curl = curl_init($url);\ncurl_setopt($curl,
+          CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($curl, CURLOPT_POSTFIELDS, $data);\ncurl_setopt($curl,
+          CURLOPT_HTTPHEADER, $headers);\ncurl_setopt($curl, CURLOPT_CUSTOMREQUEST,
+          'POST');\nvar_dump(curl_exec($curl)); // Dumps the response\ncurl_close($curl);"

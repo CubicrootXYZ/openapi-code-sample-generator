@@ -20,20 +20,20 @@ func (j *PhpJsonEncode) EnocdeParameter(name string, value interface{}) (string,
 
 // EnocdeValue encodes a single value to a php json object
 func (j *PhpJsonEncode) EnocdeValue(ref string, value interface{}, meta *types.FormattingMeta) (string, error) {
-	switch value.(type) {
+	switch t := value.(type) {
 	case string:
-		return `"` + value.(string) + `"`, nil
+		return `"` + t + `"`, nil
 	case int, int8, int16, int32, int64, uint, uint16, uint32, uint64, float64, float32:
-		return fmt.Sprintf(`"%v"`, value), nil
+		return fmt.Sprintf(`"%v"`, t), nil
 	case bool:
 		return fmt.Sprint(value), nil
 	case byte:
-		return `"` + string(value.(byte)) + `"`, nil
+		return `"` + string(t) + `"`, nil
 	case []interface{}:
 		out := strings.Builder{}
 		out.WriteString("json_encode(array(")
 
-		for _, item := range value.([]interface{}) {
+		for _, item := range t {
 			itemStringified, err := j.EnocdeValue(ref, item, meta)
 			if err != nil {
 				log.Warn(err.Error())
@@ -50,7 +50,7 @@ func (j *PhpJsonEncode) EnocdeValue(ref string, value interface{}, meta *types.F
 		out := strings.Builder{}
 		out.WriteString("json_encode(array(")
 
-		for key, item := range value.(map[string]interface{}) {
+		for key, item := range t {
 			itemStringified, err := j.EnocdeValue(ref, item, meta)
 			if err != nil {
 				log.Warn(err.Error())
