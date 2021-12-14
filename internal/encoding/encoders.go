@@ -11,7 +11,7 @@ func Encoders() map[string]types.Encoder {
 	encoders[types.EncodingXML] = &XMLEncode{}
 	encoders[types.EncodingXMLText] = &XMLEncode{}
 	encoders[types.EncodingFormData] = &FormDataEncode{}
-	encoders[types.EncodingJSONPHP] = &PhpJsonEncode{}
+	encoders[types.EncodingPHP] = &PhpEncode{}
 
 	return encoders
 }

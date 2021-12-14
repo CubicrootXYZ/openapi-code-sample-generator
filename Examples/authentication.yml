@@ -1,0 +1,109 @@
+openapi: 3.0.2
+info:
+    title: New API
+    version: 1.0.0
+    description: A brand new API with no content.  Go nuts!
+paths:
+    /test1:
+        get:
+            responses:
+                '204':
+                    description: Ok
+            security:
+                -
+                    HTTP-Basic-Auth: []
+    /test2:
+        get:
+            responses:
+                '204':
+                    description: Ok
+            security:
+                -
+                    HTTP-Bearer-Auth: []
+    /test3:
+        get:
+            responses:
+                '204':
+                    description: Ok
+            security:
+                -
+                    HTTP-Digest-Auth: []
+    /test4:
+        get:
+            responses:
+                '204':
+                    description: Ok
+            security:
+                -
+                    Api-Key-Header-Auth: []
+    /test5:
+        get:
+            responses:
+                '204':
+                    description: Ok
+            security:
+                -
+                    Api-Key-Query-Auth: []
+    /test6:
+        get:
+            responses:
+                '204':
+                    description: Ok
+            security:
+                -
+                    Api-Key-Cookie-Auth: []
+    /test7:
+        get:
+            responses:
+                '204':
+                    description: Ok
+            security:
+                -
+                    Oauth2-Auth:
+                        - scope-1
+                        - scope-3
+    /test8:
+        get:
+            responses:
+                '204':
+                    description: Ok
+            security:
+                -
+                    OIDC-Auth: []
+components:
+    securitySchemes:
+        HTTP-Basic-Auth:
+            scheme: basic
+            type: http
+        HTTP-Bearer-Auth:
+            scheme: bearer
+            type: http
+        HTTP-Digest-Auth:
+            scheme: digest
+            type: http
+        Api-Key-Header-Auth:
+            type: apiKey
+            name: Auth
+            in: header
+        Api-Key-Query-Auth:
+            type: apiKey
+            name: Auth
+            in: query
+        Api-Key-Cookie-Auth:
+            type: apiKey
+            name: Auth
+            in: cookie
+        Oauth2-Auth:
+            flows:
+                authorizationCode:
+                    authorizationUrl: 'https://domain.tld/auth'
+                    tokenUrl: 'https://domain.tld/token'
+                    refreshUrl: 'https://domain.tld/token'
+                    scopes:
+                        scope-1: this is scope 1
+                        scope-2: ''
+                        scope-3: ''
+            type: oauth2
+        OIDC-Auth:
+            openIdConnectUrl: 'https://domain.tld/oidc'
+            type: openIdConnect

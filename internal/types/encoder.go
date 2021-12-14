@@ -13,5 +13,5 @@ const (
 	EncodingXML          = "application/xml"
 	EncodingXMLText      = "text/xml"
 	EncodingFormData     = "multipart/form-data"
-	EncodingJSONPHP      = "application/json/php"
+	EncodingPHP          = "php"
 )

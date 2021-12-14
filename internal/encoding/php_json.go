@@ -9,17 +9,17 @@ import (
 	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/types"
 )
 
-// PhpJsonEncode groups json features for php
-type PhpJsonEncode struct {
+// PhpEncode groups json features for php
+type PhpEncode struct {
 }
 
 // EnocdeParameter encodes the given parameter and its value to json
-func (j *PhpJsonEncode) EnocdeParameter(name string, value interface{}) (string, error) {
+func (j *PhpEncode) EnocdeParameter(name string, value interface{}) (string, error) {
 	return j.EnocdeValue("", map[string]interface{}{name: value}, nil)
 }
 
 // EnocdeValue encodes a single value to a php json object
-func (j *PhpJsonEncode) EnocdeValue(ref string, value interface{}, meta *types.FormattingMeta) (string, error) {
+func (j *PhpEncode) EnocdeValue(ref string, value interface{}, meta *types.FormattingMeta) (string, error) {
 	switch t := value.(type) {
 	case string:
 		return `"` + t + `"`, nil
@@ -31,7 +31,7 @@ func (j *PhpJsonEncode) EnocdeValue(ref string, value interface{}, meta *types.F
 		return `"` + string(t) + `"`, nil
 	case []interface{}:
 		out := strings.Builder{}
-		out.WriteString("json_encode(array(")
+		out.WriteString("array(\n")
 
 		for _, item := range t {
 			itemStringified, err := j.EnocdeValue(ref, item, meta)
@@ -39,16 +39,16 @@ func (j *PhpJsonEncode) EnocdeValue(ref string, value interface{}, meta *types.F
 				log.Warn(err.Error())
 				continue
 			}
-
+			out.WriteString("\t")
 			out.WriteString(itemStringified)
-			out.WriteString(",")
+			out.WriteString(",\n")
 		}
-		out.WriteString("))")
+		out.WriteString(")")
 
 		return out.String(), nil
 	case map[string]interface{}:
 		out := strings.Builder{}
-		out.WriteString("json_encode(array(")
+		out.WriteString("array(\n")
 
 		for key, item := range t {
 			itemStringified, err := j.EnocdeValue(ref, item, meta)
@@ -57,11 +57,11 @@ func (j *PhpJsonEncode) EnocdeValue(ref string, value interface{}, meta *types.F
 				continue
 			}
 
-			out.WriteString("\"")
+			out.WriteString("\t\"")
 			out.WriteString(key)
 			out.WriteString("\" => ")
 			out.WriteString(itemStringified)
-			out.WriteString(",")
+			out.WriteString(",\n")
 		}
 		out.WriteString("))")
 

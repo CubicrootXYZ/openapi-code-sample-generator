@@ -220,31 +220,42 @@ func (p *Php) getRequestBody(operation *openapi3.Operation) (string, *types.Form
 
 	meta.Format = format
 
-	addQuotes := false
-	encoder, ok := p.encoders[strings.ToLower(format)+"/php"]
+	phpEncoder, ok := p.encoders[types.EncodingPHP]
 	if !ok {
-		addQuotes = true
-		log.Debug("No PHP specific encoder, falling back to: " + format)
-		encoder, ok = p.encoders[strings.ToLower(format)]
+		log.Warn("Missing encoder for format: php")
+		return "", meta
 	}
-
-	if ok {
-		newValue, err := encoder.EnocdeValue(operation.RequestBody.Ref, value, meta)
-		if err != nil {
-			log.Warn(fmt.Sprintf("Request body parsing failed: %s", err.Error()))
-			return "", meta
-		}
-
-		if !addQuotes {
-			return newValue, meta
-		}
-
-		return "\"" + p.escape(newValue) + "\"", meta
-	} else {
+	encoder, ok := p.encoders[strings.ToLower(format)]
+	if !ok {
 		log.Warn("Missing encoder for format: " + format)
+		return "", meta
 	}
 
-	return "", meta
+	formatSupported := false
+	for _, formatDef := range []string{types.EncodingJSON, types.EncodingJSONText} {
+		if strings.ToLower(format) == formatDef {
+			formatSupported = true
+		}
+	}
+
+	if formatSupported {
+		phpEncodedValue, err := phpEncoder.EnocdeValue(operation.RequestBody.Ref, value, meta)
+		if err == nil {
+			switch strings.ToLower(format) {
+			case types.EncodingJSON, types.EncodingJSONText:
+				return "json_encode(" + phpEncodedValue + ")", meta
+			}
+		}
+		log.Warn("Failed php encoding value, fallbacking. Error was: " + err.Error())
+	}
+
+	newValue, err := encoder.EnocdeValue(operation.RequestBody.Ref, value, meta)
+	if err != nil {
+		log.Warn(fmt.Sprintf("Request body parsing failed: %s", err.Error()))
+		return "", meta
+	}
+
+	return "\"" + p.escape(newValue) + "\"", meta
 }
 
 func (p *Php) escape(text string) string {
