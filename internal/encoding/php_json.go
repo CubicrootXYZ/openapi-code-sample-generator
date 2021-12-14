@@ -63,7 +63,7 @@ func (j *PhpEncode) EnocdeValue(ref string, value interface{}, meta *types.Forma
 			out.WriteString(itemStringified)
 			out.WriteString(",\n")
 		}
-		out.WriteString("))")
+		out.WriteString(")")
 
 		return out.String(), nil
 	default:

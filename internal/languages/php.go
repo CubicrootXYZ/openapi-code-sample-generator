@@ -72,7 +72,7 @@ func (p *Php) GetSample(httpVerb string, path string, operation *openapi3.Operat
 	}
 
 	// Set request headers
-	if headers != "array()" {
+	if headers != "array(\n)" {
 		codeInit.WriteString("$headers = ")
 		codeInit.WriteString(headers)
 		codeInit.WriteString(";\n")
@@ -168,13 +168,17 @@ func (p *Php) getHeaderParams(params []*types.Parameter, meta *types.FormattingM
 		head.WriteString("\",\n")
 	}
 
-	head.WriteString("\t\"")
-	head.WriteString(p.writeFormatMeta(meta))
-	head.WriteString("\",\n")
+	encoding := p.writeFormatMeta(meta)
+
+	if encoding != "" {
+		head.WriteString("\t\"")
+		head.WriteString(encoding)
+		head.WriteString("\",\n")
+	}
 
 	head.WriteString(")")
 
-	// TODO handle ${TOKEN}
+	// TODO handle ${TOKEN} also in cookie and params
 
 	return head.String()
 }
