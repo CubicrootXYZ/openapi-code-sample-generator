@@ -300,6 +300,7 @@ func (p *Php) filterToken(text string) string {
 	if strings.Contains(text, "${TOKEN}") {
 		p.usesToken = true
 		text = strings.Replace(text, "${TOKEN}", "\" . $token . \"", -1)
+		text = strings.Replace(text, " . \"\",\n", "\n", -1)
 	}
 
 	return text
