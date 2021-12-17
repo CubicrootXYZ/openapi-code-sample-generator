@@ -1,0 +1,135 @@
+openapi: 3.0.2
+info:
+    title: New API
+    version: 1.0.0
+    description: A brand new API with no content.  Go nuts!
+paths:
+    /test-json:
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Level1'
+                required: true
+            responses:
+                '200':
+                    description: |
+                        ok
+    /test-xml:
+        post:
+            requestBody:
+                content:
+                    text/xml:
+                        schema:
+                            $ref: '#/components/schemas/Level1'
+                required: true
+            responses:
+                '200':
+                    description: ok
+    /test-form-data:
+        post:
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            $ref: '#/components/schemas/Level1'
+                required: true
+            responses:
+                '200':
+                    description: OK
+components:
+    schemas:
+        Level5:
+            description: ''
+            required:
+                - field5.1
+                - field5.2
+                - field5.3
+                - field5.4
+            type: object
+            properties:
+                field5.1:
+                    description: ''
+                    enum:
+                        - '14'
+                        - a
+                        - b
+                        - c
+                    type: string
+                field5.2:
+                    description: ''
+                    type: array
+                    items:
+                        type: boolean
+                field5.3:
+                    description: ''
+                    type: string
+                field5.4:
+                    description: ''
+                    type: number
+        Level4:
+            description: ''
+            required:
+                - field4.1
+                - field4.2
+            type: object
+            properties:
+                field4.1:
+                    description: ''
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Level5'
+                field4.2:
+                    description: ''
+                    type: integer
+        Level3:
+            description: ''
+            required:
+                - field3.1
+                - field3.2
+            type: object
+            properties:
+                field3.1:
+                    $ref: '#/components/schemas/Level4'
+                    description: ''
+                field3.2:
+                    description: ''
+                    type: array
+                    items:
+                        type: string
+        Level2:
+            description: ''
+            required:
+                - field2.1
+                - field2.2
+                - field2.3
+            type: object
+            properties:
+                field2.1:
+                    $ref: '#/components/schemas/Level3'
+                    description: ''
+                field2.2:
+                    description: ''
+                    type: array
+                    items:
+                        format: date-time
+                        type: string
+                field2.3:
+                    format: password
+                    description: ''
+                    type: string
+        Level1:
+            description: ''
+            required:
+                - field1.2
+                - field1.1
+            type: object
+            properties:
+                field1.1:
+                    $ref: '#/components/schemas/Level2'
+                    description: ''
+                field1.2:
+                    format: int32
+                    description: ''
+                    type: integer
