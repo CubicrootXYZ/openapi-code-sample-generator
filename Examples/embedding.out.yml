@@ -92,7 +92,7 @@ paths:
         lang: php
         source: "<?php\n$url = \"domain.tld/all-of-test\";\n$data = json_encode(array(\n\t\"field1\"
           => \"example-string\",\n\t\"field2\" => \"example-string\",\n\t\"section1\"
-          => \"1234\",\n\t\"section2\" => \"1234\",\n\t\"property2\" => false,\n\t\"property1\"
+          => \"1234\",\n\t\"section2\" => \"1234\",\n\t\"property1\" => false,\n\t\"property2\"
           => false,\n));\n$headers = array(\n\t\"Content-Type: application/json\",\n);\n\n\n$curl
           = curl_init($url);\ncurl_setopt($curl, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($curl,
           CURLOPT_POSTFIELDS, $data);\ncurl_setopt($curl, CURLOPT_HTTPHEADER, $headers);\ncurl_setopt($curl,
@@ -116,8 +116,8 @@ paths:
           -H "Content-Type: application/json" -X POST'
       - label: PHP
         lang: php
-        source: "<?php\n$url = \"domain.tld/any-of-test\";\n$data = json_encode(array(\n\t\"field2\"
-          => \"example-string\",\n\t\"field1\" => \"example-string\",\n));\n$headers
+        source: "<?php\n$url = \"domain.tld/any-of-test\";\n$data = json_encode(array(\n\t\"field1\"
+          => \"example-string\",\n\t\"field2\" => \"example-string\",\n));\n$headers
           = array(\n\t\"Content-Type: application/json\",\n);\n\n\n$curl = curl_init($url);\ncurl_setopt($curl,
           CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($curl, CURLOPT_POSTFIELDS, $data);\ncurl_setopt($curl,
           CURLOPT_HTTPHEADER, $headers);\ncurl_setopt($curl, CURLOPT_CUSTOMREQUEST,
