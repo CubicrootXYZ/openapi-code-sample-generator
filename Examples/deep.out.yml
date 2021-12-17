@@ -96,40 +96,40 @@ paths:
       - label: curl
         lang: curl
         source: 'curl "domain.tld/test-form-data" -d "Content-Type: multipart/form-data;
-          boundary=2050ae2e7a6e3cded5746bacdfd41441d89cb320872c9b50c0da069fcb6c\r\n\r\n--2050ae2e7a6e3cded5746bacdfd41441d89cb320872c9b50c0da069fcb6c\r\nContent-Id:
+          boundary=fffa52919450b34d896d6273bf5ba1d9457162e81e8ad58875f94fdda7f4\r\n\r\n--fffa52919450b34d896d6273bf5ba1d9457162e81e8ad58875f94fdda7f4\r\nContent-Id:
           field1.1\r\nContent-Type: text/plain\r\n\r\nContent-Type: multipart/form-data;
-          boundary=48a780228cfd87af40c3308edc1107961ddeb33eaa9e34ee0298647b811c\r\n\r\n--48a780228cfd87af40c3308edc1107961ddeb33eaa9e34ee0298647b811c\r\nContent-Id:
+          boundary=5522a37d2ed13b85273ff8c5a5463287a38114a5025cb143eb39b1bde232\r\n\r\n--5522a37d2ed13b85273ff8c5a5463287a38114a5025cb143eb39b1bde232\r\nContent-Id:
           field2.1\r\nContent-Type: text/plain\r\n\r\nContent-Type: multipart/form-data;
-          boundary=de863b324ef5fdde484ec46a7a8cf4adfa28d24f818e97132d0b3478f65e\r\n\r\n--de863b324ef5fdde484ec46a7a8cf4adfa28d24f818e97132d0b3478f65e\r\nContent-Id:
+          boundary=aef4c04589caf5bab34190f1ec9a3bc8ea9d0968130d37cec756d6e25506\r\n\r\n--aef4c04589caf5bab34190f1ec9a3bc8ea9d0968130d37cec756d6e25506\r\nContent-Id:
           field3.1\r\nContent-Type: text/plain\r\n\r\nContent-Type: multipart/form-data;
-          boundary=a74f25d88caaa9e70a946d5a1ff66cc79b8c1ac17a1c1e09642e0bccd3d0\r\n\r\n--a74f25d88caaa9e70a946d5a1ff66cc79b8c1ac17a1c1e09642e0bccd3d0\r\nContent-Id:
+          boundary=84e47e7b3e08400681fcb27da1970a20e2e7f6b2c76b1b1dd152504b68ce\r\n\r\n--84e47e7b3e08400681fcb27da1970a20e2e7f6b2c76b1b1dd152504b68ce\r\nContent-Id:
           field4.1\r\nContent-Type: text/plain\r\n\r\n[map[field5.1:14 field5.2:[false]
-          field5.3:example-string field5.4:1.234]]\r\n--a74f25d88caaa9e70a946d5a1ff66cc79b8c1ac17a1c1e09642e0bccd3d0\r\nContent-Id:
-          field4.2\r\nContent-Type: text/plain\r\n\r\n1234\r\n--a74f25d88caaa9e70a946d5a1ff66cc79b8c1ac17a1c1e09642e0bccd3d0--\r\n\r\n--de863b324ef5fdde484ec46a7a8cf4adfa28d24f818e97132d0b3478f65e\r\nContent-Id:
-          field3.2\r\nContent-Type: text/plain\r\n\r\n[example-string]\r\n--de863b324ef5fdde484ec46a7a8cf4adfa28d24f818e97132d0b3478f65e--\r\n\r\n--48a780228cfd87af40c3308edc1107961ddeb33eaa9e34ee0298647b811c\r\nContent-Id:
-          field2.2\r\nContent-Type: text/plain\r\n\r\n[2021-12-17T18:52:49+01:00]\r\n--48a780228cfd87af40c3308edc1107961ddeb33eaa9e34ee0298647b811c\r\nContent-Id:
-          field2.3\r\nContent-Type: text/plain\r\n\r\nexample-string\r\n--48a780228cfd87af40c3308edc1107961ddeb33eaa9e34ee0298647b811c--\r\n\r\n--2050ae2e7a6e3cded5746bacdfd41441d89cb320872c9b50c0da069fcb6c\r\nContent-Id:
-          field1.2\r\nContent-Type: text/plain\r\n\r\n1234\r\n--2050ae2e7a6e3cded5746bacdfd41441d89cb320872c9b50c0da069fcb6c--\r\n"
-          -H "Content-Type: multipart/form-data boundary=2050ae2e7a6e3cded5746bacdfd41441d89cb320872c9b50c0da069fcb6c"
+          field5.3:example-string field5.4:1.234]]\r\n--84e47e7b3e08400681fcb27da1970a20e2e7f6b2c76b1b1dd152504b68ce\r\nContent-Id:
+          field4.2\r\nContent-Type: text/plain\r\n\r\n1234\r\n--84e47e7b3e08400681fcb27da1970a20e2e7f6b2c76b1b1dd152504b68ce--\r\n\r\n--aef4c04589caf5bab34190f1ec9a3bc8ea9d0968130d37cec756d6e25506\r\nContent-Id:
+          field3.2\r\nContent-Type: text/plain\r\n\r\n[example-string]\r\n--aef4c04589caf5bab34190f1ec9a3bc8ea9d0968130d37cec756d6e25506--\r\n\r\n--5522a37d2ed13b85273ff8c5a5463287a38114a5025cb143eb39b1bde232\r\nContent-Id:
+          field2.2\r\nContent-Type: text/plain\r\n\r\n[2021-12-17T18:58:47+01:00]\r\n--5522a37d2ed13b85273ff8c5a5463287a38114a5025cb143eb39b1bde232\r\nContent-Id:
+          field2.3\r\nContent-Type: text/plain\r\n\r\nexample-string\r\n--5522a37d2ed13b85273ff8c5a5463287a38114a5025cb143eb39b1bde232--\r\n\r\n--fffa52919450b34d896d6273bf5ba1d9457162e81e8ad58875f94fdda7f4\r\nContent-Id:
+          field1.2\r\nContent-Type: text/plain\r\n\r\n1234\r\n--fffa52919450b34d896d6273bf5ba1d9457162e81e8ad58875f94fdda7f4--\r\n"
+          -H "Content-Type: multipart/form-data boundary=fffa52919450b34d896d6273bf5ba1d9457162e81e8ad58875f94fdda7f4"
           -X POST'
       - label: PHP
         lang: php
         source: "<?php\n$url = \"domain.tld/test-form-data\";\n$data = \"Content-Type:
-          multipart/form-data; boundary=48af70d9512942f51a9dead9c49c092deb2b711a62b9303deb980ccb59ef\\r\\n\\r\\n--48af70d9512942f51a9dead9c49c092deb2b711a62b9303deb980ccb59ef\\r\\nContent-Id:
+          multipart/form-data; boundary=8003c5d6bb2e1ef0a2fcaa750520bc27cdd7a8c5bcbbc76e0ead517485b8\\r\\n\\r\\n--8003c5d6bb2e1ef0a2fcaa750520bc27cdd7a8c5bcbbc76e0ead517485b8\\r\\nContent-Id:
           field1.1\\r\\nContent-Type: text/plain\\r\\n\\r\\nContent-Type: multipart/form-data;
-          boundary=e65323494ce2c9c7f880667ced3d7ad4d30061e1ccf139e082624e7a4da6\\r\\n\\r\\n--e65323494ce2c9c7f880667ced3d7ad4d30061e1ccf139e082624e7a4da6\\r\\nContent-Id:
+          boundary=7ef9b17e44a8c165c9c54a6814cde474a14234f6bba7d2242484b2c61524\\r\\n\\r\\n--7ef9b17e44a8c165c9c54a6814cde474a14234f6bba7d2242484b2c61524\\r\\nContent-Id:
           field2.1\\r\\nContent-Type: text/plain\\r\\n\\r\\nContent-Type: multipart/form-data;
-          boundary=ad58e7705c78b549c54abed0c9d4b58a8be7267e33ea3e0c86ca99f85815\\r\\n\\r\\n--ad58e7705c78b549c54abed0c9d4b58a8be7267e33ea3e0c86ca99f85815\\r\\nContent-Id:
-          field3.2\\r\\nContent-Type: text/plain\\r\\n\\r\\n[example-string]\\r\\n--ad58e7705c78b549c54abed0c9d4b58a8be7267e33ea3e0c86ca99f85815\\r\\nContent-Id:
+          boundary=09de9a758f4c524fa54d3f63f3ecf3c9cb82652b77792c09311b1a037c52\\r\\n\\r\\n--09de9a758f4c524fa54d3f63f3ecf3c9cb82652b77792c09311b1a037c52\\r\\nContent-Id:
           field3.1\\r\\nContent-Type: text/plain\\r\\n\\r\\nContent-Type: multipart/form-data;
-          boundary=c856833264961353be6b636ea7449e52eb3b11834e5e517ffa5366ec282d\\r\\n\\r\\n--c856833264961353be6b636ea7449e52eb3b11834e5e517ffa5366ec282d\\r\\nContent-Id:
+          boundary=2d9ed4ce8327224529b96b01dc1515f08d240c888e782911ffaa1c102b65\\r\\n\\r\\n--2d9ed4ce8327224529b96b01dc1515f08d240c888e782911ffaa1c102b65\\r\\nContent-Id:
           field4.1\\r\\nContent-Type: text/plain\\r\\n\\r\\n[map[field5.1:14 field5.2:[false]
-          field5.3:example-string field5.4:1.234]]\\r\\n--c856833264961353be6b636ea7449e52eb3b11834e5e517ffa5366ec282d\\r\\nContent-Id:
-          field4.2\\r\\nContent-Type: text/plain\\r\\n\\r\\n1234\\r\\n--c856833264961353be6b636ea7449e52eb3b11834e5e517ffa5366ec282d--\\r\\n\\r\\n--ad58e7705c78b549c54abed0c9d4b58a8be7267e33ea3e0c86ca99f85815--\\r\\n\\r\\n--e65323494ce2c9c7f880667ced3d7ad4d30061e1ccf139e082624e7a4da6\\r\\nContent-Id:
-          field2.2\\r\\nContent-Type: text/plain\\r\\n\\r\\n[2021-12-17T18:52:49+01:00]\\r\\n--e65323494ce2c9c7f880667ced3d7ad4d30061e1ccf139e082624e7a4da6\\r\\nContent-Id:
-          field2.3\\r\\nContent-Type: text/plain\\r\\n\\r\\nexample-string\\r\\n--e65323494ce2c9c7f880667ced3d7ad4d30061e1ccf139e082624e7a4da6--\\r\\n\\r\\n--48af70d9512942f51a9dead9c49c092deb2b711a62b9303deb980ccb59ef\\r\\nContent-Id:
-          field1.2\\r\\nContent-Type: text/plain\\r\\n\\r\\n1234\\r\\n--48af70d9512942f51a9dead9c49c092deb2b711a62b9303deb980ccb59ef--\\r\\n\";\n$headers
-          = array(\n\t\"Content-Type: multipart/form-data boundary=48af70d9512942f51a9dead9c49c092deb2b711a62b9303deb980ccb59ef\",\n);\n\n\n$curl
+          field5.3:example-string field5.4:1.234]]\\r\\n--2d9ed4ce8327224529b96b01dc1515f08d240c888e782911ffaa1c102b65\\r\\nContent-Id:
+          field4.2\\r\\nContent-Type: text/plain\\r\\n\\r\\n1234\\r\\n--2d9ed4ce8327224529b96b01dc1515f08d240c888e782911ffaa1c102b65--\\r\\n\\r\\n--09de9a758f4c524fa54d3f63f3ecf3c9cb82652b77792c09311b1a037c52\\r\\nContent-Id:
+          field3.2\\r\\nContent-Type: text/plain\\r\\n\\r\\n[example-string]\\r\\n--09de9a758f4c524fa54d3f63f3ecf3c9cb82652b77792c09311b1a037c52--\\r\\n\\r\\n--7ef9b17e44a8c165c9c54a6814cde474a14234f6bba7d2242484b2c61524\\r\\nContent-Id:
+          field2.2\\r\\nContent-Type: text/plain\\r\\n\\r\\n[2021-12-17T18:58:47+01:00]\\r\\n--7ef9b17e44a8c165c9c54a6814cde474a14234f6bba7d2242484b2c61524\\r\\nContent-Id:
+          field2.3\\r\\nContent-Type: text/plain\\r\\n\\r\\nexample-string\\r\\n--7ef9b17e44a8c165c9c54a6814cde474a14234f6bba7d2242484b2c61524--\\r\\n\\r\\n--8003c5d6bb2e1ef0a2fcaa750520bc27cdd7a8c5bcbbc76e0ead517485b8\\r\\nContent-Id:
+          field1.2\\r\\nContent-Type: text/plain\\r\\n\\r\\n1234\\r\\n--8003c5d6bb2e1ef0a2fcaa750520bc27cdd7a8c5bcbbc76e0ead517485b8--\\r\\n\";\n$headers
+          = array(\n\t\"Content-Type: multipart/form-data boundary=8003c5d6bb2e1ef0a2fcaa750520bc27cdd7a8c5bcbbc76e0ead517485b8\",\n);\n\n\n$curl
           = curl_init($url);\ncurl_setopt($curl, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($curl,
           CURLOPT_POSTFIELDS, $data);\ncurl_setopt($curl, CURLOPT_HTTPHEADER, $headers);\ncurl_setopt($curl,
           CURLOPT_CUSTOMREQUEST, 'POST');\nvar_dump(curl_exec($curl)); // Dumps the
@@ -149,16 +149,20 @@ paths:
       x-codeSamples:
       - label: curl
         lang: curl
-        source: 'curl "domain.tld/test-json" -d "{\"field1.1\":{\"field2.1\":{\"field3.1\":{\"field4.1\":[{\"field5.1\":\"14\",\"field5.2\":[false],\"field5.3\":\"example-string\",\"field5.4\":1.234}],\"field4.2\":1234},\"field3.2\":[\"example-string\"]},\"field2.2\":[\"2021-12-17T18:52:49+01:00\"],\"field2.3\":\"example-string\"},\"field1.2\":1234}"
+        source: 'curl "domain.tld/test-json" -d "{\"field1.1\":{\"field2.1\":{\"field3.1\":{\"field4.1\":[{\"field5.1\":\"14\",\"field5.2\":[false],\"field5.3\":\"example-string\",\"field5.4\":1.234}],\"field4.2\":1234},\"field3.2\":[\"example-string\"]},\"field2.2\":[\"2021-12-17T18:58:47+01:00\"],\"field2.3\":\"example-string\"},\"field1.2\":1234}"
           -H "Content-Type: application/json" -X POST'
       - label: PHP
         lang: php
         source: "<?php\n$url = \"domain.tld/test-json\";\n$data = json_encode(array(\n\t\"field1.1\"
-          => array(\n\t\"field2.1\" => array(\n\t\"field3.2\" => array(\n\t\"example-string\",\n),\n\t\"field3.1\"
-          => array(\n\t\"field4.2\" => \"1234\",\n\t\"field4.1\" => array(\n\tarray(\n\t\"field5.2\"
-          => array(\n\tfalse,\n),\n\t\"field5.3\" => \"example-string\",\n\t\"field5.4\"
-          => \"1.234\",\n\t\"field5.1\" => \"14\",\n),\n),\n),\n),\n\t\"field2.2\"
-          => array(\n\t\"2021-12-17T18:52:49+01:00\",\n),\n\t\"field2.3\" => \"example-string\",\n),\n\t\"field1.2\"
+          => array(\n\n\t\"field2.2\" => array(\n\n\n\n\t\"2021-12-17T18:58:47+01:00\",\n\n\n\n),\n\n\t\"field2.3\"
+          => \"example-string\",\n\n\t\"field2.1\" => array(\n\n\n\n\t\"field3.1\"
+          => array(\n\n\n\n\n\n\n\n\t\"field4.2\" => \"1234\",\n\n\n\n\n\n\n\n\t\"field4.1\"
+          => array(\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\tarray(\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\"field5.1\"
+          => \"14\",\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\"field5.2\"
+          => array(\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\tfalse,\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n),\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\"field5.3\"
+          => \"example-string\",\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\"field5.4\"
+          => \"1.234\",\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n),\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n),\n\n\n\n\n\n\n\n),\n\n\n\n\t\"field3.2\"
+          => array(\n\n\n\n\n\n\n\n\t\"example-string\",\n\n\n\n\n\n\n\n),\n\n\n\n),\n\n),\n\t\"field1.2\"
           => \"1234\",\n));\n$headers = array(\n\t\"Content-Type: application/json\",\n);\n\n\n$curl
           = curl_init($url);\ncurl_setopt($curl, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($curl,
           CURLOPT_POSTFIELDS, $data);\ncurl_setopt($curl, CURLOPT_HTTPHEADER, $headers);\ncurl_setopt($curl,
@@ -178,12 +182,12 @@ paths:
       x-codeSamples:
       - label: curl
         lang: curl
-        source: 'curl "domain.tld/test-xml" -d "<?xml version=\"1.0\" encoding=\"UTF-8\"?><doc><field1.1><field2.1><field3.1><field4.1><field5.1>14</field5.1><field5.2>false</field5.2><field5.3>example-string</field5.3><field5.4>1.234</field5.4></field4.1><field4.2>1234</field4.2></field3.1><field3.2>example-string</field3.2></field2.1><field2.2>2021-12-17T18:52:49+01:00</field2.2><field2.3>example-string</field2.3></field1.1><field1.2>1234</field1.2></doc>"
+        source: 'curl "domain.tld/test-xml" -d "<?xml version=\"1.0\" encoding=\"UTF-8\"?><doc><field1.1><field2.1><field3.1><field4.1><field5.1>14</field5.1><field5.2>false</field5.2><field5.3>example-string</field5.3><field5.4>1.234</field5.4></field4.1><field4.2>1234</field4.2></field3.1><field3.2>example-string</field3.2></field2.1><field2.2>2021-12-17T18:58:47+01:00</field2.2><field2.3>example-string</field2.3></field1.1><field1.2>1234</field1.2></doc>"
           -H "Content-Type: text/xml" -X POST'
       - label: PHP
         lang: php
         source: "<?php\n$url = \"domain.tld/test-xml\";\n$data = \"<?xml version=\\\"1.0\\\"
-          encoding=\\\"UTF-8\\\"?><doc><field1.1><field2.1><field3.1><field4.1><field5.1>14</field5.1><field5.2>false</field5.2><field5.3>example-string</field5.3><field5.4>1.234</field5.4></field4.1><field4.2>1234</field4.2></field3.1><field3.2>example-string</field3.2></field2.1><field2.2>2021-12-17T18:52:49+01:00</field2.2><field2.3>example-string</field2.3></field1.1><field1.2>1234</field1.2></doc>\";\n$headers
+          encoding=\\\"UTF-8\\\"?><doc><field1.1><field2.1><field3.1><field4.1><field5.1>14</field5.1><field5.2>false</field5.2><field5.3>example-string</field5.3><field5.4>1.234</field5.4></field4.1><field4.2>1234</field4.2></field3.1><field3.2>example-string</field3.2></field2.1><field2.2>2021-12-17T18:58:47+01:00</field2.2><field2.3>example-string</field2.3></field1.1><field1.2>1234</field1.2></doc>\";\n$headers
           = array(\n\t\"Content-Type: text/xml\",\n);\n\n\n$curl = curl_init($url);\ncurl_setopt($curl,
           CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($curl, CURLOPT_POSTFIELDS, $data);\ncurl_setopt($curl,
           CURLOPT_HTTPHEADER, $headers);\ncurl_setopt($curl, CURLOPT_CUSTOMREQUEST,
