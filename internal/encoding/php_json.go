@@ -40,7 +40,7 @@ func (j *PhpEncode) EnocdeValue(ref string, value interface{}, meta *types.Forma
 				continue
 			}
 			out.WriteString("\t")
-			out.WriteString(strings.Replace(itemStringified, "\t", "\t\t", -1))
+			out.WriteString(strings.Replace(itemStringified, "\n", "\n\t", -1))
 			out.WriteString(",\n")
 		}
 		out.WriteString(")")
@@ -60,7 +60,7 @@ func (j *PhpEncode) EnocdeValue(ref string, value interface{}, meta *types.Forma
 			out.WriteString("\t\"")
 			out.WriteString(key)
 			out.WriteString("\" => ")
-			out.WriteString(strings.Replace(itemStringified, "\t", "\t\t", -1))
+			out.WriteString(strings.Replace(itemStringified, "\n", "\n\t", -1))
 			out.WriteString(",\n")
 		}
 		out.WriteString(")")
