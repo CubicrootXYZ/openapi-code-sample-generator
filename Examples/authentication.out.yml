@@ -57,6 +57,7 @@ paths:
         source: |-
           <?php
           $url = "domain.tld/test1";
+          $token = "my secret token"; // Put your token here
           $username = "username";
           $password = "password";
 
@@ -81,9 +82,10 @@ paths:
           -X GET'
       - label: PHP
         lang: php
-        source: "<?php\n$url = \"domain.tld/test2\";\n$headers = array(\n\t\"Authorization:
-          Bearer ${TOKEN}\",\n);\n\n\n$curl = curl_init($url);\ncurl_setopt($curl,
-          CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($curl, CURLOPT_HTTPHEADER, $headers);\ncurl_setopt($curl,
+        source: "<?php\n$url = \"domain.tld/test2\";\n$token = \"my secret token\";
+          // Put your token here\n$headers = array(\n\t\"Authorization: Bearer \"
+          . $token . \"\",\n);\n\n\n$curl = curl_init($url);\ncurl_setopt($curl, CURLOPT_RETURNTRANSFER,
+          true);\ncurl_setopt($curl, CURLOPT_HTTPHEADER, $headers);\ncurl_setopt($curl,
           CURLOPT_CUSTOMREQUEST, 'GET');\nvar_dump(curl_exec($curl)); // Dumps the
           response\ncurl_close($curl);"
   /test3:
@@ -122,11 +124,11 @@ paths:
         source: 'curl "domain.tld/test4" -H "Auth: ${TOKEN}" -d "" -X GET'
       - label: PHP
         lang: php
-        source: "<?php\n$url = \"domain.tld/test4\";\n$headers = array(\n\t\"Auth:
-          ${TOKEN}\",\n);\n\n\n$curl = curl_init($url);\ncurl_setopt($curl, CURLOPT_RETURNTRANSFER,
-          true);\ncurl_setopt($curl, CURLOPT_HTTPHEADER, $headers);\ncurl_setopt($curl,
-          CURLOPT_CUSTOMREQUEST, 'GET');\nvar_dump(curl_exec($curl)); // Dumps the
-          response\ncurl_close($curl);"
+        source: "<?php\n$url = \"domain.tld/test4\";\n$token = \"my secret token\";
+          // Put your token here\n$headers = array(\n\t\"Auth: \" . $token . \"\",\n);\n\n\n$curl
+          = curl_init($url);\ncurl_setopt($curl, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($curl,
+          CURLOPT_HTTPHEADER, $headers);\ncurl_setopt($curl, CURLOPT_CUSTOMREQUEST,
+          'GET');\nvar_dump(curl_exec($curl)); // Dumps the response\ncurl_close($curl);"
   /test5:
     get:
       responses:
@@ -142,7 +144,8 @@ paths:
         lang: php
         source: |-
           <?php
-          $url = "domain.tld/test5?Auth=${TOKEN}";
+          $url = "domain.tld/test5";
+          $token = "my secret token"; // Put your token here
 
 
           $curl = curl_init($url);
@@ -166,7 +169,8 @@ paths:
         source: |-
           <?php
           $url = "domain.tld/test6";
-          $cookies = "Auth=${TOKEN};";
+          $token = "my secret token"; // Put your token here
+          $cookies = "Auth=" . $token . ";";
 
 
           $curl = curl_init($url);
@@ -191,9 +195,10 @@ paths:
           -X GET'
       - label: PHP
         lang: php
-        source: "<?php\n$url = \"domain.tld/test7\";\n$headers = array(\n\t\"Authorization:
-          Bearer ${TOKEN}\",\n);\n\n\n$curl = curl_init($url);\ncurl_setopt($curl,
-          CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($curl, CURLOPT_HTTPHEADER, $headers);\ncurl_setopt($curl,
+        source: "<?php\n$url = \"domain.tld/test7\";\n$token = \"my secret token\";
+          // Put your token here\n$headers = array(\n\t\"Authorization: Bearer \"
+          . $token . \"\",\n);\n\n\n$curl = curl_init($url);\ncurl_setopt($curl, CURLOPT_RETURNTRANSFER,
+          true);\ncurl_setopt($curl, CURLOPT_HTTPHEADER, $headers);\ncurl_setopt($curl,
           CURLOPT_CUSTOMREQUEST, 'GET');\nvar_dump(curl_exec($curl)); // Dumps the
           response\ncurl_close($curl);"
   /test8:
@@ -210,8 +215,9 @@ paths:
           -X GET'
       - label: PHP
         lang: php
-        source: "<?php\n$url = \"domain.tld/test8\";\n$headers = array(\n\t\"Authorization:
-          Bearer ${TOKEN}\",\n);\n\n\n$curl = curl_init($url);\ncurl_setopt($curl,
-          CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($curl, CURLOPT_HTTPHEADER, $headers);\ncurl_setopt($curl,
+        source: "<?php\n$url = \"domain.tld/test8\";\n$token = \"my secret token\";
+          // Put your token here\n$headers = array(\n\t\"Authorization: Bearer \"
+          . $token . \"\",\n);\n\n\n$curl = curl_init($url);\ncurl_setopt($curl, CURLOPT_RETURNTRANSFER,
+          true);\ncurl_setopt($curl, CURLOPT_HTTPHEADER, $headers);\ncurl_setopt($curl,
           CURLOPT_CUSTOMREQUEST, 'GET');\nvar_dump(curl_exec($curl)); // Dumps the
           response\ncurl_close($curl);"

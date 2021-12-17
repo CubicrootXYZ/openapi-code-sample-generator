@@ -14,6 +14,7 @@ import (
 type Php struct {
 	encoders  map[string]types.Encoder
 	extractor types.Extractor
+	usesToken bool
 }
 
 // NewPhp returns a new php object
@@ -26,6 +27,7 @@ func NewPhp(encoders map[string]types.Encoder, extractor types.Extractor) types.
 
 // GetSample returns a php sample for the given operation
 func (p *Php) GetSample(httpVerb string, path string, operation *openapi3.Operation, pathItem *openapi3.PathItem, document *openapi3.T) (*types.CodeSample, error) {
+	p.usesToken = false
 	codeInit := strings.Builder{} // php variable definitions
 	codeExec := strings.Builder{} // php curl statement
 
@@ -39,14 +41,15 @@ func (p *Php) GetSample(httpVerb string, path string, operation *openapi3.Operat
 		return nil, err
 	}
 
-	parameters.Query = append(parameters.Query, secParameters.Query...)
+	parameters.Query = append(parameters.Query, parameters.Query...)
 	parameters.Header = append(parameters.Header, secParameters.Header...)
 	parameters.Path = append(parameters.Path, secParameters.Path...)
 	parameters.Cookie = append(parameters.Cookie, secParameters.Cookie...)
 
 	body, meta := p.getRequestBody(operation)
-	headers := p.getHeaderParams(parameters.Header, meta)
-	cookies := p.getCookieParams(parameters.Cookie)
+	body = p.filterToken(body)
+	headers := p.filterToken(p.getHeaderParams(parameters.Header, meta))
+	cookies := p.filterToken(p.getCookieParams(parameters.Cookie))
 
 	// Basic curl stuff
 	codeExec.WriteString("\n\n$curl = curl_init($url);\ncurl_setopt($curl, CURLOPT_RETURNTRANSFER, true);\n")
@@ -61,9 +64,12 @@ func (p *Php) GetSample(httpVerb string, path string, operation *openapi3.Operat
 	}
 	codeInit.WriteString("\";\n")
 
+	if p.usesToken {
+		codeInit.WriteString("$token = \"my secret token\"; // Put your token here\n")
+	}
+
 	// Set request body
 	if body != "" {
-		// TODO use php arrays where possible and json_encode
 		codeInit.WriteString("$data = ")
 		codeInit.WriteString(body)
 		codeInit.WriteString(";\n")
@@ -287,4 +293,14 @@ func (p *Php) writeFormatMeta(meta *types.FormattingMeta) string {
 	}
 
 	return code.String()
+}
+
+func (p *Php) filterToken(text string) string {
+
+	if strings.Contains(text, "${TOKEN}") {
+		p.usesToken = true
+		text = strings.Replace(text, "${TOKEN}", "\" . $token . \"", -1)
+	}
+
+	return text
 }
