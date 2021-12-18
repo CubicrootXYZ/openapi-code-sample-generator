@@ -60,7 +60,7 @@ func generate(cmd *cobra.Command, args []string) {
 	}
 
 	executor := codesample.NewExecutor(doc, generators)
-	executor.AddSamples([]types.Language{types.LanguageCurl})
+	executor.AddSamples([]types.Language{types.LanguageCurl, types.LanguagePhp})
 
 	json, err := yaml.Marshal(doc)
 	if err != nil {

@@ -6,4 +6,5 @@ type Language string
 const (
 	// LanguageCurl curl
 	LanguageCurl = Language("curl")
+	LanguagePhp  = Language("php")
 )

@@ -13,3 +13,5 @@ var ErrUnknownMediaType = errors.New("unknown media type")
 var ErrUnsupportedDataType = errors.New("data type is not supported")
 
 var ErrTypeAssertionFailed = errors.New("type assertion failed")
+
+var ErrUnknownType = errors.New("unknown data type")

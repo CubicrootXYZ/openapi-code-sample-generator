@@ -1,0 +1,191 @@
+components:
+  schemas:
+    Level1:
+      properties:
+        field1.1:
+          $ref: '#/components/schemas/Level2'
+        field1.2:
+          format: int32
+          type: integer
+      required:
+      - field1.2
+      - field1.1
+      type: object
+    Level2:
+      properties:
+        field2.1:
+          $ref: '#/components/schemas/Level3'
+        field2.2:
+          items:
+            format: date-time
+            type: string
+          type: array
+        field2.3:
+          format: password
+          type: string
+      required:
+      - field2.1
+      - field2.2
+      - field2.3
+      type: object
+    Level3:
+      properties:
+        field3.1:
+          $ref: '#/components/schemas/Level4'
+        field3.2:
+          items:
+            type: string
+          type: array
+      required:
+      - field3.1
+      - field3.2
+      type: object
+    Level4:
+      properties:
+        field4.1:
+          items:
+            $ref: '#/components/schemas/Level5'
+          type: array
+        field4.2:
+          type: integer
+      required:
+      - field4.1
+      - field4.2
+      type: object
+    Level5:
+      properties:
+        field5.1:
+          enum:
+          - "14"
+          - a
+          - b
+          - c
+          type: string
+        field5.2:
+          items:
+            type: boolean
+          type: array
+        field5.3:
+          type: string
+        field5.4:
+          type: number
+      required:
+      - field5.1
+      - field5.2
+      - field5.3
+      - field5.4
+      type: object
+info:
+  description: A brand new API with no content.  Go nuts!
+  title: New API
+  version: 1.0.0
+openapi: 3.0.2
+paths:
+  /test-form-data:
+    post:
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Level1'
+        required: true
+      responses:
+        "200":
+          description: OK
+      x-codeSamples:
+      - label: curl
+        lang: curl
+        source: 'curl "domain.tld/test-form-data" -d "Content-Type: multipart/form-data;
+          boundary=c912522ebb47934d1c2443c7b2a3b64c79a130cb73c80e1848d9a2216b05\r\n\r\n--c912522ebb47934d1c2443c7b2a3b64c79a130cb73c80e1848d9a2216b05\r\nContent-Id:
+          field1.1\r\nContent-Type: text/plain\r\n\r\nContent-Type: multipart/form-data;
+          boundary=a820a001d412b672517dbc75a1adf8fccac6e256068c49b111790d09e11a\r\n\r\n--a820a001d412b672517dbc75a1adf8fccac6e256068c49b111790d09e11a\r\nContent-Id:
+          field2.1\r\nContent-Type: text/plain\r\n\r\nContent-Type: multipart/form-data;
+          boundary=0e305e1fc17b5224b9c6d4337841523b8c54fd8f21fcbae191dc218a3b9a\r\n\r\n--0e305e1fc17b5224b9c6d4337841523b8c54fd8f21fcbae191dc218a3b9a\r\nContent-Id:
+          field3.1\r\nContent-Type: text/plain\r\n\r\nContent-Type: multipart/form-data;
+          boundary=b29458477aa0613e24a1aae5f04c050c46885ec7b998ff54b12fe8b85fc3\r\n\r\n--b29458477aa0613e24a1aae5f04c050c46885ec7b998ff54b12fe8b85fc3\r\nContent-Id:
+          field4.2\r\nContent-Type: text/plain\r\n\r\n1234\r\n--b29458477aa0613e24a1aae5f04c050c46885ec7b998ff54b12fe8b85fc3\r\nContent-Id:
+          field4.1\r\nContent-Type: text/plain\r\n\r\n[map[field5.1:14 field5.2:[false]
+          field5.3:example-string field5.4:1.234]]\r\n--b29458477aa0613e24a1aae5f04c050c46885ec7b998ff54b12fe8b85fc3--\r\n\r\n--0e305e1fc17b5224b9c6d4337841523b8c54fd8f21fcbae191dc218a3b9a\r\nContent-Id:
+          field3.2\r\nContent-Type: text/plain\r\n\r\n[example-string]\r\n--0e305e1fc17b5224b9c6d4337841523b8c54fd8f21fcbae191dc218a3b9a--\r\n\r\n--a820a001d412b672517dbc75a1adf8fccac6e256068c49b111790d09e11a\r\nContent-Id:
+          field2.2\r\nContent-Type: text/plain\r\n\r\n[2021-12-17T19:39:17+01:00]\r\n--a820a001d412b672517dbc75a1adf8fccac6e256068c49b111790d09e11a\r\nContent-Id:
+          field2.3\r\nContent-Type: text/plain\r\n\r\nexample-string\r\n--a820a001d412b672517dbc75a1adf8fccac6e256068c49b111790d09e11a--\r\n\r\n--c912522ebb47934d1c2443c7b2a3b64c79a130cb73c80e1848d9a2216b05\r\nContent-Id:
+          field1.2\r\nContent-Type: text/plain\r\n\r\n1234\r\n--c912522ebb47934d1c2443c7b2a3b64c79a130cb73c80e1848d9a2216b05--\r\n"
+          -H "Content-Type: multipart/form-data boundary=c912522ebb47934d1c2443c7b2a3b64c79a130cb73c80e1848d9a2216b05"
+          -X POST'
+      - label: PHP
+        lang: php
+        source: "<?php\n$url = \"domain.tld/test-form-data\";\n$data = \"Content-Type:
+          multipart/form-data; boundary=0d006fca199e9abc6adb3514e4d953f5d57548db5dccb69a1b2c594c7eda\\r\\n\\r\\n--0d006fca199e9abc6adb3514e4d953f5d57548db5dccb69a1b2c594c7eda\\r\\nContent-Id:
+          field1.1\\r\\nContent-Type: text/plain\\r\\n\\r\\nContent-Type: multipart/form-data;
+          boundary=c355df65c946da8dd55bb7a0aa1e08f52d3f0287003e191477456a188aa7\\r\\n\\r\\n--c355df65c946da8dd55bb7a0aa1e08f52d3f0287003e191477456a188aa7\\r\\nContent-Id:
+          field2.1\\r\\nContent-Type: text/plain\\r\\n\\r\\nContent-Type: multipart/form-data;
+          boundary=a53ee457fd0d9a8e0a769adfa0a0a2d987b900a631d548bec6948bba23f8\\r\\n\\r\\n--a53ee457fd0d9a8e0a769adfa0a0a2d987b900a631d548bec6948bba23f8\\r\\nContent-Id:
+          field3.1\\r\\nContent-Type: text/plain\\r\\n\\r\\nContent-Type: multipart/form-data;
+          boundary=947a51e39ab62b602955bce9c16ebdd4b133fb025f4e3d39647a4f04e722\\r\\n\\r\\n--947a51e39ab62b602955bce9c16ebdd4b133fb025f4e3d39647a4f04e722\\r\\nContent-Id:
+          field4.1\\r\\nContent-Type: text/plain\\r\\n\\r\\n[map[field5.1:14 field5.2:[false]
+          field5.3:example-string field5.4:1.234]]\\r\\n--947a51e39ab62b602955bce9c16ebdd4b133fb025f4e3d39647a4f04e722\\r\\nContent-Id:
+          field4.2\\r\\nContent-Type: text/plain\\r\\n\\r\\n1234\\r\\n--947a51e39ab62b602955bce9c16ebdd4b133fb025f4e3d39647a4f04e722--\\r\\n\\r\\n--a53ee457fd0d9a8e0a769adfa0a0a2d987b900a631d548bec6948bba23f8\\r\\nContent-Id:
+          field3.2\\r\\nContent-Type: text/plain\\r\\n\\r\\n[example-string]\\r\\n--a53ee457fd0d9a8e0a769adfa0a0a2d987b900a631d548bec6948bba23f8--\\r\\n\\r\\n--c355df65c946da8dd55bb7a0aa1e08f52d3f0287003e191477456a188aa7\\r\\nContent-Id:
+          field2.2\\r\\nContent-Type: text/plain\\r\\n\\r\\n[2021-12-17T19:39:17+01:00]\\r\\n--c355df65c946da8dd55bb7a0aa1e08f52d3f0287003e191477456a188aa7\\r\\nContent-Id:
+          field2.3\\r\\nContent-Type: text/plain\\r\\n\\r\\nexample-string\\r\\n--c355df65c946da8dd55bb7a0aa1e08f52d3f0287003e191477456a188aa7--\\r\\n\\r\\n--0d006fca199e9abc6adb3514e4d953f5d57548db5dccb69a1b2c594c7eda\\r\\nContent-Id:
+          field1.2\\r\\nContent-Type: text/plain\\r\\n\\r\\n1234\\r\\n--0d006fca199e9abc6adb3514e4d953f5d57548db5dccb69a1b2c594c7eda--\\r\\n\";\n$headers
+          = array(\n\t\"Content-Type: multipart/form-data boundary=0d006fca199e9abc6adb3514e4d953f5d57548db5dccb69a1b2c594c7eda\",\n);\n\n\n$curl
+          = curl_init($url);\ncurl_setopt($curl, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($curl,
+          CURLOPT_POSTFIELDS, $data);\ncurl_setopt($curl, CURLOPT_HTTPHEADER, $headers);\ncurl_setopt($curl,
+          CURLOPT_CUSTOMREQUEST, 'POST');\nvar_dump(curl_exec($curl)); // Dumps the
+          response\ncurl_close($curl);"
+  /test-json:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Level1'
+        required: true
+      responses:
+        "200":
+          description: |
+            ok
+      x-codeSamples:
+      - label: curl
+        lang: curl
+        source: 'curl "domain.tld/test-json" -d "{\"field1.1\":{\"field2.1\":{\"field3.1\":{\"field4.1\":[{\"field5.1\":\"14\",\"field5.2\":[false],\"field5.3\":\"example-string\",\"field5.4\":1.234}],\"field4.2\":1234},\"field3.2\":[\"example-string\"]},\"field2.2\":[\"2021-12-17T19:39:17+01:00\"],\"field2.3\":\"example-string\"},\"field1.2\":1234}"
+          -H "Content-Type: application/json" -X POST'
+      - label: PHP
+        lang: php
+        source: "<?php\n$url = \"domain.tld/test-json\";\n$data = json_encode(array(\n\t\"field1.2\"
+          => \"1234\",\n\t\"field1.1\" => array(\n\t\t\"field2.1\" => array(\n\t\t\t\"field3.1\"
+          => array(\n\t\t\t\t\"field4.1\" => array(\n\t\t\t\t\tarray(\n\t\t\t\t\t\t\"field5.3\"
+          => \"example-string\",\n\t\t\t\t\t\t\"field5.4\" => \"1.234\",\n\t\t\t\t\t\t\"field5.1\"
+          => \"14\",\n\t\t\t\t\t\t\"field5.2\" => array(\n\t\t\t\t\t\t\tfalse,\n\t\t\t\t\t\t),\n\t\t\t\t\t),\n\t\t\t\t),\n\t\t\t\t\"field4.2\"
+          => \"1234\",\n\t\t\t),\n\t\t\t\"field3.2\" => array(\n\t\t\t\t\"example-string\",\n\t\t\t),\n\t\t),\n\t\t\"field2.2\"
+          => array(\n\t\t\t\"2021-12-17T19:39:17+01:00\",\n\t\t),\n\t\t\"field2.3\"
+          => \"example-string\",\n\t),\n));\n$headers = array(\n\t\"Content-Type:
+          application/json\",\n);\n\n\n$curl = curl_init($url);\ncurl_setopt($curl,
+          CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($curl, CURLOPT_POSTFIELDS, $data);\ncurl_setopt($curl,
+          CURLOPT_HTTPHEADER, $headers);\ncurl_setopt($curl, CURLOPT_CUSTOMREQUEST,
+          'POST');\nvar_dump(curl_exec($curl)); // Dumps the response\ncurl_close($curl);"
+  /test-xml:
+    post:
+      requestBody:
+        content:
+          text/xml:
+            schema:
+              $ref: '#/components/schemas/Level1'
+        required: true
+      responses:
+        "200":
+          description: ok
+      x-codeSamples:
+      - label: curl
+        lang: curl
+        source: 'curl "domain.tld/test-xml" -d "<?xml version=\"1.0\" encoding=\"UTF-8\"?><doc><field1.1><field2.1><field3.1><field4.1><field5.1>14</field5.1><field5.2>false</field5.2><field5.3>example-string</field5.3><field5.4>1.234</field5.4></field4.1><field4.2>1234</field4.2></field3.1><field3.2>example-string</field3.2></field2.1><field2.2>2021-12-17T19:39:17+01:00</field2.2><field2.3>example-string</field2.3></field1.1><field1.2>1234</field1.2></doc>"
+          -H "Content-Type: text/xml" -X POST'
+      - label: PHP
+        lang: php
+        source: "<?php\n$url = \"domain.tld/test-xml\";\n$data = \"<?xml version=\\\"1.0\\\"
+          encoding=\\\"UTF-8\\\"?><doc><field1.1><field2.1><field3.1><field4.1><field5.1>14</field5.1><field5.2>false</field5.2><field5.3>example-string</field5.3><field5.4>1.234</field5.4></field4.1><field4.2>1234</field4.2></field3.1><field3.2>example-string</field3.2></field2.1><field2.2>2021-12-17T19:39:17+01:00</field2.2><field2.3>example-string</field2.3></field1.1><field1.2>1234</field1.2></doc>\";\n$headers
+          = array(\n\t\"Content-Type: text/xml\",\n);\n\n\n$curl = curl_init($url);\ncurl_setopt($curl,
+          CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($curl, CURLOPT_POSTFIELDS, $data);\ncurl_setopt($curl,
+          CURLOPT_HTTPHEADER, $headers);\ncurl_setopt($curl, CURLOPT_CUSTOMREQUEST,
+          'POST');\nvar_dump(curl_exec($curl)); // Dumps the response\ncurl_close($curl);"

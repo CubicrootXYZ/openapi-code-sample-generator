@@ -79,6 +79,7 @@ func (c *Curl) getQueryParams(params []*types.Parameter) string {
 
 	if !ok {
 		log.Warn("Missing encoder for format: " + types.EncodingWwwUrlencode)
+		return ""
 	}
 
 	for i, param := range params {
@@ -109,6 +110,7 @@ func (c *Curl) getHeaderParams(params []*types.Parameter) string {
 
 	if !ok {
 		log.Warn("Missing encoder for format: " + types.EncodingWwwUrlencode)
+		return ""
 	}
 
 	for _, param := range params {
@@ -138,6 +140,7 @@ func (c *Curl) getCookieParams(params []*types.Parameter) string {
 
 	if !ok {
 		log.Warn("Missing encoder for format: " + types.EncodingWwwUrlencode)
+		return ""
 	}
 
 	for _, param := range params {
