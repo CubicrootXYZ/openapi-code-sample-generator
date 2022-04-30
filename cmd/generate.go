@@ -1,7 +1,9 @@
 package cmd
 
 import (
+	"fmt"
 	"os"
+	"strings"
 
 	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/encoding"
 	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/extractor"
@@ -27,6 +29,7 @@ var generateCmd = &cobra.Command{
 // Flags
 var inputFile string
 var outputFile string
+var selectedLanguages string
 var debug bool
 
 func init() {
@@ -38,6 +41,7 @@ func init() {
 	// and all subcommands, e.g.:
 	generateCmd.PersistentFlags().StringVar(&inputFile, "input-file", "swagger.yaml", "Location of the input swagger yaml specification file")
 	generateCmd.PersistentFlags().StringVar(&outputFile, "output-file", "swagger-out.yaml", "Location of the output swagger yaml specification file")
+	generateCmd.PersistentFlags().StringVar(&selectedLanguages, "languages", "curl,php,js", "Comma separated list of languages to make examples for")
 	generateCmd.PersistentFlags().BoolVar(&debug, "v", false, "Enable to get verbose output")
 
 	// Cobra supports local flags which will only run when this command
@@ -60,11 +64,27 @@ func generate(cmd *cobra.Command, args []string) {
 	}
 
 	executor := codesample.NewExecutor(doc, generators)
-	executor.AddSamples([]types.Language{types.LanguageCurl, types.LanguagePhp})
+	executor.AddSamples(languagesFromCSV(selectedLanguages))
 
 	json, err := yaml.Marshal(doc)
 	if err != nil {
 		log.Error(err.Error())
 	}
+
+	log.Info(fmt.Sprintf("Writing to file: %s", outputFile))
 	os.WriteFile(outputFile, json, 0666)
+}
+
+func languagesFromCSV(commaSeparatedLanguages string) []types.Language {
+	languages := make([]types.Language, 0)
+	for _, language := range strings.Split(commaSeparatedLanguages, ",") {
+		newLang := types.StringToLanguage(language)
+		if newLang == types.LanguageEmpty {
+			log.Error(fmt.Sprintf("Language %s unknown", language))
+			os.Exit(1)
+		}
+		languages = append(languages, newLang)
+	}
+
+	return languages
 }
