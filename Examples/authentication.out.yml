@@ -67,6 +67,17 @@ paths:
           curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
           var_dump(curl_exec($curl)); // Dumps the response
           curl_close($curl);
+      - label: JavaScript
+        lang: js
+        source: |-
+          var request = new XMLHttpRequest();
+          var username = "my username";
+          var password = "*******";
+
+          request.open("GET", "https://domain.tld/test1", false);
+          request.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
+          request.send("");
+          console.log(request.responseText);
   /test2:
     get:
       responses:
@@ -87,6 +98,15 @@ paths:
           true);\ncurl_setopt($curl, CURLOPT_HTTPHEADER, $headers);\ncurl_setopt($curl,
           CURLOPT_CUSTOMREQUEST, 'GET');\nvar_dump(curl_exec($curl)); // Dumps the
           response\ncurl_close($curl);"
+      - label: JavaScript
+        lang: js
+        source: |-
+          var request = new XMLHttpRequest();
+
+          request.open("GET", "https://domain.tld/test2", false);
+          request.setRequestHeader("Authorization", "Bearer " + token);
+          request.send("");
+          console.log(request.responseText);
   /test3:
     get:
       responses:
@@ -110,6 +130,14 @@ paths:
           curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
           var_dump(curl_exec($curl)); // Dumps the response
           curl_close($curl);
+      - label: JavaScript
+        lang: js
+        source: |-
+          var request = new XMLHttpRequest();
+
+          request.open("GET", "https://domain.tld/test3", false);
+          request.send("");
+          console.log(request.responseText);
   /test4:
     get:
       responses:
@@ -128,6 +156,15 @@ paths:
           = curl_init($url);\ncurl_setopt($curl, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($curl,
           CURLOPT_HTTPHEADER, $headers);\ncurl_setopt($curl, CURLOPT_CUSTOMREQUEST,
           'GET');\nvar_dump(curl_exec($curl)); // Dumps the response\ncurl_close($curl);"
+      - label: JavaScript
+        lang: js
+        source: |-
+          var request = new XMLHttpRequest();
+
+          request.open("GET", "https://domain.tld/test4", false);
+          request.setRequestHeader("Auth", token);
+          request.send("");
+          console.log(request.responseText);
   /test5:
     get:
       responses:
@@ -143,7 +180,7 @@ paths:
         lang: php
         source: |-
           <?php
-          $url = "domain.tld/test5";
+          $url = "domain.tld/test5?Auth=${TOKEN}";
 
 
           $curl = curl_init($url);
@@ -151,6 +188,15 @@ paths:
           curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
           var_dump(curl_exec($curl)); // Dumps the response
           curl_close($curl);
+      - label: JavaScript
+        lang: js
+        source: |-
+          var request = new XMLHttpRequest();
+          var token = "my secret token"; // Put your token here
+
+          request.open("GET", "https://domain.tld/test5?Auth=" + token, false);
+          request.send("");
+          console.log(request.responseText);
   /test6:
     get:
       responses:
@@ -177,6 +223,14 @@ paths:
           curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
           var_dump(curl_exec($curl)); // Dumps the response
           curl_close($curl);
+      - label: JavaScript
+        lang: js
+        source: |-
+          var request = new XMLHttpRequest();
+
+          request.open("GET", "https://domain.tld/test6", false);
+          request.send("");
+          console.log(request.responseText);
   /test7:
     get:
       responses:
@@ -199,6 +253,15 @@ paths:
           true);\ncurl_setopt($curl, CURLOPT_HTTPHEADER, $headers);\ncurl_setopt($curl,
           CURLOPT_CUSTOMREQUEST, 'GET');\nvar_dump(curl_exec($curl)); // Dumps the
           response\ncurl_close($curl);"
+      - label: JavaScript
+        lang: js
+        source: |-
+          var request = new XMLHttpRequest();
+
+          request.open("GET", "https://domain.tld/test7", false);
+          request.setRequestHeader("Authorization", "Bearer " + token);
+          request.send("");
+          console.log(request.responseText);
   /test8:
     get:
       responses:
@@ -219,3 +282,12 @@ paths:
           true);\ncurl_setopt($curl, CURLOPT_HTTPHEADER, $headers);\ncurl_setopt($curl,
           CURLOPT_CUSTOMREQUEST, 'GET');\nvar_dump(curl_exec($curl)); // Dumps the
           response\ncurl_close($curl);"
+      - label: JavaScript
+        lang: js
+        source: |-
+          var request = new XMLHttpRequest();
+
+          request.open("GET", "https://domain.tld/test8", false);
+          request.setRequestHeader("Authorization", "Bearer " + token);
+          request.send("");
+          console.log(request.responseText);

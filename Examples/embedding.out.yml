@@ -90,14 +90,22 @@ paths:
           -H "Content-Type: application/json" -X POST'
       - label: PHP
         lang: php
-        source: "<?php\n$url = \"domain.tld/all-of-test\";\n$data = json_encode(array(\n\t\"field1\"
-          => \"example-string\",\n\t\"field2\" => \"example-string\",\n\t\"section1\"
+        source: "<?php\n$url = \"domain.tld/all-of-test\";\n$data = json_encode(array(\n\t\"section1\"
           => \"1234\",\n\t\"section2\" => \"1234\",\n\t\"property1\" => false,\n\t\"property2\"
-          => false,\n));\n$headers = array(\n\t\"Content-Type: application/json\",\n);\n\n\n$curl
-          = curl_init($url);\ncurl_setopt($curl, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($curl,
-          CURLOPT_POSTFIELDS, $data);\ncurl_setopt($curl, CURLOPT_HTTPHEADER, $headers);\ncurl_setopt($curl,
-          CURLOPT_CUSTOMREQUEST, 'POST');\nvar_dump(curl_exec($curl)); // Dumps the
-          response\ncurl_close($curl);"
+          => false,\n\t\"field1\" => \"example-string\",\n\t\"field2\" => \"example-string\",\n));\n$headers
+          = array(\n\t\"Content-Type: application/json\",\n);\n\n\n$curl = curl_init($url);\ncurl_setopt($curl,
+          CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($curl, CURLOPT_POSTFIELDS, $data);\ncurl_setopt($curl,
+          CURLOPT_HTTPHEADER, $headers);\ncurl_setopt($curl, CURLOPT_CUSTOMREQUEST,
+          'POST');\nvar_dump(curl_exec($curl)); // Dumps the response\ncurl_close($curl);"
+      - label: JavaScript
+        lang: js
+        source: |-
+          var request = new XMLHttpRequest();
+
+          request.open("POST", "https://domain.tld/all-of-test", false);
+          request.setRequestHeader("Content-Type", "application/json");
+          request.send("{\"field1\":\"example-string\",\"field2\":\"example-string\",\"property1\":false,\"property2\":false,\"section1\":1234,\"section2\":1234}");
+          console.log(request.responseText);
   /any-of-test:
     post:
       requestBody:
@@ -122,6 +130,15 @@ paths:
           CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($curl, CURLOPT_POSTFIELDS, $data);\ncurl_setopt($curl,
           CURLOPT_HTTPHEADER, $headers);\ncurl_setopt($curl, CURLOPT_CUSTOMREQUEST,
           'POST');\nvar_dump(curl_exec($curl)); // Dumps the response\ncurl_close($curl);"
+      - label: JavaScript
+        lang: js
+        source: |-
+          var request = new XMLHttpRequest();
+
+          request.open("POST", "https://domain.tld/any-of-test", false);
+          request.setRequestHeader("Content-Type", "application/json");
+          request.send("{\"field1\":\"example-string\",\"field2\":\"example-string\"}");
+          console.log(request.responseText);
   /one-of-test:
     post:
       requestBody:
@@ -146,3 +163,12 @@ paths:
           CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($curl, CURLOPT_POSTFIELDS, $data);\ncurl_setopt($curl,
           CURLOPT_HTTPHEADER, $headers);\ncurl_setopt($curl, CURLOPT_CUSTOMREQUEST,
           'POST');\nvar_dump(curl_exec($curl)); // Dumps the response\ncurl_close($curl);"
+      - label: JavaScript
+        lang: js
+        source: |-
+          var request = new XMLHttpRequest();
+
+          request.open("POST", "https://domain.tld/one-of-test", false);
+          request.setRequestHeader("Content-Type", "application/xml");
+          request.send("<?xml version=\"1.0\" encoding=\"UTF-8\"?><doc><field1>example-string</field1><field2>example-string</field2></doc>");
+          console.log(request.responseText);

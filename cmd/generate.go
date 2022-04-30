@@ -41,7 +41,7 @@ func init() {
 	// and all subcommands, e.g.:
 	generateCmd.PersistentFlags().StringVar(&inputFile, "input-file", "swagger.yaml", "Location of the input swagger yaml specification file")
 	generateCmd.PersistentFlags().StringVar(&outputFile, "output-file", "swagger-out.yaml", "Location of the output swagger yaml specification file")
-	generateCmd.PersistentFlags().StringVar(&selectedLanguages, "languages", "curl,php", "Comma separated list of languages to make examples for")
+	generateCmd.PersistentFlags().StringVar(&selectedLanguages, "languages", "curl,php,js", "Comma separated list of languages to make examples for")
 	generateCmd.PersistentFlags().BoolVar(&debug, "v", false, "Enable to get verbose output")
 
 	// Cobra supports local flags which will only run when this command

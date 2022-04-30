@@ -41,7 +41,7 @@ func (js *JS) GetSample(httpVerb string, path string, operation *openapi3.Operat
 		return nil, err
 	}
 
-	parameters.Query = append(parameters.Query, parameters.Query...)
+	parameters.Query = append(parameters.Query, secParameters.Query...)
 	parameters.Header = append(parameters.Header, secParameters.Header...)
 	parameters.Path = append(parameters.Path, secParameters.Path...)
 	parameters.Cookie = append(parameters.Cookie, secParameters.Cookie...)
@@ -49,17 +49,21 @@ func (js *JS) GetSample(httpVerb string, path string, operation *openapi3.Operat
 	body, meta := js.getRequestBody(operation)
 	body = js.filterToken(body)
 
+	codeInit.WriteString("var request = new XMLHttpRequest();\n")
+
 	// Set the url
 	codeExec.WriteString("request.open(\"")
 	codeExec.WriteString(httpVerb)
-	codeExec.WriteString("\", \"")
+	codeExec.WriteString("\", \"https://")
 	codeExec.WriteString(js.extractor.GetURL(operation, pathItem, document))
 	codeExec.WriteString(js.extractor.GetPathExample(path, parameters.Path))
 	if len(parameters.Query) > 0 {
-		codeInit.WriteString("?")
-		codeInit.WriteString(js.getQueryParams(parameters.Query))
+		codeExec.WriteString("?")
+		codeExec.WriteString(strings.TrimSuffix(js.filterToken(js.getQueryParams(parameters.Query)+"\""), " + \"\""))
+	} else {
+		codeExec.WriteString("\"")
 	}
-	codeExec.WriteString(", false);\"\n")
+	codeExec.WriteString(", false);\n")
 
 	if js.usesToken {
 		codeInit.WriteString("var token = \"my secret token\"; // Put your token here\n")
@@ -95,7 +99,8 @@ func (js *JS) GetSample(httpVerb string, path string, operation *openapi3.Operat
 	codeExec.WriteString(body)
 	codeExec.WriteString("\");\n")
 
-	codeExec.WriteString("console.log(request.responseText)")
+	codeExec.WriteString("console.log(request.responseText);")
+	codeInit.WriteString("\n")
 
 	return &types.CodeSample{
 		Lang:   types.LanguageJS,
@@ -104,9 +109,9 @@ func (js *JS) GetSample(httpVerb string, path string, operation *openapi3.Operat
 	}, nil
 }
 
-func (p *JS) getQueryParams(params []*types.Parameter) string {
+func (js *JS) getQueryParams(params []*types.Parameter) string {
 	query := strings.Builder{}
-	encoder, ok := p.encoders[types.EncodingWwwUrlencode]
+	encoder, ok := js.encoders[types.EncodingWwwUrlencode]
 
 	if !ok {
 		log.Warn("Missing encoder for format: " + types.EncodingWwwUrlencode)
@@ -126,7 +131,7 @@ func (p *JS) getQueryParams(params []*types.Parameter) string {
 			query.WriteString("&")
 		}
 
-		query.WriteString(p.escape(encoded))
+		query.WriteString(js.escape(encoded))
 	}
 
 	log.Debug(fmt.Sprintf("Wrote %d parameters to query", len(params)))
@@ -134,13 +139,13 @@ func (p *JS) getQueryParams(params []*types.Parameter) string {
 	return query.String()
 }
 
-func (p *JS) getRequestBody(operation *openapi3.Operation) (string, *types.FormattingMeta) {
+func (js *JS) getRequestBody(operation *openapi3.Operation) (string, *types.FormattingMeta) {
 	meta := &types.FormattingMeta{}
 	if operation.RequestBody == nil || operation.RequestBody.Value == nil {
 		return "", meta
 	}
 
-	value, format, err := p.extractor.GetRequestBody(operation.RequestBody.Value)
+	value, format, err := js.extractor.GetRequestBody(operation.RequestBody.Value)
 	if err != nil {
 		log.Warn(fmt.Sprintf("Request body parsing failed: %s", err.Error()))
 		return "", meta
@@ -148,20 +153,11 @@ func (p *JS) getRequestBody(operation *openapi3.Operation) (string, *types.Forma
 
 	meta.Format = format
 
-	encoder, ok := p.encoders[types.EncodingJSON]
+	encoder, ok := js.encoders[strings.ToLower(format)]
 	if !ok {
 		log.Warn("Missing encoder for format: json")
 		return "", meta
 	}
-
-	jsEncodedValue, err := encoder.EnocdeValue(operation.RequestBody.Ref, value, meta)
-	if err == nil {
-		switch strings.ToLower(format) {
-		case types.EncodingJSON, types.EncodingJSONText:
-			return "json_encode(" + jsEncodedValue + ")", meta
-		}
-	}
-	log.Warn("Failed js encoding value, fallbacking. Error was: " + err.Error())
 
 	newValue, err := encoder.EnocdeValue(operation.RequestBody.Ref, value, meta)
 	if err != nil {
@@ -169,7 +165,7 @@ func (p *JS) getRequestBody(operation *openapi3.Operation) (string, *types.Forma
 		return "", meta
 	}
 
-	return "\"" + p.escape(newValue) + "\"", meta
+	return js.escape(newValue), meta
 }
 
 func (p *JS) escape(text string) string {
@@ -179,10 +175,10 @@ func (p *JS) escape(text string) string {
 	return text
 }
 
-func (p *JS) filterToken(text string) string {
+func (js *JS) filterToken(text string) string {
 
 	if strings.Contains(text, "${TOKEN}") {
-		p.usesToken = true
+		js.usesToken = true
 		text = strings.Replace(text, "${TOKEN}", "\" + token + \"", -1)
 	}
 

@@ -41,7 +41,7 @@ func (p *Php) GetSample(httpVerb string, path string, operation *openapi3.Operat
 		return nil, err
 	}
 
-	parameters.Query = append(parameters.Query, parameters.Query...)
+	parameters.Query = append(parameters.Query, secParameters.Query...)
 	parameters.Header = append(parameters.Header, secParameters.Header...)
 	parameters.Path = append(parameters.Path, secParameters.Path...)
 	parameters.Cookie = append(parameters.Cookie, secParameters.Cookie...)
