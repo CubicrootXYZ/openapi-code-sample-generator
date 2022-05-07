@@ -3,6 +3,7 @@ package codesample
 import (
 	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/errors"
 	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/log"
+	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/templater"
 	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/types"
 
 	"github.com/getkin/kin-openapi/openapi3"
@@ -12,13 +13,15 @@ import (
 type Executor struct {
 	document   *openapi3.T
 	generators map[types.Language]types.Generator
+	templater  templater.Templater
 }
 
 // NewExecutor returns a new constructor
-func NewExecutor(document *openapi3.T, generators map[types.Language]types.Generator) *Executor {
+func NewExecutor(document *openapi3.T, generators map[types.Language]types.Generator, templater templater.Templater) *Executor {
 	return &Executor{
 		document:   document,
 		generators: generators,
+		templater:  templater,
 	}
 }
 
@@ -54,7 +57,7 @@ func (o *Executor) getSamples(languages []types.Language, httpVerb, path string,
 	for _, lang := range languages {
 		log.Debug("## LANGUAGE: " + string(lang))
 
-		sample, err := o.getSample(lang, httpVerb, path, pathItem, operation)
+		sample, err := o.getTemplatedSample(lang, httpVerb, path, pathItem, operation)
 		if err != nil {
 			log.Warn(err.Error())
 			continue
@@ -72,4 +75,17 @@ func (o *Executor) getSample(lang types.Language, httpVerb, path string, pathIte
 	}
 
 	return generator.GetSample(httpVerb, path, operation, pathItem, o.document)
+}
+
+func (o *Executor) getTemplatedSample(lang types.Language, httpVerb, path string, pathItem *openapi3.PathItem, operation *openapi3.Operation) (*types.CodeSample, error) {
+	sample, err := o.templater.Template(lang, templater.NewEndpoint(httpVerb, path, operation, pathItem, o.document))
+	if err != nil {
+		return nil, err
+	}
+
+	return &types.CodeSample{
+		Lang:   lang,
+		Source: sample,
+		Label:  string(lang),
+	}, nil
 }

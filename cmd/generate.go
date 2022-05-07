@@ -9,6 +9,8 @@ import (
 	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/extractor"
 	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/languages"
 	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/log"
+	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/templater"
+	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/templater/curl"
 	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/types"
 
 	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/codesample"
@@ -63,7 +65,8 @@ func generate(cmd *cobra.Command, args []string) {
 		os.Exit(1)
 	}
 
-	executor := codesample.NewExecutor(doc, generators)
+	templater := templater.NewTemplater(encoders, extractor, map[types.Language]templater.Language{types.LanguageCurl: curl.New()})
+	executor := codesample.NewExecutor(doc, generators, templater)
 	executor.AddSamples(languagesFromCSV(selectedLanguages))
 
 	json, err := yaml.Marshal(doc)

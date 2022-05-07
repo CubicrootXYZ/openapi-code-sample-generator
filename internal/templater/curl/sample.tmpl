@@ -1,0 +1,17 @@
+{{- if (or .SecurityParameters.Header .SecurityParameters.Cookie .SecurityParameters.Query .SecurityParameters.Path) -}}
+TOKEN="my secure token"
+{{ end -}}
+
+curl {{ .URL }}{{ .Path }}?{{ .QueryParamsString }} -X {{ .HTTPVerb }}
+
+{{- if .BasicAuth }} -u ${USERNAME}:${PASSWORD}
+{{- end }} 
+
+{{- range $header := .Parameters.Header }} -H "{{ (escape $header.Name) }}: {{ (escape $header.Value) }}"
+{{- end}}
+
+{{- range $header := .SecurityParameters.Header }} -H "{{ (escape $header.Name) }}: {{ (escape $header.Value) }}"
+{{- end}}
+
+{{- if .BodyString }} -d "{{ (escape .BodyString) }}"
+{{- end}}
