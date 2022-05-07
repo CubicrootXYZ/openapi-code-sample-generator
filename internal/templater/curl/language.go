@@ -2,6 +2,7 @@ package curl
 
 import (
 	_ "embed"
+	"net/url"
 	"strings"
 	"text/template"
 
@@ -27,7 +28,8 @@ func (language *Language) GetTemplate() (*template.Template, error) {
 
 	tmpl.Funcs(
 		template.FuncMap{
-			"escape": escape,
+			"escape":    escape,
+			"urlencode": url.QueryEscape,
 		},
 	)
 
@@ -44,5 +46,5 @@ func (language *Language) GetAdditionals(data *templater.TemplateData) map[strin
 }
 
 func escape(value string) string {
-	return strings.Replace(value, `"`, `\"`, -1)
+	return strings.Replace(strings.Replace(strings.Replace(strings.Replace(value, `"`, `\"`, -1), "\n", "\\n", -1), "\r", "\\r", -1), "\t", "\\t", -1)
 }
