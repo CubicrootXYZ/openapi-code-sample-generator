@@ -5,12 +5,12 @@ TOKEN="my secure token"
 USERNAME="user"
 PASSWORD="******"
 {{ end }}
-curl {{ .URL }}{{ .Path }}?{{ .QueryParamsString }}
+curl {{ .URL }}{{ .Path }}{{ if (or .QueryParamsString .SecurityParameters.Query) }}?{{ end }}{{ .QueryParamsString }}
 {{- if (and .QueryParamsString .SecurityParameters.Query) -}}
 &
 {{- end }}
 {{- range .SecurityParameters.Query }}
-{{- (urlencode .Name) }}=${TOKEN}
+{{- (urlencode .Name) }}=${TOKEN}&
 {{- end}} -X {{ .HTTPVerb }}
 
 {{- if .BasicAuth }} -u ${USERNAME}:${PASSWORD}

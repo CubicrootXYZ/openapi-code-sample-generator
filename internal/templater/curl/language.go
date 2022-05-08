@@ -9,7 +9,7 @@ import (
 	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/templater"
 )
 
-//go:embed sample.tmpl
+//go:embed sample.gtpl
 var templateString string
 
 type Language struct {
@@ -20,7 +20,7 @@ func New() *Language {
 }
 
 func (Language *Language) Name() string {
-	return "curl"
+	return "bash/curl"
 }
 
 func (language *Language) GetTemplate() (*template.Template, error) {
