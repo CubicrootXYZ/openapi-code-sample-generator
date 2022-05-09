@@ -46,17 +46,17 @@ $data = {{ if index .Additionals "customRequestBody" -}}
 $curl = curl_init($url);
 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "{{ .HTTPVerb }}");
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-{{ if (or .BodyString (index .Additionals "customRequestBody")) -}}
+{{- if (or .BodyString (index .Additionals "customRequestBody")) -}}
 curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-{{- end }}
-{{ if (or .Parameters.Header .SecurityParameters.Header) -}}
+{{ end }}
+{{- if (or .Parameters.Header .SecurityParameters.Header) -}}
 curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-{{- end }}
-{{ if (or .Parameters.Cookie .SecurityParameters.Cookie) -}}
+{{ end }}
+{{- if (or .Parameters.Cookie .SecurityParameters.Cookie) -}}
 curl_setopt($curl, CURLOPT_COOKIE, $cookies);
-{{- end }}
-{{ if .BasicAuth -}}
+{{ end }}
+{{- if .BasicAuth -}}
 curl_setopt($ch, CURLOPT_USERPWD, $username . \":\" . $password);
-{{- end }}
+{{ end -}}
 var_dump(curl_exec($curl)); // Dumps the response
 curl_close($curl);
