@@ -39,6 +39,7 @@ func (language *Language) GetTemplate() (*template.Template, error) {
 			"escape":       escape,
 			"urlencode":    url.QueryEscape,
 			"converttoken": tokenStringToPHP,
+			"escapeQuotes": escapeQuotes,
 		},
 	)
 
@@ -54,8 +55,10 @@ func (language *Language) GetAdditionals(data *templater.TemplateData) map[strin
 	additionals := make(map[string]interface{})
 
 	phpRequestBody, err := language.getRequestBody(data)
-	if err != nil {
+	if err == nil {
 		additionals["customRequestBody"] = phpRequestBody
+	} else {
+		log.Debug("Custom PHP body not supported for " + data.Formatting.Format)
 	}
 
 	return additionals
@@ -87,6 +90,10 @@ func (language *Language) getRequestBody(data *templater.TemplateData) (string, 
 
 func escape(value string) string {
 	return strings.Replace(strings.Replace(strings.Replace(strings.Replace(value, `"`, `\"`, -1), "\n", "\\n", -1), "\r", "\\r", -1), "\t", "\\t", -1)
+}
+
+func escapeQuotes(value string) string {
+	return strings.Replace(value, `"`, `\"`, -1)
 }
 
 func tokenStringToPHP(token string) string {

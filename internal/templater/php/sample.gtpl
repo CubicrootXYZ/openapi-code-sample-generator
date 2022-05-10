@@ -39,7 +39,7 @@ $cookies = "
 $data = {{ if index .Additionals "customRequestBody" -}}
 {{ index .Additionals "customRequestBody" -}};
 {{ else if .BodyString -}}
-"{{ .BodyString }}";
+"{{ (escape .BodyString) }}";
 {{- end -}}
 {{- end }}
 

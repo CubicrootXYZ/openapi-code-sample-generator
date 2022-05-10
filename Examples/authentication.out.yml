@@ -51,33 +51,24 @@ paths:
       x-codeSamples:
       - label: curl
         lang: curl
-        source: curl "domain.tld/test1" -u username:password -d "" -X GET
-      - label: PHP
-        lang: php
         source: |-
-          <?php
-          $url = "domain.tld/test1";
-          $username = "username";
-          $password = "password";
+          USERNAME="user"
+          PASSWORD="******"
 
+          curl https://domain.tld/test1 -X GET -u ${USERNAME}:${PASSWORD}
+      - label: php
+        lang: php
+        source: |2-
+
+          $username = "username";
+          $password = "********";
+          $url = "https://domain.tld/test1";
 
           $curl = curl_init($url);
-          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-          curl_setopt($ch, CURLOPT_USERPWD, $username . ":" . $password);
-          curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
+          curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
+          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);curl_setopt($ch, CURLOPT_USERPWD, $username . \":\" . $password);
           var_dump(curl_exec($curl)); // Dumps the response
           curl_close($curl);
-      - label: JavaScript
-        lang: js
-        source: |-
-          var request = new XMLHttpRequest();
-          var username = "my username";
-          var password = "*******";
-
-          request.open("GET", "https://domain.tld/test1", false);
-          request.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
-          request.send("");
-          console.log(request.responseText);
   /test2:
     get:
       responses:
@@ -88,25 +79,25 @@ paths:
       x-codeSamples:
       - label: curl
         lang: curl
-        source: 'curl "domain.tld/test2" -H "Authorization: Bearer ${TOKEN}" -d ""
-          -X GET'
-      - label: PHP
-        lang: php
-        source: "<?php\n$url = \"domain.tld/test2\";\n$token = \"my secret token\";
-          // Put your token here\n$headers = array(\n\t\"Authorization: Bearer \"
-          . $token,\n);\n\n\n$curl = curl_init($url);\ncurl_setopt($curl, CURLOPT_RETURNTRANSFER,
-          true);\ncurl_setopt($curl, CURLOPT_HTTPHEADER, $headers);\ncurl_setopt($curl,
-          CURLOPT_CUSTOMREQUEST, 'GET');\nvar_dump(curl_exec($curl)); // Dumps the
-          response\ncurl_close($curl);"
-      - label: JavaScript
-        lang: js
         source: |-
-          var request = new XMLHttpRequest();
+          TOKEN="my secure token"
 
-          request.open("GET", "https://domain.tld/test2", false);
-          request.setRequestHeader("Authorization", "Bearer " + token);
-          request.send("");
-          console.log(request.responseText);
+          curl https://domain.tld/test2 -X GET -H "Authorization: Bearer ${TOKEN}"
+      - label: php
+        lang: php
+        source: |2-
+
+          $token = "my secret token";
+          $url = "https://domain.tld/test2";
+          $headers = array(
+              "Authorization: " . \"Bearer \" . $token,
+          );
+
+          $curl = curl_init($url);
+          curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
+          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+          var_dump(curl_exec($curl)); // Dumps the response
+          curl_close($curl);
   /test3:
     get:
       responses:
@@ -117,27 +108,18 @@ paths:
       x-codeSamples:
       - label: curl
         lang: curl
-        source: curl "domain.tld/test3" -d "" -X GET
-      - label: PHP
+        source: |2-
+
+          curl https://domain.tld/test3 -X GET
+      - label: php
         lang: php
         source: |-
-          <?php
-          $url = "domain.tld/test3";
-
+          $url = "https://domain.tld/test3";
 
           $curl = curl_init($url);
-          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-          curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
-          var_dump(curl_exec($curl)); // Dumps the response
+          curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
+          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);var_dump(curl_exec($curl)); // Dumps the response
           curl_close($curl);
-      - label: JavaScript
-        lang: js
-        source: |-
-          var request = new XMLHttpRequest();
-
-          request.open("GET", "https://domain.tld/test3", false);
-          request.send("");
-          console.log(request.responseText);
   /test4:
     get:
       responses:
@@ -148,23 +130,25 @@ paths:
       x-codeSamples:
       - label: curl
         lang: curl
-        source: 'curl "domain.tld/test4" -H "Auth: ${TOKEN}" -d "" -X GET'
-      - label: PHP
-        lang: php
-        source: "<?php\n$url = \"domain.tld/test4\";\n$token = \"my secret token\";
-          // Put your token here\n$headers = array(\n\t\"Auth: \" . $token,\n);\n\n\n$curl
-          = curl_init($url);\ncurl_setopt($curl, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($curl,
-          CURLOPT_HTTPHEADER, $headers);\ncurl_setopt($curl, CURLOPT_CUSTOMREQUEST,
-          'GET');\nvar_dump(curl_exec($curl)); // Dumps the response\ncurl_close($curl);"
-      - label: JavaScript
-        lang: js
         source: |-
-          var request = new XMLHttpRequest();
+          TOKEN="my secure token"
 
-          request.open("GET", "https://domain.tld/test4", false);
-          request.setRequestHeader("Auth", token);
-          request.send("");
-          console.log(request.responseText);
+          curl https://domain.tld/test4 -X GET -H "Auth: ${TOKEN}"
+      - label: php
+        lang: php
+        source: |2-
+
+          $token = "my secret token";
+          $url = "https://domain.tld/test4";
+          $headers = array(
+              "Auth: " . $token,
+          );
+
+          $curl = curl_init($url);
+          curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
+          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+          var_dump(curl_exec($curl)); // Dumps the response
+          curl_close($curl);
   /test5:
     get:
       responses:
@@ -175,28 +159,21 @@ paths:
       x-codeSamples:
       - label: curl
         lang: curl
-        source: curl "domain.tld/test5?Auth=${TOKEN}" -d "" -X GET
-      - label: PHP
-        lang: php
         source: |-
-          <?php
-          $url = "domain.tld/test5?Auth=${TOKEN}";
+          TOKEN="my secure token"
 
+          curl https://domain.tld/test5?Auth=${TOKEN}& -X GET
+      - label: php
+        lang: php
+        source: |2-
+
+          $token = "my secret token";
+          $url = "https://domain.tld/test5?Auth=" . $token . "&";
 
           $curl = curl_init($url);
-          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-          curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
-          var_dump(curl_exec($curl)); // Dumps the response
+          curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
+          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);var_dump(curl_exec($curl)); // Dumps the response
           curl_close($curl);
-      - label: JavaScript
-        lang: js
-        source: |-
-          var request = new XMLHttpRequest();
-          var token = "my secret token"; // Put your token here
-
-          request.open("GET", "https://domain.tld/test5?Auth=" + token, false);
-          request.send("");
-          console.log(request.responseText);
   /test6:
     get:
       responses:
@@ -207,30 +184,23 @@ paths:
       x-codeSamples:
       - label: curl
         lang: curl
-        source: curl "domain.tld/test6" -b "Auth=${TOKEN}" -d "" -X GET
-      - label: PHP
-        lang: php
         source: |-
-          <?php
-          $url = "domain.tld/test6";
-          $token = "my secret token"; // Put your token here
-          $cookies = "Auth=" . $token . ";";
+          TOKEN="my secure token"
 
+          curl https://domain.tld/test6 -X GET -b "Auth=${TOKEN}"
+      - label: php
+        lang: php
+        source: |2-
+
+          $token = "my secret token";
+          $url = "https://domain.tld/test6";
+          $cookies = ""Auth=" . $token . ";";
 
           $curl = curl_init($url);
-          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-          curl_setopt($curl, CURLOPT_COOKIE, $cookies);
-          curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
+          curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
+          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);curl_setopt($curl, CURLOPT_COOKIE, $cookies);
           var_dump(curl_exec($curl)); // Dumps the response
           curl_close($curl);
-      - label: JavaScript
-        lang: js
-        source: |-
-          var request = new XMLHttpRequest();
-
-          request.open("GET", "https://domain.tld/test6", false);
-          request.send("");
-          console.log(request.responseText);
   /test7:
     get:
       responses:
@@ -243,25 +213,25 @@ paths:
       x-codeSamples:
       - label: curl
         lang: curl
-        source: 'curl "domain.tld/test7" -H "Authorization: Bearer ${TOKEN}" -d ""
-          -X GET'
-      - label: PHP
-        lang: php
-        source: "<?php\n$url = \"domain.tld/test7\";\n$token = \"my secret token\";
-          // Put your token here\n$headers = array(\n\t\"Authorization: Bearer \"
-          . $token,\n);\n\n\n$curl = curl_init($url);\ncurl_setopt($curl, CURLOPT_RETURNTRANSFER,
-          true);\ncurl_setopt($curl, CURLOPT_HTTPHEADER, $headers);\ncurl_setopt($curl,
-          CURLOPT_CUSTOMREQUEST, 'GET');\nvar_dump(curl_exec($curl)); // Dumps the
-          response\ncurl_close($curl);"
-      - label: JavaScript
-        lang: js
         source: |-
-          var request = new XMLHttpRequest();
+          TOKEN="my secure token"
 
-          request.open("GET", "https://domain.tld/test7", false);
-          request.setRequestHeader("Authorization", "Bearer " + token);
-          request.send("");
-          console.log(request.responseText);
+          curl https://domain.tld/test7 -X GET -H "Authorization: Bearer ${TOKEN}"
+      - label: php
+        lang: php
+        source: |2-
+
+          $token = "my secret token";
+          $url = "https://domain.tld/test7";
+          $headers = array(
+              "Authorization: " . \"Bearer \" . $token,
+          );
+
+          $curl = curl_init($url);
+          curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
+          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+          var_dump(curl_exec($curl)); // Dumps the response
+          curl_close($curl);
   /test8:
     get:
       responses:
@@ -272,22 +242,22 @@ paths:
       x-codeSamples:
       - label: curl
         lang: curl
-        source: 'curl "domain.tld/test8" -H "Authorization: Bearer ${TOKEN}" -d ""
-          -X GET'
-      - label: PHP
-        lang: php
-        source: "<?php\n$url = \"domain.tld/test8\";\n$token = \"my secret token\";
-          // Put your token here\n$headers = array(\n\t\"Authorization: Bearer \"
-          . $token,\n);\n\n\n$curl = curl_init($url);\ncurl_setopt($curl, CURLOPT_RETURNTRANSFER,
-          true);\ncurl_setopt($curl, CURLOPT_HTTPHEADER, $headers);\ncurl_setopt($curl,
-          CURLOPT_CUSTOMREQUEST, 'GET');\nvar_dump(curl_exec($curl)); // Dumps the
-          response\ncurl_close($curl);"
-      - label: JavaScript
-        lang: js
         source: |-
-          var request = new XMLHttpRequest();
+          TOKEN="my secure token"
 
-          request.open("GET", "https://domain.tld/test8", false);
-          request.setRequestHeader("Authorization", "Bearer " + token);
-          request.send("");
-          console.log(request.responseText);
+          curl https://domain.tld/test8 -X GET -H "Authorization: Bearer ${TOKEN}"
+      - label: php
+        lang: php
+        source: |2-
+
+          $token = "my secret token";
+          $url = "https://domain.tld/test8";
+          $headers = array(
+              "Authorization: " . \"Bearer \" . $token,
+          );
+
+          $curl = curl_init($url);
+          curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
+          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+          var_dump(curl_exec($curl)); // Dumps the response
+          curl_close($curl);
