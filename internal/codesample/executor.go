@@ -78,14 +78,5 @@ func (o *Executor) getSample(lang types.Language, httpVerb, path string, pathIte
 }
 
 func (o *Executor) getTemplatedSample(lang types.Language, httpVerb, path string, pathItem *openapi3.PathItem, operation *openapi3.Operation) (*types.CodeSample, error) {
-	sample, err := o.templater.Template(lang, templater.NewEndpoint(httpVerb, path, operation, pathItem, o.document))
-	if err != nil {
-		return nil, err
-	}
-
-	return &types.CodeSample{
-		Lang:   lang,
-		Source: sample,
-		Label:  string(lang),
-	}, nil
+	return o.templater.Template(lang, templater.NewEndpoint(httpVerb, path, operation, pathItem, o.document))
 }

@@ -17,7 +17,7 @@ var ErrUnknownLanguage = errors.New("language is not known")
 
 // Templater templates a template
 type Templater interface {
-	Template(language types.Language, endpoint *Endpoint) (string, error)
+	Template(language types.Language, endpoint *Endpoint) (*types.CodeSample, error)
 }
 
 // TemplateData holds all data available in templating
@@ -39,7 +39,7 @@ type TemplateData struct {
 type Language interface {
 	GetAdditionals(data *TemplateData) map[string]interface{} // Allows the language to set additional data to the template data
 	GetTemplate() (*template.Template, error)                 // Must return the template for the code sample
-	// TODO add custom escape method
+	Name() string
 }
 
 // Endpoint defines a openapi operation and meta information for templating
@@ -85,30 +85,34 @@ func NewTemplater(encoders map[string]types.Encoder, extractor types.Extractor, 
 }
 
 // Template actually templates the template
-func (template *templater) Template(lang types.Language, endpoint *Endpoint) (string, error) {
+func (template *templater) Template(lang types.Language, endpoint *Endpoint) (*types.CodeSample, error) {
 	language, ok := template.languages[lang]
 	if !ok {
-		return "", ErrUnknownLanguage
+		return nil, ErrUnknownLanguage
 	}
 
 	templateData, err := template.extractTemplateData(endpoint)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	templateData.Additionals = language.GetAdditionals(templateData)
 	tmpl, err := language.GetTemplate()
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	buffer := bytes.Buffer{}
 	err = tmpl.Execute(&buffer, &templateData)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
-	return buffer.String(), err
+	return &types.CodeSample{
+		Lang:   lang,
+		Source: buffer.String(),
+		Label:  language.Name(),
+	}, nil
 }
 
 func (template *templater) extractTemplateData(endpoint *Endpoint) (*TemplateData, error) {
@@ -133,7 +137,7 @@ func (template *templater) extractTemplateData(endpoint *Endpoint) (*TemplateDat
 		url = "https://" + url
 	}
 
-	templateData.SecurityParameters = &secParameters
+	templateData.SecurityParameters = &secParameters // Todo digest auth seems missing
 	templateData.HTTPVerb = endpoint.HTTPVerb
 	templateData.Parameters = &params
 	templateData.BasicAuth = basicAuth

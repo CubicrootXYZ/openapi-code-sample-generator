@@ -20,7 +20,7 @@ $headers = array(
     "{{ (escape .Name) }}: {{ (escape .Value) }}",
 {{- end -}}
 {{- range .SecurityParameters.Header }}
-    "{{ (escape .Name) }}: " . {{ (escape (converttoken .Value)) }},
+    "{{ (escape .Name) }}: " . {{ (converttoken .Value) }},
 {{- end}}
 );
 {{- end }}
@@ -31,7 +31,7 @@ $cookies = "
     {{ (escape .Name) }}={{ (escape .Value) }};
 {{- end -}}
 {{- range .SecurityParameters.Cookie -}}
-    "{{ (escape .Name) }}=" . {{ (escape (converttoken .Value)) }} . ";
+    {{ (escape .Name) }}=" . {{ (escape (converttoken .Value)) }} . ";
 {{- end -}}";
 {{- end }}
 
@@ -46,7 +46,7 @@ $data = {{ if index .Additionals "customRequestBody" -}}
 $curl = curl_init($url);
 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "{{ .HTTPVerb }}");
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-{{- if (or .BodyString (index .Additionals "customRequestBody")) -}}
+{{ if (or .BodyString (index .Additionals "customRequestBody")) -}}
 curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 {{ end }}
 {{- if (or .Parameters.Header .SecurityParameters.Header) -}}

@@ -100,9 +100,9 @@ func tokenStringToPHP(token string) string {
 	if token == "${TOKEN}" {
 		return "$token"
 	} else if strings.HasSuffix(token, "${TOKEN}") {
-		return "\"" + strings.TrimSuffix(token, "${TOKEN}") + "\" . $token"
+		return "\"" + escape(strings.TrimSuffix(token, "${TOKEN}")) + "\" . $token"
 	} else if strings.HasPrefix(token, "${TOKEN}") {
-		return "$token . \"" + strings.TrimPrefix(token, "${TOKEN}") + "\""
+		return "$token . \"" + escape(strings.TrimPrefix(token, "${TOKEN}")) + "\""
 	} else {
 		return "$token"
 	}

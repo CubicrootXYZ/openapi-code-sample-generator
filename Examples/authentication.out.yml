@@ -49,14 +49,14 @@ paths:
       security:
       - HTTP-Basic-Auth: []
       x-codeSamples:
-      - label: curl
+      - label: bash/curl
         lang: curl
         source: |-
           USERNAME="user"
           PASSWORD="******"
 
           curl https://domain.tld/test1 -X GET -u ${USERNAME}:${PASSWORD}
-      - label: php
+      - label: PHP
         lang: php
         source: |2-
 
@@ -66,7 +66,8 @@ paths:
 
           $curl = curl_init($url);
           curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
-          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);curl_setopt($ch, CURLOPT_USERPWD, $username . \":\" . $password);
+          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+          curl_setopt($ch, CURLOPT_USERPWD, $username . \":\" . $password);
           var_dump(curl_exec($curl)); // Dumps the response
           curl_close($curl);
   /test2:
@@ -77,25 +78,25 @@ paths:
       security:
       - HTTP-Bearer-Auth: []
       x-codeSamples:
-      - label: curl
+      - label: bash/curl
         lang: curl
         source: |-
           TOKEN="my secure token"
-
           curl https://domain.tld/test2 -X GET -H "Authorization: Bearer ${TOKEN}"
-      - label: php
+      - label: PHP
         lang: php
         source: |2-
 
           $token = "my secret token";
           $url = "https://domain.tld/test2";
           $headers = array(
-              "Authorization: " . \"Bearer \" . $token,
+              "Authorization: " . "Bearer " . $token,
           );
 
           $curl = curl_init($url);
           curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
-          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+          curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
           var_dump(curl_exec($curl)); // Dumps the response
           curl_close($curl);
   /test3:
@@ -106,19 +107,18 @@ paths:
       security:
       - HTTP-Digest-Auth: []
       x-codeSamples:
-      - label: curl
+      - label: bash/curl
         lang: curl
-        source: |2-
-
-          curl https://domain.tld/test3 -X GET
-      - label: php
+        source: curl https://domain.tld/test3 -X GET
+      - label: PHP
         lang: php
         source: |-
           $url = "https://domain.tld/test3";
 
           $curl = curl_init($url);
           curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
-          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);var_dump(curl_exec($curl)); // Dumps the response
+          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+          var_dump(curl_exec($curl)); // Dumps the response
           curl_close($curl);
   /test4:
     get:
@@ -128,13 +128,12 @@ paths:
       security:
       - Api-Key-Header-Auth: []
       x-codeSamples:
-      - label: curl
+      - label: bash/curl
         lang: curl
         source: |-
           TOKEN="my secure token"
-
           curl https://domain.tld/test4 -X GET -H "Auth: ${TOKEN}"
-      - label: php
+      - label: PHP
         lang: php
         source: |2-
 
@@ -146,7 +145,8 @@ paths:
 
           $curl = curl_init($url);
           curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
-          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+          curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
           var_dump(curl_exec($curl)); // Dumps the response
           curl_close($curl);
   /test5:
@@ -157,13 +157,12 @@ paths:
       security:
       - Api-Key-Query-Auth: []
       x-codeSamples:
-      - label: curl
+      - label: bash/curl
         lang: curl
         source: |-
           TOKEN="my secure token"
-
           curl https://domain.tld/test5?Auth=${TOKEN}& -X GET
-      - label: php
+      - label: PHP
         lang: php
         source: |2-
 
@@ -172,7 +171,8 @@ paths:
 
           $curl = curl_init($url);
           curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
-          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);var_dump(curl_exec($curl)); // Dumps the response
+          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+          var_dump(curl_exec($curl)); // Dumps the response
           curl_close($curl);
   /test6:
     get:
@@ -182,23 +182,23 @@ paths:
       security:
       - Api-Key-Cookie-Auth: []
       x-codeSamples:
-      - label: curl
+      - label: bash/curl
         lang: curl
         source: |-
           TOKEN="my secure token"
-
           curl https://domain.tld/test6 -X GET -b "Auth=${TOKEN}"
-      - label: php
+      - label: PHP
         lang: php
         source: |2-
 
           $token = "my secret token";
           $url = "https://domain.tld/test6";
-          $cookies = ""Auth=" . $token . ";";
+          $cookies = "Auth=" . $token . ";";
 
           $curl = curl_init($url);
           curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
-          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);curl_setopt($curl, CURLOPT_COOKIE, $cookies);
+          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+          curl_setopt($curl, CURLOPT_COOKIE, $cookies);
           var_dump(curl_exec($curl)); // Dumps the response
           curl_close($curl);
   /test7:
@@ -211,25 +211,25 @@ paths:
         - scope-1
         - scope-3
       x-codeSamples:
-      - label: curl
+      - label: bash/curl
         lang: curl
         source: |-
           TOKEN="my secure token"
-
           curl https://domain.tld/test7 -X GET -H "Authorization: Bearer ${TOKEN}"
-      - label: php
+      - label: PHP
         lang: php
         source: |2-
 
           $token = "my secret token";
           $url = "https://domain.tld/test7";
           $headers = array(
-              "Authorization: " . \"Bearer \" . $token,
+              "Authorization: " . "Bearer " . $token,
           );
 
           $curl = curl_init($url);
           curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
-          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+          curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
           var_dump(curl_exec($curl)); // Dumps the response
           curl_close($curl);
   /test8:
@@ -240,24 +240,24 @@ paths:
       security:
       - OIDC-Auth: []
       x-codeSamples:
-      - label: curl
+      - label: bash/curl
         lang: curl
         source: |-
           TOKEN="my secure token"
-
           curl https://domain.tld/test8 -X GET -H "Authorization: Bearer ${TOKEN}"
-      - label: php
+      - label: PHP
         lang: php
         source: |2-
 
           $token = "my secret token";
           $url = "https://domain.tld/test8";
           $headers = array(
-              "Authorization: " . \"Bearer \" . $token,
+              "Authorization: " . "Bearer " . $token,
           );
 
           $curl = curl_init($url);
           curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
-          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+          curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
           var_dump(curl_exec($curl)); // Dumps the response
           curl_close($curl);

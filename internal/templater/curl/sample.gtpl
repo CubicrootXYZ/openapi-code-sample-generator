@@ -4,7 +4,8 @@ TOKEN="my secure token"
 {{ if .BasicAuth -}}
 USERNAME="user"
 PASSWORD="******"
-{{ end }}
+
+{{ end -}}
 curl {{ .URL }}{{ .Path }}{{ if (or .QueryParamsString .SecurityParameters.Query) }}?{{ end }}{{ .QueryParamsString }}
 {{- if (and .QueryParamsString .SecurityParameters.Query) -}}
 &

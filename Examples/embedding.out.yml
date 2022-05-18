@@ -84,18 +84,17 @@ paths:
         "200":
           description: ok
       x-codeSamples:
-      - label: curl
+      - label: bash/curl
         lang: curl
-        source: |2-
-
-          curl https://domain.tld/all-of-test -X POST -H "Content-Type: application/json " -d "{\"field1\":\"example-string\",\"field2\":\"example-string\",\"property1\":false,\"property2\":false,\"section1\":1234,\"section2\":1234}"
-      - label: php
+        source: 'curl https://domain.tld/all-of-test -X POST -H "Content-Type: application/json
+          " -d "{\"field1\":\"example-string\",\"field2\":\"example-string\",\"property1\":false,\"property2\":false,\"section1\":1234,\"section2\":1234}"'
+      - label: PHP
         lang: php
         source: "$url = \"https://domain.tld/all-of-test\";\n$data = json_encode(array(\n\t\"field1\"
           => \"example-string\",\n\t\"field2\" => \"example-string\",\n\t\"section1\"
           => \"1234\",\n\t\"section2\" => \"1234\",\n\t\"property1\" => false,\n\t\"property2\"
           => false,\n));\n\n\n$curl = curl_init($url);\ncurl_setopt($curl, CURLOPT_CUSTOMREQUEST,
-          \"POST\");\ncurl_setopt($curl, CURLOPT_RETURNTRANSFER, true);curl_setopt($curl,
+          \"POST\");\ncurl_setopt($curl, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($curl,
           CURLOPT_POSTFIELDS, $data);\nvar_dump(curl_exec($curl)); // Dumps the response\ncurl_close($curl);"
   /any-of-test:
     post:
@@ -109,17 +108,16 @@ paths:
         "200":
           description: ok
       x-codeSamples:
-      - label: curl
+      - label: bash/curl
         lang: curl
-        source: |2-
-
-          curl https://domain.tld/any-of-test -X POST -H "Content-Type: application/json " -d "{\"field1\":\"example-string\",\"field2\":\"example-string\"}"
-      - label: php
+        source: 'curl https://domain.tld/any-of-test -X POST -H "Content-Type: application/json
+          " -d "{\"field1\":\"example-string\",\"field2\":\"example-string\"}"'
+      - label: PHP
         lang: php
         source: "$url = \"https://domain.tld/any-of-test\";\n$data = json_encode(array(\n\t\"field2\"
           => \"example-string\",\n\t\"field1\" => \"example-string\",\n));\n\n\n$curl
           = curl_init($url);\ncurl_setopt($curl, CURLOPT_CUSTOMREQUEST, \"POST\");\ncurl_setopt($curl,
-          CURLOPT_RETURNTRANSFER, true);curl_setopt($curl, CURLOPT_POSTFIELDS, $data);\nvar_dump(curl_exec($curl));
+          CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($curl, CURLOPT_POSTFIELDS, $data);\nvar_dump(curl_exec($curl));
           // Dumps the response\ncurl_close($curl);"
   /one-of-test:
     post:
@@ -133,12 +131,11 @@ paths:
         "200":
           description: ok
       x-codeSamples:
-      - label: curl
+      - label: bash/curl
         lang: curl
-        source: |2-
-
-          curl https://domain.tld/one-of-test -X POST -H "Content-Type: application/xml " -d "<?xml version=\"1.0\" encoding=\"UTF-8\"?><doc><field1>example-string</field1><field2>example-string</field2></doc>"
-      - label: php
+        source: 'curl https://domain.tld/one-of-test -X POST -H "Content-Type: application/xml
+          " -d "<?xml version=\"1.0\" encoding=\"UTF-8\"?><doc><field1>example-string</field1><field2>example-string</field2></doc>"'
+      - label: PHP
         lang: php
         source: |-
           $url = "https://domain.tld/one-of-test";
@@ -146,6 +143,7 @@ paths:
 
           $curl = curl_init($url);
           curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
-          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+          curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
           var_dump(curl_exec($curl)); // Dumps the response
           curl_close($curl);
