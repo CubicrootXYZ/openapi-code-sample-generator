@@ -1,4 +1,4 @@
-package php
+package javascript
 
 import (
 	_ "embed"

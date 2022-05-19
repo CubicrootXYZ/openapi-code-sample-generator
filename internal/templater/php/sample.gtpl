@@ -1,4 +1,4 @@
-{{- if (or .SecurityParameters.Query .SecurityParameters.Header .SecurityParameters.Cookie) }}
+{{- if (or .SecurityParameters.Query .SecurityParameters.Header .SecurityParameters.Cookie) -}}
 $token = "my secret token";
 {{ end -}}
 {{ if .BasicAuth }}

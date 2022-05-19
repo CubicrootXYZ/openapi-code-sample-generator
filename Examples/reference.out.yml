@@ -63,5 +63,17 @@ paths:
           CURLOPT_CUSTOMREQUEST, \"POST\");\ncurl_setopt($curl, CURLOPT_RETURNTRANSFER,
           true);\ncurl_setopt($curl, CURLOPT_POSTFIELDS, $data);\nvar_dump(curl_exec($curl));
           // Dumps the response\ncurl_close($curl);"
+      - label: JavaScript
+        lang: js
+        source: |2-
+
+          var url = "https://example.tld/data";
+
+          var request = new XMLHttpRequest();
+          request.open(url);
+          request.setRequestHeader("Content-Type", "application/json");
+
+          request.send("{\"field1\":{\"name\":\"example-string\"},\"field2\":{\"name\":1234}}")
+          console.log(request.responseText)
 servers:
 - url: example.tld

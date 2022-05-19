@@ -11,6 +11,7 @@ import (
 	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/log"
 	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/templater"
 	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/templater/curl"
+	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/templater/javascript"
 	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/templater/php"
 	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/types"
 
@@ -66,7 +67,11 @@ func generate(cmd *cobra.Command, args []string) {
 		os.Exit(1)
 	}
 
-	templater := templater.NewTemplater(encoders, extractor, map[types.Language]templater.Language{types.LanguageCurl: curl.New(), types.LanguagePhp: php.New(encoders[types.EncodingPHP])})
+	templater := templater.NewTemplater(encoders, extractor, map[types.Language]templater.Language{
+		types.LanguageCurl: curl.New(),
+		types.LanguagePhp:  php.New(encoders[types.EncodingPHP]),
+		types.LanguageJS:   javascript.New(),
+	})
 	executor := codesample.NewExecutor(doc, generators, templater)
 	executor.AddSamples(languagesFromCSV(selectedLanguages))
 

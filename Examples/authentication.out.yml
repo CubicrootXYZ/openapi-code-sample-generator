@@ -70,6 +70,20 @@ paths:
           curl_setopt($ch, CURLOPT_USERPWD, $username . \":\" . $password);
           var_dump(curl_exec($curl)); // Dumps the response
           curl_close($curl);
+      - label: JavaScript
+        lang: js
+        source: |2-
+
+          var username = "username";
+          var password = "********";
+          var url = "https://domain.tld/test1";
+
+          var request = new XMLHttpRequest();
+          request.open(url);
+          request.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
+
+          request.send("")
+          console.log(request.responseText)
   /test2:
     get:
       responses:
@@ -85,8 +99,7 @@ paths:
           curl https://domain.tld/test2 -X GET -H "Authorization: Bearer ${TOKEN}"
       - label: PHP
         lang: php
-        source: |2-
-
+        source: |-
           $token = "my secret token";
           $url = "https://domain.tld/test2";
           $headers = array(
@@ -99,6 +112,18 @@ paths:
           curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
           var_dump(curl_exec($curl)); // Dumps the response
           curl_close($curl);
+      - label: JavaScript
+        lang: js
+        source: |-
+          var token = "my secret token";
+          var url = "https://domain.tld/test2";
+
+          var request = new XMLHttpRequest();
+          request.open(url);
+          request.setRequestHeader("Authorization", "Bearer " + $token);
+
+          request.send("")
+          console.log(request.responseText)
   /test3:
     get:
       responses:
@@ -120,6 +145,17 @@ paths:
           curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
           var_dump(curl_exec($curl)); // Dumps the response
           curl_close($curl);
+      - label: JavaScript
+        lang: js
+        source: |2-
+
+          var url = "https://domain.tld/test3";
+
+          var request = new XMLHttpRequest();
+          request.open(url);
+
+          request.send("")
+          console.log(request.responseText)
   /test4:
     get:
       responses:
@@ -135,8 +171,7 @@ paths:
           curl https://domain.tld/test4 -X GET -H "Auth: ${TOKEN}"
       - label: PHP
         lang: php
-        source: |2-
-
+        source: |-
           $token = "my secret token";
           $url = "https://domain.tld/test4";
           $headers = array(
@@ -149,6 +184,18 @@ paths:
           curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
           var_dump(curl_exec($curl)); // Dumps the response
           curl_close($curl);
+      - label: JavaScript
+        lang: js
+        source: |-
+          var token = "my secret token";
+          var url = "https://domain.tld/test4";
+
+          var request = new XMLHttpRequest();
+          request.open(url);
+          request.setRequestHeader("Auth", token);
+
+          request.send("")
+          console.log(request.responseText)
   /test5:
     get:
       responses:
@@ -164,8 +211,7 @@ paths:
           curl https://domain.tld/test5?Auth=${TOKEN}& -X GET
       - label: PHP
         lang: php
-        source: |2-
-
+        source: |-
           $token = "my secret token";
           $url = "https://domain.tld/test5?Auth=" . $token . "&";
 
@@ -174,6 +220,17 @@ paths:
           curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
           var_dump(curl_exec($curl)); // Dumps the response
           curl_close($curl);
+      - label: JavaScript
+        lang: js
+        source: |-
+          var token = "my secret token";
+          var url = "https://domain.tld/test5?Auth=" + token + "&";
+
+          var request = new XMLHttpRequest();
+          request.open(url);
+
+          request.send("")
+          console.log(request.responseText)
   /test6:
     get:
       responses:
@@ -189,8 +246,7 @@ paths:
           curl https://domain.tld/test6 -X GET -b "Auth=${TOKEN}"
       - label: PHP
         lang: php
-        source: |2-
-
+        source: |-
           $token = "my secret token";
           $url = "https://domain.tld/test6";
           $cookies = "Auth=" . $token . ";";
@@ -201,6 +257,17 @@ paths:
           curl_setopt($curl, CURLOPT_COOKIE, $cookies);
           var_dump(curl_exec($curl)); // Dumps the response
           curl_close($curl);
+      - label: JavaScript
+        lang: js
+        source: |-
+          var token = "my secret token";
+          var url = "https://domain.tld/test6";
+
+          var request = new XMLHttpRequest();
+          request.open(url);
+
+          request.send("")
+          console.log(request.responseText)
   /test7:
     get:
       responses:
@@ -218,8 +285,7 @@ paths:
           curl https://domain.tld/test7 -X GET -H "Authorization: Bearer ${TOKEN}"
       - label: PHP
         lang: php
-        source: |2-
-
+        source: |-
           $token = "my secret token";
           $url = "https://domain.tld/test7";
           $headers = array(
@@ -232,6 +298,18 @@ paths:
           curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
           var_dump(curl_exec($curl)); // Dumps the response
           curl_close($curl);
+      - label: JavaScript
+        lang: js
+        source: |-
+          var token = "my secret token";
+          var url = "https://domain.tld/test7";
+
+          var request = new XMLHttpRequest();
+          request.open(url);
+          request.setRequestHeader("Authorization", "Bearer " + $token);
+
+          request.send("")
+          console.log(request.responseText)
   /test8:
     get:
       responses:
@@ -247,8 +325,7 @@ paths:
           curl https://domain.tld/test8 -X GET -H "Authorization: Bearer ${TOKEN}"
       - label: PHP
         lang: php
-        source: |2-
-
+        source: |-
           $token = "my secret token";
           $url = "https://domain.tld/test8";
           $headers = array(
@@ -261,3 +338,15 @@ paths:
           curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
           var_dump(curl_exec($curl)); // Dumps the response
           curl_close($curl);
+      - label: JavaScript
+        lang: js
+        source: |-
+          var token = "my secret token";
+          var url = "https://domain.tld/test8";
+
+          var request = new XMLHttpRequest();
+          request.open(url);
+          request.setRequestHeader("Authorization", "Bearer " + $token);
+
+          request.send("")
+          console.log(request.responseText)
