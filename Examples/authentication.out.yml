@@ -120,7 +120,7 @@ paths:
 
           var request = new XMLHttpRequest();
           request.open("GET", url);
-          request.setRequestHeader("Authorization", "Bearer " + $token);
+          request.setRequestHeader("Authorization", "Bearer " + token);
 
           request.send("");
           console.log(request.responseText);
@@ -306,7 +306,7 @@ paths:
 
           var request = new XMLHttpRequest();
           request.open("GET", url);
-          request.setRequestHeader("Authorization", "Bearer " + $token);
+          request.setRequestHeader("Authorization", "Bearer " + token);
 
           request.send("");
           console.log(request.responseText);
@@ -346,7 +346,7 @@ paths:
 
           var request = new XMLHttpRequest();
           request.open("GET", url);
-          request.setRequestHeader("Authorization", "Bearer " + $token);
+          request.setRequestHeader("Authorization", "Bearer " + token);
 
           request.send("");
           console.log(request.responseText);

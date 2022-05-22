@@ -90,8 +90,8 @@ paths:
           " -d "{\"field1\":\"example-string\",\"field2\":\"example-string\",\"property1\":false,\"property2\":false,\"section1\":1234,\"section2\":1234}"'
       - label: PHP
         lang: php
-        source: "$url = \"https://domain.tld/all-of-test\";\n$data = json_encode(array(\n\t\"field1\"
-          => \"example-string\",\n\t\"field2\" => \"example-string\",\n\t\"section1\"
+        source: "$url = \"https://domain.tld/all-of-test\";\n$data = json_encode(array(\n\t\"field2\"
+          => \"example-string\",\n\t\"field1\" => \"example-string\",\n\t\"section1\"
           => \"1234\",\n\t\"section2\" => \"1234\",\n\t\"property1\" => false,\n\t\"property2\"
           => false,\n));\n\n\n$curl = curl_init($url);\ncurl_setopt($curl, CURLOPT_CUSTOMREQUEST,
           \"POST\");\ncurl_setopt($curl, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($curl,
