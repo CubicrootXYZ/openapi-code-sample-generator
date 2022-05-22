@@ -14,7 +14,7 @@ var url = "{{ .URL }}{{ .Path }}{{ if (or .QueryParamsString .SecurityParameters
 {{- end}}";
 
 var request = new XMLHttpRequest();
-request.open(url);
+request.open("{{ .HTTPVerb }}", url);
 {{- range .Parameters.Header }}
 request.setRequestHeader("{{ (escape .Name) }}", "{{ (escape .Value) }}");
 {{- end -}}
@@ -30,5 +30,5 @@ request.setRequestHeader("Content-Type", "{{ .Formatting.Format }}
 {{- end }}");
 {{- end }}
 
-request.send("{{ (escape .BodyString) }}")
-console.log(request.responseText)
+request.send("{{ (escape .BodyString) }}");
+console.log(request.responseText);

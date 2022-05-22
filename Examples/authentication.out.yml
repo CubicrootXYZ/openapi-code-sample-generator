@@ -79,11 +79,11 @@ paths:
           var url = "https://domain.tld/test1";
 
           var request = new XMLHttpRequest();
-          request.open(url);
+          request.open("GET", url);
           request.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
 
-          request.send("")
-          console.log(request.responseText)
+          request.send("");
+          console.log(request.responseText);
   /test2:
     get:
       responses:
@@ -119,11 +119,11 @@ paths:
           var url = "https://domain.tld/test2";
 
           var request = new XMLHttpRequest();
-          request.open(url);
+          request.open("GET", url);
           request.setRequestHeader("Authorization", "Bearer " + $token);
 
-          request.send("")
-          console.log(request.responseText)
+          request.send("");
+          console.log(request.responseText);
   /test3:
     get:
       responses:
@@ -152,10 +152,10 @@ paths:
           var url = "https://domain.tld/test3";
 
           var request = new XMLHttpRequest();
-          request.open(url);
+          request.open("GET", url);
 
-          request.send("")
-          console.log(request.responseText)
+          request.send("");
+          console.log(request.responseText);
   /test4:
     get:
       responses:
@@ -191,11 +191,11 @@ paths:
           var url = "https://domain.tld/test4";
 
           var request = new XMLHttpRequest();
-          request.open(url);
+          request.open("GET", url);
           request.setRequestHeader("Auth", token);
 
-          request.send("")
-          console.log(request.responseText)
+          request.send("");
+          console.log(request.responseText);
   /test5:
     get:
       responses:
@@ -227,10 +227,10 @@ paths:
           var url = "https://domain.tld/test5?Auth=" + token + "&";
 
           var request = new XMLHttpRequest();
-          request.open(url);
+          request.open("GET", url);
 
-          request.send("")
-          console.log(request.responseText)
+          request.send("");
+          console.log(request.responseText);
   /test6:
     get:
       responses:
@@ -264,10 +264,10 @@ paths:
           var url = "https://domain.tld/test6";
 
           var request = new XMLHttpRequest();
-          request.open(url);
+          request.open("GET", url);
 
-          request.send("")
-          console.log(request.responseText)
+          request.send("");
+          console.log(request.responseText);
   /test7:
     get:
       responses:
@@ -305,11 +305,11 @@ paths:
           var url = "https://domain.tld/test7";
 
           var request = new XMLHttpRequest();
-          request.open(url);
+          request.open("GET", url);
           request.setRequestHeader("Authorization", "Bearer " + $token);
 
-          request.send("")
-          console.log(request.responseText)
+          request.send("");
+          console.log(request.responseText);
   /test8:
     get:
       responses:
@@ -345,8 +345,8 @@ paths:
           var url = "https://domain.tld/test8";
 
           var request = new XMLHttpRequest();
-          request.open(url);
+          request.open("GET", url);
           request.setRequestHeader("Authorization", "Bearer " + $token);
 
-          request.send("")
-          console.log(request.responseText)
+          request.send("");
+          console.log(request.responseText);

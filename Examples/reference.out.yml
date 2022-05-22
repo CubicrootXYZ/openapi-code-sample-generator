@@ -70,10 +70,10 @@ paths:
           var url = "https://example.tld/data";
 
           var request = new XMLHttpRequest();
-          request.open(url);
+          request.open("POST", url);
           request.setRequestHeader("Content-Type", "application/json");
 
-          request.send("{\"field1\":{\"name\":\"example-string\"},\"field2\":{\"name\":1234}}")
-          console.log(request.responseText)
+          request.send("{\"field1\":{\"name\":\"example-string\"},\"field2\":{\"name\":1234}}");
+          console.log(request.responseText);
 servers:
 - url: example.tld

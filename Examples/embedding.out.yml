@@ -90,12 +90,12 @@ paths:
           " -d "{\"field1\":\"example-string\",\"field2\":\"example-string\",\"property1\":false,\"property2\":false,\"section1\":1234,\"section2\":1234}"'
       - label: PHP
         lang: php
-        source: "$url = \"https://domain.tld/all-of-test\";\n$data = json_encode(array(\n\t\"property2\"
-          => false,\n\t\"field1\" => \"example-string\",\n\t\"field2\" => \"example-string\",\n\t\"section1\"
-          => \"1234\",\n\t\"section2\" => \"1234\",\n\t\"property1\" => false,\n));\n\n\n$curl
-          = curl_init($url);\ncurl_setopt($curl, CURLOPT_CUSTOMREQUEST, \"POST\");\ncurl_setopt($curl,
-          CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($curl, CURLOPT_POSTFIELDS, $data);\nvar_dump(curl_exec($curl));
-          // Dumps the response\ncurl_close($curl);"
+        source: "$url = \"https://domain.tld/all-of-test\";\n$data = json_encode(array(\n\t\"field1\"
+          => \"example-string\",\n\t\"field2\" => \"example-string\",\n\t\"section1\"
+          => \"1234\",\n\t\"section2\" => \"1234\",\n\t\"property1\" => false,\n\t\"property2\"
+          => false,\n));\n\n\n$curl = curl_init($url);\ncurl_setopt($curl, CURLOPT_CUSTOMREQUEST,
+          \"POST\");\ncurl_setopt($curl, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($curl,
+          CURLOPT_POSTFIELDS, $data);\nvar_dump(curl_exec($curl)); // Dumps the response\ncurl_close($curl);"
       - label: JavaScript
         lang: js
         source: |2-
@@ -103,11 +103,11 @@ paths:
           var url = "https://domain.tld/all-of-test";
 
           var request = new XMLHttpRequest();
-          request.open(url);
+          request.open("POST", url);
           request.setRequestHeader("Content-Type", "application/json");
 
-          request.send("{\"field1\":\"example-string\",\"field2\":\"example-string\",\"property1\":false,\"property2\":false,\"section1\":1234,\"section2\":1234}")
-          console.log(request.responseText)
+          request.send("{\"field1\":\"example-string\",\"field2\":\"example-string\",\"property1\":false,\"property2\":false,\"section1\":1234,\"section2\":1234}");
+          console.log(request.responseText);
   /any-of-test:
     post:
       requestBody:
@@ -138,11 +138,11 @@ paths:
           var url = "https://domain.tld/any-of-test";
 
           var request = new XMLHttpRequest();
-          request.open(url);
+          request.open("POST", url);
           request.setRequestHeader("Content-Type", "application/json");
 
-          request.send("{\"field1\":\"example-string\",\"field2\":\"example-string\"}")
-          console.log(request.responseText)
+          request.send("{\"field1\":\"example-string\",\"field2\":\"example-string\"}");
+          console.log(request.responseText);
   /one-of-test:
     post:
       requestBody:
@@ -178,8 +178,8 @@ paths:
           var url = "https://domain.tld/one-of-test";
 
           var request = new XMLHttpRequest();
-          request.open(url);
+          request.open("POST", url);
           request.setRequestHeader("Content-Type", "application/xml");
 
-          request.send("<?xml version=\"1.0\" encoding=\"UTF-8\"?><doc><field1>example-string</field1><field2>example-string</field2></doc>")
-          console.log(request.responseText)
+          request.send("<?xml version=\"1.0\" encoding=\"UTF-8\"?><doc><field1>example-string</field1><field2>example-string</field2></doc>");
+          console.log(request.responseText);
