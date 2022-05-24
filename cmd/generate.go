@@ -7,7 +7,6 @@ import (
 
 	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/encoding"
 	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/extractor"
-	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/languages"
 	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/log"
 	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/templater"
 	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/templater/curl"
@@ -58,7 +57,6 @@ func generate(cmd *cobra.Command, args []string) {
 
 	encoders := encoding.Encoders()
 	extractor := extractor.NewOpenAPIExtractor()
-	generators := languages.Generators(encoders, extractor)
 
 	log.Info("Loading file " + inputFile)
 	doc, err := openapi.NewLoader().LoadFromFile(inputFile)
@@ -72,7 +70,7 @@ func generate(cmd *cobra.Command, args []string) {
 		types.LanguagePhp:  php.New(encoders[types.EncodingPHP]),
 		types.LanguageJS:   javascript.New(),
 	})
-	executor := codesample.NewExecutor(doc, generators, templater)
+	executor := codesample.NewExecutor(doc, templater)
 	executor.AddSamples(languagesFromCSV(selectedLanguages))
 
 	json, err := yaml.Marshal(doc)
