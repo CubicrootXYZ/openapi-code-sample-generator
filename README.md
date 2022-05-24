@@ -12,7 +12,7 @@ Tools like [redoc](https://github.com/Redocly/redoc) will provide those examples
 
 ### Languages
 
-* CURL
+* cURL
 * PHP
 * JavaScript (Cookies not supported)
 
