@@ -126,15 +126,16 @@ func (u *URLEncode) urlencodeSecondLevelObject(value interface{}) (string, error
 	encoded := strings.Builder{}
 
 	if helper.IsMap(value) {
-		newVal, ok := value.(map[interface{}]interface{})
+		newVal, ok := value.(map[string]interface{})
 		if !ok {
+			log.Debug("IsMap but is not interface map")
 			return "", errors.ErrTypeAssertionFailed
 		}
 		for key, val := range newVal {
 			encoded.WriteString("%5B")
 			encoded.WriteString(url.QueryEscape(fmt.Sprint(key)))
 			encoded.WriteString("%5D")
-			if !helper.IsMap(val) && !helper.IsSlice(newVal) {
+			if !helper.IsMap(val) && !helper.IsSlice(val) {
 				encoded.WriteString("=")
 				encoded.WriteString(url.QueryEscape(fmt.Sprint(val)))
 			} else {
@@ -148,11 +149,12 @@ func (u *URLEncode) urlencodeSecondLevelObject(value interface{}) (string, error
 	} else if helper.IsSlice(value) {
 		newVal, ok := value.([]interface{})
 		if !ok {
+			log.Debug("IsSlice but is not interface slice")
 			return "", errors.ErrTypeAssertionFailed
 		}
 		for _, val := range newVal {
 			encoded.WriteString("%5B%5D")
-			if !helper.IsMap(val) && !helper.IsSlice(newVal) {
+			if !helper.IsMap(val) && !helper.IsSlice(val) {
 				encoded.WriteString("=")
 				encoded.WriteString(url.QueryEscape(fmt.Sprint(val)))
 			} else {

@@ -12,6 +12,8 @@ import (
 	"github.com/getkin/kin-openapi/openapi3"
 )
 
+var ReferenceTime = time.Date(2022, 01, 01, 15, 00, 14, 100, time.UTC)
+
 // GetExampleValueForSchema returns an example value for the given schema
 func (o *openAPIExtractor) GetExampleValueForSchema(schema *openapi3.Schema, format string) (interface{}, error) {
 	log.Debug(fmt.Sprintf("New schema (title: %s; format: %s) received to generate examples for", schema.Title, format))
@@ -61,10 +63,10 @@ func (o *openAPIExtractor) getExampleValueByType(schema *openapi3.Schema, format
 			return "01000101 01111000 01100001 01101101 01110000 01101100 01100101", nil
 		case "date":
 			log.Debug("Using date default")
-			return time.Now().Format("2006-01-02"), nil
+			return ReferenceTime.Format("2006-01-02"), nil
 		case "date-time":
 			log.Debug("Using date-time default")
-			return time.Now().Format(time.RFC3339), nil
+			return ReferenceTime.Format(time.RFC3339), nil
 		default:
 			log.Debug("Using string default")
 			return "example-string", nil

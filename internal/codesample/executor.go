@@ -1,8 +1,8 @@
 package codesample
 
 import (
-	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/errors"
 	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/log"
+	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/templater"
 	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/types"
 
 	"github.com/getkin/kin-openapi/openapi3"
@@ -10,15 +10,15 @@ import (
 
 // Executor orchestrates the sample generation
 type Executor struct {
-	document   *openapi3.T
-	generators map[types.Language]types.Generator
+	document  *openapi3.T
+	templater templater.Templater
 }
 
 // NewExecutor returns a new constructor
-func NewExecutor(document *openapi3.T, generators map[types.Language]types.Generator) *Executor {
+func NewExecutor(document *openapi3.T, templater templater.Templater) *Executor {
 	return &Executor{
-		document:   document,
-		generators: generators,
+		document:  document,
+		templater: templater,
 	}
 }
 
@@ -54,7 +54,7 @@ func (o *Executor) getSamples(languages []types.Language, httpVerb, path string,
 	for _, lang := range languages {
 		log.Debug("## LANGUAGE: " + string(lang))
 
-		sample, err := o.getSample(lang, httpVerb, path, pathItem, operation)
+		sample, err := o.getTemplatedSample(lang, httpVerb, path, pathItem, operation)
 		if err != nil {
 			log.Warn(err.Error())
 			continue
@@ -65,11 +65,6 @@ func (o *Executor) getSamples(languages []types.Language, httpVerb, path string,
 	return samples, nil
 }
 
-func (o *Executor) getSample(lang types.Language, httpVerb, path string, pathItem *openapi3.PathItem, operation *openapi3.Operation) (*types.CodeSample, error) {
-	generator, ok := o.generators[lang]
-	if !ok {
-		return nil, errors.ErrUnknownLanguage
-	}
-
-	return generator.GetSample(httpVerb, path, operation, pathItem, o.document)
+func (o *Executor) getTemplatedSample(lang types.Language, httpVerb, path string, pathItem *openapi3.PathItem, operation *openapi3.Operation) (*types.CodeSample, error) {
+	return o.templater.Template(lang, templater.NewEndpoint(httpVerb, path, operation, pathItem, o.document))
 }

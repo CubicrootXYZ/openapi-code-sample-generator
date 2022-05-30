@@ -1,5 +1,7 @@
 # OpenApi code sample generator
 
+> :warning: This still is a beta software and not guranteed to work. Help this project by reporting errors in the code examples!
+
 [![GitHub license](https://img.shields.io/github/license/CubicrootXYZ/openapi-code-sample-generator)](https://github.com/CubicrootXYZ/openapi-code-sample-generator/blob/main/LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/CubicrootXYZ/openapi-code-sample-generator)](https://github.com/CubicrootXYZ/openapi-code-sample-generator/issues)
 [![Actions Status](https://github.com/CubicrootXYZ/openapi-code-sample-generator/workflows/Main/badge.svg?branch=main)](https://github.com/CubicrootXYZ/openapi-code-sample-generator/workflows/actions)
@@ -12,7 +14,7 @@ Tools like [redoc](https://github.com/Redocly/redoc) will provide those examples
 
 ### Languages
 
-* CURL
+* cURL
 * PHP
 * JavaScript (Cookies not supported)
 
