@@ -1,24 +1,11 @@
-package curl
+package test
 
 import (
-	"testing"
-
-	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/encoding"
-	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/extractor"
-	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/log"
 	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/templater"
-	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/types"
 	"github.com/getkin/kin-openapi/openapi3"
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 )
 
-func TestMain(m *testing.M) {
-	log.Verbose = true
-	m.Run()
-}
-
-func testEndpoint1() *templater.Endpoint {
+func Endpoint1() *templater.Endpoint {
 	endpoint := templater.Endpoint{}
 	endpoint.HTTPVerb = "POST"
 	endpoint.Path = "/random_#+!§$%&/()=/path"
@@ -130,15 +117,88 @@ func testEndpoint1() *templater.Endpoint {
 	return &endpoint
 }
 
-func TestTemplater_Template_Curl(t *testing.T) {
-	templater := templater.NewTemplater(encoding.Encoders(),
-		extractor.NewOpenAPIExtractor(),
-		map[types.Language]templater.Language{types.LanguageCurl: New()})
+func Endpoint2() *templater.Endpoint {
+	endpoint := templater.Endpoint{}
+	endpoint.HTTPVerb = "POST"
+	endpoint.Path = "/random_#+!§$%&/()=/path"
+	endpoint.OpenAPI.Operation = &openapi3.Operation{
+		RequestBody: &openapi3.RequestBodyRef{
+			Value: &openapi3.RequestBody{
+				Content: openapi3.Content{
+					"application/json": &openapi3.MediaType{
+						Schema: &openapi3.SchemaRef{
+							Value: &openapi3.Schema{
+								Type: "object",
+								Properties: openapi3.Schemas{"param6-sub": &openapi3.SchemaRef{
+									Value: &openapi3.Schema{
+										Type: "array",
+										Items: &openapi3.SchemaRef{
+											Value: &openapi3.Schema{
+												Type: "string",
+											},
+										},
+									},
+								}},
+							},
+						},
+					},
+				},
+			},
+		},
+	}
+	endpoint.OpenAPI.PathItem = &openapi3.PathItem{
+		Post: endpoint.OpenAPI.Operation,
+	}
+	endpoint.OpenAPI.Document = &openapi3.T{
+		Servers: openapi3.Servers{
+			&openapi3.Server{
+				URL: "example.com",
+			},
+		},
+	}
 
-	result, err := templater.Template(types.LanguageCurl, testEndpoint1())
+	return &endpoint
+}
 
-	require.NoError(t, err)
-	assert.Equal(t, types.LanguageCurl, result.Lang)
-	assert.Equal(t, New().Name(), result.Label)
-	assert.Equal(t, `curl https://example.com/random_#+!§$%&/()=/path?param1=1234&param3=2022-01-01T15%3A00%3A14Z&param4=false&param5%5B%5D=example-string&param6%5Bparam6-sub%5D%5B%5D=example-string -X POST`, result.Source)
+func Endpoint3() *templater.Endpoint {
+	endpoint := templater.Endpoint{}
+	endpoint.HTTPVerb = "POST"
+	endpoint.Path = "/random_#+!§$%&/()=/path"
+	endpoint.OpenAPI.Operation = &openapi3.Operation{
+		RequestBody: &openapi3.RequestBodyRef{
+			Value: &openapi3.RequestBody{
+				Content: openapi3.Content{
+					"application/xml": &openapi3.MediaType{
+						Schema: &openapi3.SchemaRef{
+							Value: &openapi3.Schema{
+								Type: "object",
+								Properties: openapi3.Schemas{"param6-sub": &openapi3.SchemaRef{
+									Value: &openapi3.Schema{
+										Type: "array",
+										Items: &openapi3.SchemaRef{
+											Value: &openapi3.Schema{
+												Type: "string",
+											},
+										},
+									},
+								}},
+							},
+						},
+					},
+				},
+			},
+		},
+	}
+	endpoint.OpenAPI.PathItem = &openapi3.PathItem{
+		Post: endpoint.OpenAPI.Operation,
+	}
+	endpoint.OpenAPI.Document = &openapi3.T{
+		Servers: openapi3.Servers{
+			&openapi3.Server{
+				URL: "example.com",
+			},
+		},
+	}
+
+	return &endpoint
 }
