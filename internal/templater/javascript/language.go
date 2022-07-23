@@ -2,6 +2,7 @@ package javascript
 
 import (
 	_ "embed"
+	"encoding/json"
 	"errors"
 	"net/url"
 	"strings"
@@ -48,6 +49,13 @@ func (language *Language) GetTemplate() (*template.Template, error) {
 
 func (language *Language) GetAdditionals(data *templater.TemplateData) map[string]interface{} {
 	additionals := make(map[string]interface{})
+
+	if data.Formatting.Format == "application/json" || data.Formatting.Format == "text/json" {
+		jsonData, err := json.MarshalIndent(data.Body, "", "\t")
+		if err == nil {
+			additionals["jsBody"] = string(jsonData)
+		}
+	}
 
 	return additionals
 }

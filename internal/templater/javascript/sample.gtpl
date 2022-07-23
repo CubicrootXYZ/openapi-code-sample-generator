@@ -30,5 +30,5 @@ request.setRequestHeader("Content-Type", "{{ .Formatting.Format }}
 {{- end }}");
 {{- end }}
 
-request.send("{{ (escape .BodyString) }}");
+request.send({{ if index .Additionals "jsBody" }}{{ index .Additionals "jsBody" }}{{ else }}"{{ (escape .BodyString) }}"{{ end }});
 console.log(request.responseText);
