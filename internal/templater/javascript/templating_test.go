@@ -41,7 +41,7 @@ func TestTemplater_Template_JSJsonBody(t *testing.T) {
 	require.NoError(t, err)
 	assert.Equal(t, types.LanguageCurl, result.Lang)
 	assert.Equal(t, New().Name(), result.Label)
-	assert.Equal(t, "\nvar url = \"https://example.com/random_#+!§$%&/()=/path\";\n\nvar request = new XMLHttpRequest();\nrequest.open(\"POST\", url);\nrequest.setRequestHeader(\"Content-Type\", \"application/json\");\n\nrequest.send(\"{\\\"param6-sub\\\":[\\\"example-string\\\"]}\");\nconsole.log(request.responseText);", result.Source)
+	assert.Equal(t, "\nvar url = \"https://example.com/random_#+!§$%&/()=/path\";\n\nvar request = new XMLHttpRequest();\nrequest.open(\"POST\", url);\nrequest.setRequestHeader(\"Content-Type\", \"application/json\");\n\nrequest.send({\n\t\"param6-sub\": [\n\t\t\"example-string\"\n\t]\n});\nconsole.log(request.responseText);", result.Source)
 }
 
 func TestTemplater_Template_JSXmlBody(t *testing.T) {
