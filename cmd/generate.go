@@ -71,7 +71,7 @@ func generate(cmd *cobra.Command, args []string) {
 		types.LanguageJS:   javascript.New(),
 	})
 	executor := codesample.NewExecutor(doc, templater)
-	executor.AddSamples(languagesFromCSV(selectedLanguages))
+	_ = executor.AddSamples(languagesFromCSV(selectedLanguages))
 
 	json, err := yaml.Marshal(doc)
 	if err != nil {
@@ -79,7 +79,7 @@ func generate(cmd *cobra.Command, args []string) {
 	}
 
 	log.Info(fmt.Sprintf("Writing to file: %s", outputFile))
-	os.WriteFile(outputFile, json, 0666)
+	_ = os.WriteFile(outputFile, json, 0666)
 }
 
 func languagesFromCSV(commaSeparatedLanguages string) []types.Language {

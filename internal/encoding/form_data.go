@@ -68,11 +68,11 @@ func (f *FormDataEncode) writePart(key string, value interface{}, writer *multip
 	if ok1 || ok2 {
 		newVal, err := f.EnocdeValue("", value, nil)
 		if err == nil {
-			part.Write([]byte(newVal))
+			_, _ = part.Write([]byte(newVal))
 		} else {
 			log.Warn(err.Error())
 		}
 	} else {
-		part.Write([]byte(fmt.Sprint(value)))
+		_, _ = part.Write([]byte(fmt.Sprint(value)))
 	}
 }

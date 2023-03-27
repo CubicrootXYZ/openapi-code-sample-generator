@@ -65,5 +65,5 @@ func convert(cmd *cobra.Command, args []string) {
 	if err != nil {
 		log.Error(err.Error())
 	}
-	os.WriteFile(outputFile, json, 0666)
+	_ = os.WriteFile(outputFile, json, 0666)
 }
