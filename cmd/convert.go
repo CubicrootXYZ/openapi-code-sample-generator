@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"io/ioutil"
 	"os"
 
 	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/log"
@@ -45,7 +44,7 @@ func convert(cmd *cobra.Command, args []string) {
 
 	log.Info("Loading file " + inputFile)
 	var doc openapi2.T
-	input, err := ioutil.ReadFile(convertFile)
+	input, err := os.ReadFile(convertFile)
 	if err != nil {
 		panic(err)
 	}
