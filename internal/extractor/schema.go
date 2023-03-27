@@ -80,16 +80,12 @@ func (o *openAPIExtractor) getExampleValueByType(schema *openapi3.Schema, format
 			val, err := o.GetExampleValueForSchema(schema.Items.Value, format)
 
 			// Handle wrapping
-			if xmlInfo, ok := schema.XML.(map[string]interface{}); ok && format == types.EncodingXML {
-				if wrapped, ok := xmlInfo["wrapped"]; ok {
-					if fmt.Sprint(wrapped) == "true" || fmt.Sprint(wrapped) == "True" {
-						// Check child for tag names
-						if xmlChildInfo, ok := schema.Items.Value.XML.(map[string]interface{}); ok && format == types.EncodingXML {
-							if wrappedName, ok := xmlChildInfo["name"]; ok {
-								log.Debug(fmt.Sprintf("Wrapping with tag names: %s", fmt.Sprint(wrappedName)))
-								return map[string]interface{}{fmt.Sprint(wrappedName): val}, nil
-							}
-						}
+			if schema.XML != nil && format == types.EncodingXML {
+				if schema.XML.Wrapped {
+					// Check child for tag names
+					if schema.Items.Value.XML != nil && format == types.EncodingXML {
+						log.Debug(fmt.Sprintf("Wrapping with tag names: %s", fmt.Sprint(schema.XML.Name)))
+						return map[string]interface{}{fmt.Sprint(schema.XML.Name): val}, nil
 					}
 				}
 			}
@@ -127,11 +123,9 @@ func (o *openAPIExtractor) getExampleValueForObject(schema *openapi3.Schema, for
 				continue
 			}
 
-			if xmlInfo, ok := val.Value.XML.(map[string]interface{}); ok && format == types.EncodingXML {
-				if value, ok := xmlInfo["name"]; ok {
-					log.Debug(fmt.Sprintf("Overriding property %s to: %s due to XML tag given", name, value))
-					name = fmt.Sprint(value)
-				}
+			if schema.XML != nil && format == types.EncodingXML {
+				log.Debug(fmt.Sprintf("Overriding property %s to: %s due to XML tag given", name, schema.XML.Name))
+				name = fmt.Sprint(schema.XML.Name)
 			}
 
 			values[name] = newVal

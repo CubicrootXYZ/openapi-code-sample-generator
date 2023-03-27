@@ -34,13 +34,13 @@ func (o *Executor) AddSamples(languages []types.Language) error {
 				continue
 			}
 
-			operation.ExtensionProps.Extensions = make(map[string]interface{})
+			operation.Extensions = make(map[string]interface{})
 			samples, err := o.getSamples(languages, method, path, pathItem, operation)
 			if err != nil {
 				log.Warn("Can not generate samples: " + err.Error())
 				continue
 			}
-			operation.ExtensionProps.Extensions["x-codeSamples"] = samples
+			operation.Extensions["x-codeSamples"] = samples
 
 		}
 	}
