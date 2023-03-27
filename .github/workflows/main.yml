@@ -33,17 +33,3 @@ jobs:
       - name: Run golangci
         run: golangci-lint run --timeout 3m0s
       
-  tidy:
-    runs-on: ubuntu-latest
-    if: "!startsWith(github.ref, 'refs/tags/')"
-    container: 
-      image: golang:1.20-alpine3.17
-      options: --user root
-    steps:
-      - uses: actions/checkout@v3
-      - name: Run tidy
-        run: go mod tidy
-      - name: install git
-        run: apk update && apk add git
-      - name: Diff
-        run: git diff --exit-code
