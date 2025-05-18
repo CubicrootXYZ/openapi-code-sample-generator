@@ -134,7 +134,7 @@ func (o *openAPIExtractor) getExampleValueForObject(schema *openapi3.Schema, for
 	}
 
 	// oneOf: pick the first one, 0 is a pointer to the main schema itself
-	if schema.OneOf != nil && len(schema.OneOf) > 1 && schema.OneOf[1].Value != nil {
+	if len(schema.OneOf) > 1 && schema.OneOf[1].Value != nil {
 		log.Debug(fmt.Sprintf("Adding first of 'oneOf' embedding (ref: %s)", schema.OneOf[1].Ref))
 		additionalValues, err := o.getExampleValueForObject(schema.OneOf[1].Value, format)
 		if err == nil {
@@ -145,7 +145,7 @@ func (o *openAPIExtractor) getExampleValueForObject(schema *openapi3.Schema, for
 	}
 
 	// anyOf: pick the first one, 0 is a pointer to the main schema itself
-	if schema.AnyOf != nil && len(schema.AnyOf) > 1 && schema.AnyOf[1].Value != nil {
+	if len(schema.AnyOf) > 1 && schema.AnyOf[1].Value != nil {
 		log.Debug(fmt.Sprintf("Adding first of 'anyOf' embedding (ref: %s)", schema.AnyOf[1].Ref))
 		additionalValues, err := o.getExampleValueForObject(schema.AnyOf[1].Value, format)
 		if err == nil {
