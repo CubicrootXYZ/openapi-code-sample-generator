@@ -2,8 +2,6 @@ module github.com/CubicrootXYZ/openapi-code-sample-generator
 
 go 1.22.5
 
-toolchain go1.24.0
-
 require (
 	github.com/clbanning/anyxml v1.2.2
 	github.com/getkin/kin-openapi v0.132.0

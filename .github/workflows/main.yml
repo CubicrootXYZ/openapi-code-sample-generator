@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     if: "!startsWith(github.ref, 'refs/tags/')"
     container: 
-      image: golang:1.20
+      image: golang:1.22
       options: --user root
     steps:
       - name: Checkout the repository
