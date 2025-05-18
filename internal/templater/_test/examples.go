@@ -16,7 +16,7 @@ func Endpoint1() *templater.Endpoint {
 				In:   "query",
 				Schema: &openapi3.SchemaRef{
 					Value: &openapi3.Schema{
-						Type: "integer",
+						Type: &openapi3.Types{"integer"},
 					},
 				},
 				Required: true,
@@ -27,7 +27,7 @@ func Endpoint1() *templater.Endpoint {
 				In:   "query",
 				Schema: &openapi3.SchemaRef{
 					Value: &openapi3.Schema{
-						Type: "integer",
+						Type: &openapi3.Types{"integer"},
 					},
 				},
 				Required: false,
@@ -38,7 +38,7 @@ func Endpoint1() *templater.Endpoint {
 				In:   "query",
 				Schema: &openapi3.SchemaRef{
 					Value: &openapi3.Schema{
-						Type:   "string",
+						Type:   &openapi3.Types{"string"},
 						Format: "date-time",
 					},
 				},
@@ -50,7 +50,7 @@ func Endpoint1() *templater.Endpoint {
 				In:   "query",
 				Schema: &openapi3.SchemaRef{
 					Value: &openapi3.Schema{
-						Type: "boolean",
+						Type: &openapi3.Types{"boolean"},
 					},
 				},
 				Required: true,
@@ -61,10 +61,10 @@ func Endpoint1() *templater.Endpoint {
 				In:   "query",
 				Schema: &openapi3.SchemaRef{
 					Value: &openapi3.Schema{
-						Type: "array",
+						Type: &openapi3.Types{"array"},
 						Items: &openapi3.SchemaRef{
 							Value: &openapi3.Schema{
-								Type: "string",
+								Type: &openapi3.Types{"string"},
 							},
 						},
 					},
@@ -77,18 +77,18 @@ func Endpoint1() *templater.Endpoint {
 				In:   "query",
 				Schema: &openapi3.SchemaRef{
 					Value: &openapi3.Schema{
-						Type: "object",
+						Type: &openapi3.Types{"object"},
 						AnyOf: openapi3.SchemaRefs{
 							nil,
 							&openapi3.SchemaRef{
 								Value: &openapi3.Schema{
-									Type: "object",
+									Type: &openapi3.Types{"object"},
 									Properties: openapi3.Schemas{"param6-sub": &openapi3.SchemaRef{
 										Value: &openapi3.Schema{
-											Type: "array",
+											Type: &openapi3.Types{"array"},
 											Items: &openapi3.SchemaRef{
 												Value: &openapi3.Schema{
-													Type: "string",
+													Type: &openapi3.Types{"string"},
 												},
 											},
 										},
@@ -128,13 +128,13 @@ func Endpoint2() *templater.Endpoint {
 					"application/json": &openapi3.MediaType{
 						Schema: &openapi3.SchemaRef{
 							Value: &openapi3.Schema{
-								Type: "object",
+								Type: &openapi3.Types{"object"},
 								Properties: openapi3.Schemas{"param6-sub": &openapi3.SchemaRef{
 									Value: &openapi3.Schema{
-										Type: "array",
+										Type: &openapi3.Types{"array"},
 										Items: &openapi3.SchemaRef{
 											Value: &openapi3.Schema{
-												Type: "string",
+												Type: &openapi3.Types{"string"},
 											},
 										},
 									},
@@ -171,13 +171,13 @@ func Endpoint3() *templater.Endpoint {
 					"application/xml": &openapi3.MediaType{
 						Schema: &openapi3.SchemaRef{
 							Value: &openapi3.Schema{
-								Type: "object",
+								Type: &openapi3.Types{"object"},
 								Properties: openapi3.Schemas{"param6-sub": &openapi3.SchemaRef{
 									Value: &openapi3.Schema{
-										Type: "array",
+										Type: &openapi3.Types{"array"},
 										Items: &openapi3.SchemaRef{
 											Value: &openapi3.Schema{
-												Type: "string",
+												Type: &openapi3.Types{"string"},
 											},
 										},
 									},

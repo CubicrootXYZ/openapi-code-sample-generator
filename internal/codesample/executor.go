@@ -25,7 +25,7 @@ func NewExecutor(document *openapi3.T, templater templater.Templater) *Executor 
 // AddSamples adds all samples to the document
 func (o *Executor) AddSamples(languages []types.Language) error {
 	// Iterate over paths
-	for path, pathItem := range o.document.Paths {
+	for path, pathItem := range o.document.Paths.Map() {
 		// Iterate over operations
 		for method, operation := range pathItem.Operations() {
 			log.Debug("# PATH: " + path + " with method: " + method)

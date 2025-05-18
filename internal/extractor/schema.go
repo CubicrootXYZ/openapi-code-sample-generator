@@ -46,14 +46,14 @@ func (o *openAPIExtractor) GetExampleValueForSchema(schema *openapi3.Schema, for
 
 func (o *openAPIExtractor) getExampleValueByType(schema *openapi3.Schema, format string) (interface{}, error) {
 	log.Debug("Trying to calculate example for schema")
-	switch schema.Type {
-	case "integer":
+	switch {
+	case schema.Type.Is("integer"):
 		log.Debug("Using integer default")
 		return 1234, nil
-	case "number":
+	case schema.Type.Is("number"):
 		log.Debug("Using number default")
 		return 1.234, nil
-	case "string":
+	case schema.Type.Is("string"):
 		switch schema.Format {
 		case "byte":
 			log.Debug("Using byte default")
@@ -71,10 +71,10 @@ func (o *openAPIExtractor) getExampleValueByType(schema *openapi3.Schema, format
 			log.Debug("Using string default")
 			return "example-string", nil
 		}
-	case "boolean":
+	case schema.Type.Is("boolean"):
 		log.Debug("Using boolean default")
 		return false, nil
-	case "array":
+	case schema.Type.Is("array"):
 		log.Debug("Generating array example")
 		if schema.Items != nil && schema.Items.Value != nil {
 			val, err := o.GetExampleValueForSchema(schema.Items.Value, format)
@@ -96,7 +96,7 @@ func (o *openAPIExtractor) getExampleValueByType(schema *openapi3.Schema, format
 		}
 
 		return []interface{}{}, nil
-	case "object":
+	case schema.Type.Is("object"):
 		log.Debug("Generating object example")
 		return o.getExampleValueForObject(schema, format)
 	}
