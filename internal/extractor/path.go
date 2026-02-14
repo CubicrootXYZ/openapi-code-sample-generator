@@ -14,7 +14,7 @@ func (o *openAPIExtractor) GetPathExample(path string, params []*types.Parameter
 			continue
 		}
 
-		path = strings.Replace(path, fmt.Sprintf("{%s}", param.Name), fmt.Sprint(param.Value), -1)
+		path = strings.ReplaceAll(path, fmt.Sprintf("{%s}", param.Name), fmt.Sprint(param.Value))
 	}
 
 	return path
