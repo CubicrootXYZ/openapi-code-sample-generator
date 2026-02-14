@@ -29,7 +29,10 @@ func (f *FormDataEncode) EnocdeValue(ref string, value interface{}, meta *types.
 		for key, value := range newValue {
 			f.writePart(fmt.Sprint(key), value, writer)
 		}
-		writer.Close()
+		err := writer.Close()
+		if err != nil {
+			return "", err
+		}
 
 		return f.prefix(writer.Boundary(), meta) + body.String(), nil
 	}
@@ -38,7 +41,10 @@ func (f *FormDataEncode) EnocdeValue(ref string, value interface{}, meta *types.
 		for key, value := range newValue {
 			f.writePart(key, value, writer)
 		}
-		writer.Close()
+		err := writer.Close()
+		if err != nil {
+			return "", err
+		}
 
 		return f.prefix(writer.Boundary(), meta) + body.String(), nil
 	}
@@ -73,6 +79,6 @@ func (f *FormDataEncode) writePart(key string, value interface{}, writer *multip
 			log.Warn(err.Error())
 		}
 	} else {
-		_, _ = part.Write([]byte(fmt.Sprint(value)))
+		_, _ = fmt.Fprint(part, value)
 	}
 }

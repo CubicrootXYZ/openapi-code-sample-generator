@@ -61,11 +61,11 @@ func (language *Language) GetAdditionals(data *templater.TemplateData) map[strin
 }
 
 func escape(value string) string {
-	return strings.Replace(strings.Replace(strings.Replace(strings.Replace(value, `"`, `\"`, -1), "\n", "\\n", -1), "\r", "\\r", -1), "\t", "\\t", -1)
+	return strings.ReplaceAll(strings.ReplaceAll(strings.ReplaceAll(strings.ReplaceAll(value, `"`, `\"`), "\n", "\\n"), "\r", "\\r"), "\t", "\\t")
 }
 
 func escapeQuotes(value string) string {
-	return strings.Replace(value, `"`, `\"`, -1)
+	return strings.ReplaceAll(value, `"`, `\"`)
 }
 
 func tokenStringToPHP(token string) string {

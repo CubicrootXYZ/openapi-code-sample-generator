@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   golang_quality:
-    uses: CubicrootXYZ/Workflows/.github/workflows/golang_quality.yaml@v0.0.20
+    uses: CubicrootXYZ/Workflows/.github/workflows/golang_quality.yaml@v0.0.26
 
   golang_test:
-    uses: CubicrootXYZ/Workflows/.github/workflows/golang_test.yaml@v0.0.20
+    uses: CubicrootXYZ/Workflows/.github/workflows/golang_test.yaml@v0.0.26
