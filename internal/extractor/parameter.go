@@ -13,18 +13,24 @@ import (
 )
 
 // GetParameters returns the different parameter types
-func (o *openAPIExtractor) GetParameters(params openapi3.Parameters) (types.Parameters, error) {
+func (o *openAPIExtractor) GetParameters(
+	operationParams openapi3.Parameters,
+	pathParams openapi3.Parameters,
+) (types.Parameters, error) {
 	parameters := types.Parameters{}
 	parameters.Path = make([]*types.Parameter, 0)
 	parameters.Query = make([]*types.Parameter, 0)
 	parameters.Header = make([]*types.Parameter, 0)
 	parameters.Cookie = make([]*types.Parameter, 0)
 
-	if params == nil {
-		return parameters, nil
+	if operationParams == nil {
+		operationParams = make(openapi3.Parameters, 0)
+	}
+	if pathParams == nil {
+		pathParams = make(openapi3.Parameters, 0)
 	}
 
-	for _, ref := range params {
+	for _, ref := range append(operationParams, pathParams...) {
 		if ref == nil || ref.Value == nil {
 			continue
 		}

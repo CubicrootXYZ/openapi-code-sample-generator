@@ -202,3 +202,67 @@ func Endpoint3() *templater.Endpoint {
 
 	return &endpoint
 }
+
+// Endpoint4 is a simple endpoint with 2 path variables.
+func Endpoint4() *templater.Endpoint {
+	endpoint := templater.Endpoint{}
+	endpoint.HTTPVerb = "POST"
+	endpoint.Path = "/data/{id1}/{id2}"
+	endpoint.OpenAPI.Operation = &openapi3.Operation{
+		RequestBody: &openapi3.RequestBodyRef{
+			Value: &openapi3.RequestBody{
+				Content: openapi3.Content{
+					"application/json": &openapi3.MediaType{
+						Schema: &openapi3.SchemaRef{
+							Value: &openapi3.Schema{
+								Type: &openapi3.Types{"string"},
+							},
+						},
+					},
+				},
+			},
+		},
+	}
+	endpoint.OpenAPI.PathItem = &openapi3.PathItem{
+		Post: endpoint.OpenAPI.Operation,
+		Parameters: openapi3.Parameters{
+			{
+				Value: &openapi3.Parameter{
+					Name: "id1",
+					In:   "path",
+					Schema: &openapi3.SchemaRef{
+						Value: &openapi3.Schema{
+							Type: &openapi3.Types{
+								"string",
+							},
+						},
+					},
+					Required: true,
+				},
+			},
+			{
+				Value: &openapi3.Parameter{
+					Name: "id2",
+					In:   "path",
+					Schema: &openapi3.SchemaRef{
+						Value: &openapi3.Schema{
+							Type: &openapi3.Types{
+								"integer",
+							},
+						},
+					},
+					Required: true,
+				},
+			},
+		},
+	}
+	endpoint.OpenAPI.Document = &openapi3.T{
+		Servers: openapi3.Servers{
+			&openapi3.Server{
+				URL: "example.com",
+			},
+		},
+	}
+
+	return &endpoint
+}

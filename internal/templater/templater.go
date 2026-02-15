@@ -117,7 +117,7 @@ func (template *templater) Template(lang types.Language, endpoint *Endpoint) (*t
 
 func (template *templater) extractTemplateData(endpoint *Endpoint) (*TemplateData, error) {
 	templateData := TemplateData{}
-	params, err := template.extractor.GetParameters(endpoint.OpenAPI.Operation.Parameters)
+	params, err := template.extractor.GetParameters(endpoint.OpenAPI.Operation.Parameters, endpoint.OpenAPI.PathItem.Parameters)
 	if err != nil {
 		return nil, err
 	}

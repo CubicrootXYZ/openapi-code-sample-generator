@@ -56,3 +56,16 @@ func TestTemplater_Template_CurlXmlBody(t *testing.T) {
 	assert.Equal(t, New().Name(), result.Label)
 	assert.Equal(t, `curl https://example.com/random_#+!§$%&/()=/path -X POST -H "Content-Type: application/xml " -d "<?xml version=\"1.0\" encoding=\"UTF-8\"?><doc><param6-sub>example-string</param6-sub></doc>"`, result.Source)
 }
+
+func TestTemplater_Template_CurlPathParams(t *testing.T) {
+	templater := templater.NewTemplater(encoding.Encoders(),
+		extractor.NewOpenAPIExtractor(),
+		map[types.Language]templater.Language{types.LanguageCurl: New()})
+
+	result, err := templater.Template(types.LanguageCurl, test.Endpoint4())
+
+	require.NoError(t, err)
+	assert.Equal(t, types.LanguageCurl, result.Lang)
+	assert.Equal(t, New().Name(), result.Label)
+	assert.Equal(t, `curl https://example.com/data/example-string/1234 -X POST -H "Content-Type: application/json " -d "\"example-string\""`, result.Source)
+}

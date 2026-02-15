@@ -91,12 +91,12 @@ paths:
         source: |-
           $url = "https://domain.tld/all-of-test";
           $data = json_encode(array(
-          	"field2" => "example-string",
-          	"field1" => "example-string",
           	"section1" => "1234",
           	"section2" => "1234",
           	"property1" => false,
           	"property2" => false,
+          	"field1" => "example-string",
+          	"field2" => "example-string",
           ));
           
           

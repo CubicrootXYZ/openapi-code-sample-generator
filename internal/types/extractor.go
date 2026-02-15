@@ -4,7 +4,7 @@ import "github.com/getkin/kin-openapi/openapi3"
 
 // Extractor defines an interface for feature extractors
 type Extractor interface {
-	GetParameters(params openapi3.Parameters) (Parameters, error)
+	GetParameters(operationParams openapi3.Parameters, pathParams openapi3.Parameters) (Parameters, error)
 	GetPathExample(path string, params []*Parameter) string
 	GetURL(operation *openapi3.Operation, pathItem *openapi3.PathItem, document *openapi3.T) string
 	GetRequestBody(body *openapi3.RequestBody) (value interface{}, format string, err error)
