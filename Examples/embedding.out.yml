@@ -38,9 +38,9 @@ components:
         required:
         - name
         type: object
-      - $ref: '#/components/schemas/data1'
-      - $ref: '#/components/schemas/data2'
-      - $ref: '#/components/schemas/data3'
+      - $ref: "#/components/schemas/data1"
+      - $ref: "#/components/schemas/data2"
+      - $ref: "#/components/schemas/data3"
       type: object
     dataAnyOf:
       anyOf:
@@ -50,9 +50,9 @@ components:
         required:
         - name
         type: object
-      - $ref: '#/components/schemas/data1'
-      - $ref: '#/components/schemas/data2'
-      - $ref: '#/components/schemas/data3'
+      - $ref: "#/components/schemas/data1"
+      - $ref: "#/components/schemas/data2"
+      - $ref: "#/components/schemas/data3"
       type: object
     dataOneOf:
       oneOf:
@@ -62,9 +62,9 @@ components:
         required:
         - name
         type: object
-      - $ref: '#/components/schemas/data1'
-      - $ref: '#/components/schemas/data2'
-      - $ref: '#/components/schemas/data3'
+      - $ref: "#/components/schemas/data1"
+      - $ref: "#/components/schemas/data2"
+      - $ref: "#/components/schemas/data3"
       type: object
 info:
   description: A brand new API with no content.  Go nuts!
@@ -78,97 +78,90 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/dataAllOf'
+              $ref: "#/components/schemas/dataAllOf"
         required: true
       responses:
         "200":
           description: ok
       x-codeSamples:
-      - label: bash/curl
-        lang: curl
-        source: 'curl https://domain.tld/all-of-test -X POST -H "Content-Type: application/json
-          " -d "{\"field1\":\"example-string\",\"field2\":\"example-string\",\"property1\":false,\"property2\":false,\"section1\":1234,\"section2\":1234}"'
-      - label: PHP
-        lang: php
-        source: "$url = \"https://domain.tld/all-of-test\";\n$data = json_encode(array(\n\t\"field2\"
-          => \"example-string\",\n\t\"section2\" => \"1234\",\n\t\"section1\" => \"1234\",\n\t\"property1\"
-          => false,\n\t\"property2\" => false,\n\t\"field1\" => \"example-string\",\n));\n\n\n$curl
-          = curl_init($url);\ncurl_setopt($curl, CURLOPT_CUSTOMREQUEST, \"POST\");\ncurl_setopt($curl,
-          CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($curl, CURLOPT_POSTFIELDS, $data);\nvar_dump(curl_exec($curl));
-          // Dumps the response\ncurl_close($curl);"
-      - label: JavaScript
-        lang: js
-        source: "\nvar url = \"https://domain.tld/all-of-test\";\n\nvar request =
-          new XMLHttpRequest();\nrequest.open(\"POST\", url);\nrequest.setRequestHeader(\"Content-Type\",
-          \"application/json\");\n\nrequest.send({\n\t\"field1\": \"example-string\",\n\t\"field2\":
-          \"example-string\",\n\t\"property1\": false,\n\t\"property2\": false,\n\t\"section1\":
-          1234,\n\t\"section2\": 1234\n});\nconsole.log(request.responseText);"
-  /any-of-test:
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/dataAnyOf'
-        required: true
-      responses:
-        "200":
-          description: ok
-      x-codeSamples:
-      - label: bash/curl
-        lang: curl
-        source: 'curl https://domain.tld/any-of-test -X POST -H "Content-Type: application/json
-          " -d "{\"field1\":\"example-string\",\"field2\":\"example-string\"}"'
-      - label: PHP
-        lang: php
-        source: "$url = \"https://domain.tld/any-of-test\";\n$data = json_encode(array(\n\t\"field1\"
-          => \"example-string\",\n\t\"field2\" => \"example-string\",\n));\n\n\n$curl
-          = curl_init($url);\ncurl_setopt($curl, CURLOPT_CUSTOMREQUEST, \"POST\");\ncurl_setopt($curl,
-          CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($curl, CURLOPT_POSTFIELDS, $data);\nvar_dump(curl_exec($curl));
-          // Dumps the response\ncurl_close($curl);"
-      - label: JavaScript
-        lang: js
-        source: "\nvar url = \"https://domain.tld/any-of-test\";\n\nvar request =
-          new XMLHttpRequest();\nrequest.open(\"POST\", url);\nrequest.setRequestHeader(\"Content-Type\",
-          \"application/json\");\n\nrequest.send({\n\t\"field1\": \"example-string\",\n\t\"field2\":
-          \"example-string\"\n});\nconsole.log(request.responseText);"
-  /one-of-test:
-    post:
-      requestBody:
-        content:
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/dataOneOf'
-        required: true
-      responses:
-        "200":
-          description: ok
-      x-codeSamples:
-      - label: bash/curl
-        lang: curl
-        source: 'curl https://domain.tld/one-of-test -X POST -H "Content-Type: application/xml
-          " -d "<?xml version=\"1.0\" encoding=\"UTF-8\"?><doc><field1>example-string</field1><field2>example-string</field2></doc>"'
-      - label: PHP
-        lang: php
+      - lang: curl
+        source: "curl https://domain.tld/all-of-test -X POST -H \"Content-Type: application/json \" -d \"{\\\"field1\\\":\\\"example-string\\\",\\\"field2\\\":\\\"example-string\\\",\\\"property1\\\":false,\\\"property2\\\":false,\\\"section1\\\":1234,\\\"section2\\\":1234}\""
+        label: bash/curl
+      - lang: php
         source: |-
-          $url = "https://domain.tld/one-of-test";
-          $data = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><doc><field1>example-string</field1><field2>example-string</field2></doc>";
-
+          $url = "https://domain.tld/all-of-test";
+          $data = json_encode(array(
+          	"field2" => "example-string",
+          	"field1" => "example-string",
+          	"section1" => "1234",
+          	"section2" => "1234",
+          	"property1" => false,
+          	"property2" => false,
+          ));
+          
+          
           $curl = curl_init($url);
           curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
           curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
           curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
           var_dump(curl_exec($curl)); // Dumps the response
           curl_close($curl);
-      - label: JavaScript
-        lang: js
-        source: |2-
-
-          var url = "https://domain.tld/one-of-test";
-
-          var request = new XMLHttpRequest();
-          request.open("POST", url);
-          request.setRequestHeader("Content-Type", "application/xml");
-
-          request.send("<?xml version=\"1.0\" encoding=\"UTF-8\"?><doc><field1>example-string</field1><field2>example-string</field2></doc>");
-          console.log(request.responseText);
+        label: PHP
+      - lang: js
+        source: "\nvar url = \"https://domain.tld/all-of-test\";\n\nvar request = new XMLHttpRequest();\nrequest.open(\"POST\", url);\nrequest.setRequestHeader(\"Content-Type\", \"application/json\");\n\nrequest.send({\n\t\"field1\": \"example-string\",\n\t\"field2\": \"example-string\",\n\t\"property1\": false,\n\t\"property2\": false,\n\t\"section1\": 1234,\n\t\"section2\": 1234\n});\nconsole.log(request.responseText);"
+        label: JavaScript
+  /any-of-test:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/dataAnyOf"
+        required: true
+      responses:
+        "200":
+          description: ok
+      x-codeSamples:
+      - lang: curl
+        source: "curl https://domain.tld/any-of-test -X POST -H \"Content-Type: application/json \" -d \"{\\\"field1\\\":\\\"example-string\\\",\\\"field2\\\":\\\"example-string\\\"}\""
+        label: bash/curl
+      - lang: php
+        source: |-
+          $url = "https://domain.tld/any-of-test";
+          $data = json_encode(array(
+          	"field1" => "example-string",
+          	"field2" => "example-string",
+          ));
+          
+          
+          $curl = curl_init($url);
+          curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+          curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+          var_dump(curl_exec($curl)); // Dumps the response
+          curl_close($curl);
+        label: PHP
+      - lang: js
+        source: "\nvar url = \"https://domain.tld/any-of-test\";\n\nvar request = new XMLHttpRequest();\nrequest.open(\"POST\", url);\nrequest.setRequestHeader(\"Content-Type\", \"application/json\");\n\nrequest.send({\n\t\"field1\": \"example-string\",\n\t\"field2\": \"example-string\"\n});\nconsole.log(request.responseText);"
+        label: JavaScript
+  /one-of-test:
+    post:
+      requestBody:
+        content:
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/dataOneOf"
+        required: true
+      responses:
+        "200":
+          description: ok
+      x-codeSamples:
+      - lang: curl
+        source: "curl https://domain.tld/one-of-test -X POST -H \"Content-Type: application/xml \" -d \"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?><doc><field1>example-string</field1><field2>example-string</field2></doc>\""
+        label: bash/curl
+      - lang: php
+        source: "$url = \"https://domain.tld/one-of-test\";\n$data = \"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?><doc><field1>example-string</field1><field2>example-string</field2></doc>\";\n\n$curl = curl_init($url);\ncurl_setopt($curl, CURLOPT_CUSTOMREQUEST, \"POST\");\ncurl_setopt($curl, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($curl, CURLOPT_POSTFIELDS, $data);\nvar_dump(curl_exec($curl)); // Dumps the response\ncurl_close($curl);"
+        label: PHP
+      - lang: js
+        source: "\nvar url = \"https://domain.tld/one-of-test\";\n\nvar request = new XMLHttpRequest();\nrequest.open(\"POST\", url);\nrequest.setRequestHeader(\"Content-Type\", \"application/xml\");\n\nrequest.send(\"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?><doc><field1>example-string</field1><field2>example-string</field2></doc>\");\nconsole.log(request.responseText);"
+        label: JavaScript

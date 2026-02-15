@@ -3,9 +3,9 @@ components:
     Data:
       properties:
         field1:
-          $ref: '#/components/schemas/Tag1'
+          $ref: "#/components/schemas/Tag1"
         field2:
-          $ref: '#/components/schemas/Tag2'
+          $ref: "#/components/schemas/Tag2"
       required:
       - field1
       - field2
@@ -18,8 +18,8 @@ components:
         required:
         - category
         type: object
-      - $ref: '#/components/schemas/Tag1'
-      - $ref: '#/components/schemas/Tag2'
+      - $ref: "#/components/schemas/Tag1"
+      - $ref: "#/components/schemas/Tag2"
       type: object
     Tag1:
       properties:
@@ -47,27 +47,35 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Data'
+              $ref: "#/components/schemas/Data"
         required: true
       responses: null
       x-codeSamples:
-      - label: bash/curl
-        lang: curl
-        source: 'curl https://example.tld/data -X POST -H "Content-Type: application/json
-          " -d "{\"field1\":{\"name\":\"example-string\"},\"field2\":{\"name\":1234}}"'
-      - label: PHP
-        lang: php
-        source: "$url = \"https://example.tld/data\";\n$data = json_encode(array(\n\t\"field1\"
-          => array(\n\t\t\"name\" => \"example-string\",\n\t),\n\t\"field2\" => array(\n\t\t\"name\"
-          => \"1234\",\n\t),\n));\n\n\n$curl = curl_init($url);\ncurl_setopt($curl,
-          CURLOPT_CUSTOMREQUEST, \"POST\");\ncurl_setopt($curl, CURLOPT_RETURNTRANSFER,
-          true);\ncurl_setopt($curl, CURLOPT_POSTFIELDS, $data);\nvar_dump(curl_exec($curl));
-          // Dumps the response\ncurl_close($curl);"
-      - label: JavaScript
-        lang: js
-        source: "\nvar url = \"https://example.tld/data\";\n\nvar request = new XMLHttpRequest();\nrequest.open(\"POST\",
-          url);\nrequest.setRequestHeader(\"Content-Type\", \"application/json\");\n\nrequest.send({\n\t\"field1\":
-          {\n\t\t\"name\": \"example-string\"\n\t},\n\t\"field2\": {\n\t\t\"name\":
-          1234\n\t}\n});\nconsole.log(request.responseText);"
+      - lang: curl
+        source: "curl https://example.tld/data -X POST -H \"Content-Type: application/json \" -d \"{\\\"field1\\\":{\\\"name\\\":\\\"example-string\\\"},\\\"field2\\\":{\\\"name\\\":1234}}\""
+        label: bash/curl
+      - lang: php
+        source: |-
+          $url = "https://example.tld/data";
+          $data = json_encode(array(
+          	"field2" => array(
+          		"name" => "1234",
+          	),
+          	"field1" => array(
+          		"name" => "example-string",
+          	),
+          ));
+          
+          
+          $curl = curl_init($url);
+          curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+          curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+          var_dump(curl_exec($curl)); // Dumps the response
+          curl_close($curl);
+        label: PHP
+      - lang: js
+        source: "\nvar url = \"https://example.tld/data\";\n\nvar request = new XMLHttpRequest();\nrequest.open(\"POST\", url);\nrequest.setRequestHeader(\"Content-Type\", \"application/json\");\n\nrequest.send({\n\t\"field1\": {\n\t\t\"name\": \"example-string\"\n\t},\n\t\"field2\": {\n\t\t\"name\": 1234\n\t}\n});\nconsole.log(request.responseText);"
+        label: JavaScript
 servers:
 - url: example.tld
