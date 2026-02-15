@@ -7,7 +7,7 @@ import (
 
 	"github.com/getkin/kin-openapi/openapi2"
 	"github.com/getkin/kin-openapi/openapi2conv"
-	"github.com/ghodss/yaml"
+	"github.com/goccy/go-yaml"
 	"github.com/spf13/cobra"
 )
 

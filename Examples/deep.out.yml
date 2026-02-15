@@ -96,26 +96,26 @@ paths:
       - label: bash/curl
         lang: curl
         source: 'curl https://domain.tld/test-form-data -X POST -H "Content-Type:
-          multipart/form-data boundary=caddc028fb5616df9f17ed4decdaa51941b5c6c224115614f03cdab12bec"
-          -d "Content-Type: multipart/form-data; boundary=caddc028fb5616df9f17ed4decdaa51941b5c6c224115614f03cdab12bec\r\n\r\n--caddc028fb5616df9f17ed4decdaa51941b5c6c224115614f03cdab12bec\r\nContent-Id:
+          multipart/form-data boundary=d39b2bb002e384ab656fd8115c7b443c3235cd46c55093988c9628006040"
+          -d "Content-Type: multipart/form-data; boundary=d39b2bb002e384ab656fd8115c7b443c3235cd46c55093988c9628006040\r\n\r\n--d39b2bb002e384ab656fd8115c7b443c3235cd46c55093988c9628006040\r\nContent-Id:
           field1.1\r\nContent-Type: text/plain\r\n\r\nContent-Type: multipart/form-data;
-          boundary=2be3c939ee0ae4aef464368bdf7f60b49f8752b5331f7baa3c46574cca8a\r\n\r\n--2be3c939ee0ae4aef464368bdf7f60b49f8752b5331f7baa3c46574cca8a\r\nContent-Id:
+          boundary=ee03787a43bcf3cfa092e67ef607aad39d89865d363ab8c26cd37960c200\r\n\r\n--ee03787a43bcf3cfa092e67ef607aad39d89865d363ab8c26cd37960c200\r\nContent-Id:
           field2.1\r\nContent-Type: text/plain\r\n\r\nContent-Type: multipart/form-data;
-          boundary=5f623102c3c822ad16f33c227d6bd52f545dfe65efa91936499b5b2e66e3\r\n\r\n--5f623102c3c822ad16f33c227d6bd52f545dfe65efa91936499b5b2e66e3\r\nContent-Id:
+          boundary=95604bf937e50ac331e400c0d38d8c1bce927f998094a798cfc8126bc371\r\n\r\n--95604bf937e50ac331e400c0d38d8c1bce927f998094a798cfc8126bc371\r\nContent-Id:
+          field3.2\r\nContent-Type: text/plain\r\n\r\n[example-string]\r\n--95604bf937e50ac331e400c0d38d8c1bce927f998094a798cfc8126bc371\r\nContent-Id:
           field3.1\r\nContent-Type: text/plain\r\n\r\nContent-Type: multipart/form-data;
-          boundary=032ec39623b5cb5e80940c82ea21b966118304093788652971a469945c73\r\n\r\n--032ec39623b5cb5e80940c82ea21b966118304093788652971a469945c73\r\nContent-Id:
+          boundary=559309d91ccab11f39aef429cd5d5540f72491434dc7d1eceebee1be5c2a\r\n\r\n--559309d91ccab11f39aef429cd5d5540f72491434dc7d1eceebee1be5c2a\r\nContent-Id:
           field4.1\r\nContent-Type: text/plain\r\n\r\n[map[field5.1:14 field5.2:[false]
-          field5.3:example-string field5.4:1.234]]\r\n--032ec39623b5cb5e80940c82ea21b966118304093788652971a469945c73\r\nContent-Id:
-          field4.2\r\nContent-Type: text/plain\r\n\r\n1234\r\n--032ec39623b5cb5e80940c82ea21b966118304093788652971a469945c73--\r\n\r\n--5f623102c3c822ad16f33c227d6bd52f545dfe65efa91936499b5b2e66e3\r\nContent-Id:
-          field3.2\r\nContent-Type: text/plain\r\n\r\n[example-string]\r\n--5f623102c3c822ad16f33c227d6bd52f545dfe65efa91936499b5b2e66e3--\r\n\r\n--2be3c939ee0ae4aef464368bdf7f60b49f8752b5331f7baa3c46574cca8a\r\nContent-Id:
-          field2.2\r\nContent-Type: text/plain\r\n\r\n[2022-01-01T15:00:14Z]\r\n--2be3c939ee0ae4aef464368bdf7f60b49f8752b5331f7baa3c46574cca8a\r\nContent-Id:
-          field2.3\r\nContent-Type: text/plain\r\n\r\nexample-string\r\n--2be3c939ee0ae4aef464368bdf7f60b49f8752b5331f7baa3c46574cca8a--\r\n\r\n--caddc028fb5616df9f17ed4decdaa51941b5c6c224115614f03cdab12bec\r\nContent-Id:
-          field1.2\r\nContent-Type: text/plain\r\n\r\n1234\r\n--caddc028fb5616df9f17ed4decdaa51941b5c6c224115614f03cdab12bec--\r\n"'
+          field5.3:example-string field5.4:1.234]]\r\n--559309d91ccab11f39aef429cd5d5540f72491434dc7d1eceebee1be5c2a\r\nContent-Id:
+          field4.2\r\nContent-Type: text/plain\r\n\r\n1234\r\n--559309d91ccab11f39aef429cd5d5540f72491434dc7d1eceebee1be5c2a--\r\n\r\n--95604bf937e50ac331e400c0d38d8c1bce927f998094a798cfc8126bc371--\r\n\r\n--ee03787a43bcf3cfa092e67ef607aad39d89865d363ab8c26cd37960c200\r\nContent-Id:
+          field2.2\r\nContent-Type: text/plain\r\n\r\n[2022-01-01T15:00:14Z]\r\n--ee03787a43bcf3cfa092e67ef607aad39d89865d363ab8c26cd37960c200\r\nContent-Id:
+          field2.3\r\nContent-Type: text/plain\r\n\r\nexample-string\r\n--ee03787a43bcf3cfa092e67ef607aad39d89865d363ab8c26cd37960c200--\r\n\r\n--d39b2bb002e384ab656fd8115c7b443c3235cd46c55093988c9628006040\r\nContent-Id:
+          field1.2\r\nContent-Type: text/plain\r\n\r\n1234\r\n--d39b2bb002e384ab656fd8115c7b443c3235cd46c55093988c9628006040--\r\n"'
       - label: PHP
         lang: php
         source: |-
           $url = "https://domain.tld/test-form-data";
-          $data = "Content-Type: multipart/form-data; boundary=95045337b4c283f0ffadf919263fe899b75d922f178df9c6cb20f23d8716\r\n\r\n--95045337b4c283f0ffadf919263fe899b75d922f178df9c6cb20f23d8716\r\nContent-Id: field1.1\r\nContent-Type: text/plain\r\n\r\nContent-Type: multipart/form-data; boundary=b45dcd60a96f2ba750e6a65d026d06b41a1cca97850f6cbbdbedb0c7e87b\r\n\r\n--b45dcd60a96f2ba750e6a65d026d06b41a1cca97850f6cbbdbedb0c7e87b\r\nContent-Id: field2.1\r\nContent-Type: text/plain\r\n\r\nContent-Type: multipart/form-data; boundary=9a4825418b7ed8a3d87c79fbc4c029c2e4e8259c9d2a8d61bba50ddf69f0\r\n\r\n--9a4825418b7ed8a3d87c79fbc4c029c2e4e8259c9d2a8d61bba50ddf69f0\r\nContent-Id: field3.2\r\nContent-Type: text/plain\r\n\r\n[example-string]\r\n--9a4825418b7ed8a3d87c79fbc4c029c2e4e8259c9d2a8d61bba50ddf69f0\r\nContent-Id: field3.1\r\nContent-Type: text/plain\r\n\r\nContent-Type: multipart/form-data; boundary=996b69cf44ac57d79cc384007fa5fd17019a8f2ee87dd6f2759e2bbafd46\r\n\r\n--996b69cf44ac57d79cc384007fa5fd17019a8f2ee87dd6f2759e2bbafd46\r\nContent-Id: field4.1\r\nContent-Type: text/plain\r\n\r\n[map[field5.1:14 field5.2:[false] field5.3:example-string field5.4:1.234]]\r\n--996b69cf44ac57d79cc384007fa5fd17019a8f2ee87dd6f2759e2bbafd46\r\nContent-Id: field4.2\r\nContent-Type: text/plain\r\n\r\n1234\r\n--996b69cf44ac57d79cc384007fa5fd17019a8f2ee87dd6f2759e2bbafd46--\r\n\r\n--9a4825418b7ed8a3d87c79fbc4c029c2e4e8259c9d2a8d61bba50ddf69f0--\r\n\r\n--b45dcd60a96f2ba750e6a65d026d06b41a1cca97850f6cbbdbedb0c7e87b\r\nContent-Id: field2.2\r\nContent-Type: text/plain\r\n\r\n[2022-01-01T15:00:14Z]\r\n--b45dcd60a96f2ba750e6a65d026d06b41a1cca97850f6cbbdbedb0c7e87b\r\nContent-Id: field2.3\r\nContent-Type: text/plain\r\n\r\nexample-string\r\n--b45dcd60a96f2ba750e6a65d026d06b41a1cca97850f6cbbdbedb0c7e87b--\r\n\r\n--95045337b4c283f0ffadf919263fe899b75d922f178df9c6cb20f23d8716\r\nContent-Id: field1.2\r\nContent-Type: text/plain\r\n\r\n1234\r\n--95045337b4c283f0ffadf919263fe899b75d922f178df9c6cb20f23d8716--\r\n";
+          $data = "Content-Type: multipart/form-data; boundary=0327cec6ed10c23f5d7f07a0e26d9f5da0a8f383dc5568d6ca81b3a9c9af\r\n\r\n--0327cec6ed10c23f5d7f07a0e26d9f5da0a8f383dc5568d6ca81b3a9c9af\r\nContent-Id: field1.2\r\nContent-Type: text/plain\r\n\r\n1234\r\n--0327cec6ed10c23f5d7f07a0e26d9f5da0a8f383dc5568d6ca81b3a9c9af\r\nContent-Id: field1.1\r\nContent-Type: text/plain\r\n\r\nContent-Type: multipart/form-data; boundary=a4453f3c305efa3c338e592f826d9e49b79b8b08ca2af81c78e92a41dedd\r\n\r\n--a4453f3c305efa3c338e592f826d9e49b79b8b08ca2af81c78e92a41dedd\r\nContent-Id: field2.1\r\nContent-Type: text/plain\r\n\r\nContent-Type: multipart/form-data; boundary=fdbde5bdc1abb07da741abcc4e00a6098c7bf4458df53ac90cb11460a4de\r\n\r\n--fdbde5bdc1abb07da741abcc4e00a6098c7bf4458df53ac90cb11460a4de\r\nContent-Id: field3.2\r\nContent-Type: text/plain\r\n\r\n[example-string]\r\n--fdbde5bdc1abb07da741abcc4e00a6098c7bf4458df53ac90cb11460a4de\r\nContent-Id: field3.1\r\nContent-Type: text/plain\r\n\r\nContent-Type: multipart/form-data; boundary=ca2d230486e73d00ed6b1764e09bf02e1071b6552b2171e762a521a84b39\r\n\r\n--ca2d230486e73d00ed6b1764e09bf02e1071b6552b2171e762a521a84b39\r\nContent-Id: field4.1\r\nContent-Type: text/plain\r\n\r\n[map[field5.1:14 field5.2:[false] field5.3:example-string field5.4:1.234]]\r\n--ca2d230486e73d00ed6b1764e09bf02e1071b6552b2171e762a521a84b39\r\nContent-Id: field4.2\r\nContent-Type: text/plain\r\n\r\n1234\r\n--ca2d230486e73d00ed6b1764e09bf02e1071b6552b2171e762a521a84b39--\r\n\r\n--fdbde5bdc1abb07da741abcc4e00a6098c7bf4458df53ac90cb11460a4de--\r\n\r\n--a4453f3c305efa3c338e592f826d9e49b79b8b08ca2af81c78e92a41dedd\r\nContent-Id: field2.2\r\nContent-Type: text/plain\r\n\r\n[2022-01-01T15:00:14Z]\r\n--a4453f3c305efa3c338e592f826d9e49b79b8b08ca2af81c78e92a41dedd\r\nContent-Id: field2.3\r\nContent-Type: text/plain\r\n\r\nexample-string\r\n--a4453f3c305efa3c338e592f826d9e49b79b8b08ca2af81c78e92a41dedd--\r\n\r\n--0327cec6ed10c23f5d7f07a0e26d9f5da0a8f383dc5568d6ca81b3a9c9af--\r\n";
 
           $curl = curl_init($url);
           curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
@@ -131,9 +131,9 @@ paths:
 
           var request = new XMLHttpRequest();
           request.open("POST", url);
-          request.setRequestHeader("Content-Type", "multipart/form-data boundary=2a59d43e579bade12c48eb2b00453a86555bf6da7b01cf8bb5813cb5a23d");
+          request.setRequestHeader("Content-Type", "multipart/form-data boundary=4aee3250fb9b293466652bb17014f09e53b0d301bae02fbb6420a64c1217");
 
-          request.send("Content-Type: multipart/form-data; boundary=2a59d43e579bade12c48eb2b00453a86555bf6da7b01cf8bb5813cb5a23d\r\n\r\n--2a59d43e579bade12c48eb2b00453a86555bf6da7b01cf8bb5813cb5a23d\r\nContent-Id: field1.1\r\nContent-Type: text/plain\r\n\r\nContent-Type: multipart/form-data; boundary=7dcfc05b675462f3f485d02f762a3e75ac2eb6d7b5ff25cf3106b1893a01\r\n\r\n--7dcfc05b675462f3f485d02f762a3e75ac2eb6d7b5ff25cf3106b1893a01\r\nContent-Id: field2.2\r\nContent-Type: text/plain\r\n\r\n[2022-01-01T15:00:14Z]\r\n--7dcfc05b675462f3f485d02f762a3e75ac2eb6d7b5ff25cf3106b1893a01\r\nContent-Id: field2.3\r\nContent-Type: text/plain\r\n\r\nexample-string\r\n--7dcfc05b675462f3f485d02f762a3e75ac2eb6d7b5ff25cf3106b1893a01\r\nContent-Id: field2.1\r\nContent-Type: text/plain\r\n\r\nContent-Type: multipart/form-data; boundary=f9cea48065ee3d9d9e49158fa8e701a192575c523e81381cd862dc17e4a6\r\n\r\n--f9cea48065ee3d9d9e49158fa8e701a192575c523e81381cd862dc17e4a6\r\nContent-Id: field3.1\r\nContent-Type: text/plain\r\n\r\nContent-Type: multipart/form-data; boundary=7f8924803ce21985f7295336cd1e45c48daf1fbb54a35559c66cccee7770\r\n\r\n--7f8924803ce21985f7295336cd1e45c48daf1fbb54a35559c66cccee7770\r\nContent-Id: field4.1\r\nContent-Type: text/plain\r\n\r\n[map[field5.1:14 field5.2:[false] field5.3:example-string field5.4:1.234]]\r\n--7f8924803ce21985f7295336cd1e45c48daf1fbb54a35559c66cccee7770\r\nContent-Id: field4.2\r\nContent-Type: text/plain\r\n\r\n1234\r\n--7f8924803ce21985f7295336cd1e45c48daf1fbb54a35559c66cccee7770--\r\n\r\n--f9cea48065ee3d9d9e49158fa8e701a192575c523e81381cd862dc17e4a6\r\nContent-Id: field3.2\r\nContent-Type: text/plain\r\n\r\n[example-string]\r\n--f9cea48065ee3d9d9e49158fa8e701a192575c523e81381cd862dc17e4a6--\r\n\r\n--7dcfc05b675462f3f485d02f762a3e75ac2eb6d7b5ff25cf3106b1893a01--\r\n\r\n--2a59d43e579bade12c48eb2b00453a86555bf6da7b01cf8bb5813cb5a23d\r\nContent-Id: field1.2\r\nContent-Type: text/plain\r\n\r\n1234\r\n--2a59d43e579bade12c48eb2b00453a86555bf6da7b01cf8bb5813cb5a23d--\r\n");
+          request.send("Content-Type: multipart/form-data; boundary=4aee3250fb9b293466652bb17014f09e53b0d301bae02fbb6420a64c1217\r\n\r\n--4aee3250fb9b293466652bb17014f09e53b0d301bae02fbb6420a64c1217\r\nContent-Id: field1.1\r\nContent-Type: text/plain\r\n\r\nContent-Type: multipart/form-data; boundary=10274d3b2b7fe08d946bda3ff260277ae7612c40618019912e0e745e5fca\r\n\r\n--10274d3b2b7fe08d946bda3ff260277ae7612c40618019912e0e745e5fca\r\nContent-Id: field2.1\r\nContent-Type: text/plain\r\n\r\nContent-Type: multipart/form-data; boundary=6af9f313fc9095a9ce41b96d7e82c9a2d916fce1c3191b25491f7ccc0896\r\n\r\n--6af9f313fc9095a9ce41b96d7e82c9a2d916fce1c3191b25491f7ccc0896\r\nContent-Id: field3.2\r\nContent-Type: text/plain\r\n\r\n[example-string]\r\n--6af9f313fc9095a9ce41b96d7e82c9a2d916fce1c3191b25491f7ccc0896\r\nContent-Id: field3.1\r\nContent-Type: text/plain\r\n\r\nContent-Type: multipart/form-data; boundary=b19ae6f1a69eb19f2160e11df2f295a27a709b2f2e482227a241387d4d36\r\n\r\n--b19ae6f1a69eb19f2160e11df2f295a27a709b2f2e482227a241387d4d36\r\nContent-Id: field4.1\r\nContent-Type: text/plain\r\n\r\n[map[field5.1:14 field5.2:[false] field5.3:example-string field5.4:1.234]]\r\n--b19ae6f1a69eb19f2160e11df2f295a27a709b2f2e482227a241387d4d36\r\nContent-Id: field4.2\r\nContent-Type: text/plain\r\n\r\n1234\r\n--b19ae6f1a69eb19f2160e11df2f295a27a709b2f2e482227a241387d4d36--\r\n\r\n--6af9f313fc9095a9ce41b96d7e82c9a2d916fce1c3191b25491f7ccc0896--\r\n\r\n--10274d3b2b7fe08d946bda3ff260277ae7612c40618019912e0e745e5fca\r\nContent-Id: field2.2\r\nContent-Type: text/plain\r\n\r\n[2022-01-01T15:00:14Z]\r\n--10274d3b2b7fe08d946bda3ff260277ae7612c40618019912e0e745e5fca\r\nContent-Id: field2.3\r\nContent-Type: text/plain\r\n\r\nexample-string\r\n--10274d3b2b7fe08d946bda3ff260277ae7612c40618019912e0e745e5fca--\r\n\r\n--4aee3250fb9b293466652bb17014f09e53b0d301bae02fbb6420a64c1217\r\nContent-Id: field1.2\r\nContent-Type: text/plain\r\n\r\n1234\r\n--4aee3250fb9b293466652bb17014f09e53b0d301bae02fbb6420a64c1217--\r\n");
           console.log(request.responseText);
   /test-json:
     post:
@@ -154,28 +154,28 @@ paths:
           " -d "{\"field1.1\":{\"field2.1\":{\"field3.1\":{\"field4.1\":[{\"field5.1\":\"14\",\"field5.2\":[false],\"field5.3\":\"example-string\",\"field5.4\":1.234}],\"field4.2\":1234},\"field3.2\":[\"example-string\"]},\"field2.2\":[\"2022-01-01T15:00:14Z\"],\"field2.3\":\"example-string\"},\"field1.2\":1234}"'
       - label: PHP
         lang: php
-        source: "$url = \"https://domain.tld/test-json\";\n$data = json_encode(array(\n\t\"field1.1\"
-          => array(\n\t\t\"field2.3\" => \"example-string\",\n\t\t\"field2.1\" =>
-          array(\n\t\t\t\"field3.1\" => array(\n\t\t\t\t\"field4.1\" => array(\n\t\t\t\t\tarray(\n\t\t\t\t\t\t\"field5.1\"
-          => \"14\",\n\t\t\t\t\t\t\"field5.2\" => array(\n\t\t\t\t\t\t\tfalse,\n\t\t\t\t\t\t),\n\t\t\t\t\t\t\"field5.3\"
-          => \"example-string\",\n\t\t\t\t\t\t\"field5.4\" => \"1.234\",\n\t\t\t\t\t),\n\t\t\t\t),\n\t\t\t\t\"field4.2\"
-          => \"1234\",\n\t\t\t),\n\t\t\t\"field3.2\" => array(\n\t\t\t\t\"example-string\",\n\t\t\t),\n\t\t),\n\t\t\"field2.2\"
-          => array(\n\t\t\t\"2022-01-01T15:00:14Z\",\n\t\t),\n\t),\n\t\"field1.2\"
-          => \"1234\",\n));\n\n\n$curl = curl_init($url);\ncurl_setopt($curl, CURLOPT_CUSTOMREQUEST,
-          \"POST\");\ncurl_setopt($curl, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($curl,
-          CURLOPT_POSTFIELDS, $data);\nvar_dump(curl_exec($curl)); // Dumps the response\ncurl_close($curl);"
+        source: "$url = \"https://domain.tld/test-json\";\n$data = json_encode(array(\n\t\"field1.2\"
+          => \"1234\",\n\t\"field1.1\" => array(\n\t\t\"field2.1\" => array(\n\t\t\t\"field3.2\"
+          => array(\n\t\t\t\t\"example-string\",\n\t\t\t),\n\t\t\t\"field3.1\" =>
+          array(\n\t\t\t\t\"field4.1\" => array(\n\t\t\t\t\tarray(\n\t\t\t\t\t\t\"field5.3\"
+          => \"example-string\",\n\t\t\t\t\t\t\"field5.4\" => \"1.234\",\n\t\t\t\t\t\t\"field5.1\"
+          => \"14\",\n\t\t\t\t\t\t\"field5.2\" => array(\n\t\t\t\t\t\t\tfalse,\n\t\t\t\t\t\t),\n\t\t\t\t\t),\n\t\t\t\t),\n\t\t\t\t\"field4.2\"
+          => \"1234\",\n\t\t\t),\n\t\t),\n\t\t\"field2.2\" => array(\n\t\t\t\"2022-01-01T15:00:14Z\",\n\t\t),\n\t\t\"field2.3\"
+          => \"example-string\",\n\t),\n));\n\n\n$curl = curl_init($url);\ncurl_setopt($curl,
+          CURLOPT_CUSTOMREQUEST, \"POST\");\ncurl_setopt($curl, CURLOPT_RETURNTRANSFER,
+          true);\ncurl_setopt($curl, CURLOPT_POSTFIELDS, $data);\nvar_dump(curl_exec($curl));
+          // Dumps the response\ncurl_close($curl);"
       - label: JavaScript
         lang: js
-        source: |2-
-
-          var url = "https://domain.tld/test-json";
-
-          var request = new XMLHttpRequest();
-          request.open("POST", url);
-          request.setRequestHeader("Content-Type", "application/json");
-
-          request.send("{\"field1.1\":{\"field2.1\":{\"field3.1\":{\"field4.1\":[{\"field5.1\":\"14\",\"field5.2\":[false],\"field5.3\":\"example-string\",\"field5.4\":1.234}],\"field4.2\":1234},\"field3.2\":[\"example-string\"]},\"field2.2\":[\"2022-01-01T15:00:14Z\"],\"field2.3\":\"example-string\"},\"field1.2\":1234}");
-          console.log(request.responseText);
+        source: "\nvar url = \"https://domain.tld/test-json\";\n\nvar request = new
+          XMLHttpRequest();\nrequest.open(\"POST\", url);\nrequest.setRequestHeader(\"Content-Type\",
+          \"application/json\");\n\nrequest.send({\n\t\"field1.1\": {\n\t\t\"field2.1\":
+          {\n\t\t\t\"field3.1\": {\n\t\t\t\t\"field4.1\": [\n\t\t\t\t\t{\n\t\t\t\t\t\t\"field5.1\":
+          \"14\",\n\t\t\t\t\t\t\"field5.2\": [\n\t\t\t\t\t\t\tfalse\n\t\t\t\t\t\t],\n\t\t\t\t\t\t\"field5.3\":
+          \"example-string\",\n\t\t\t\t\t\t\"field5.4\": 1.234\n\t\t\t\t\t}\n\t\t\t\t],\n\t\t\t\t\"field4.2\":
+          1234\n\t\t\t},\n\t\t\t\"field3.2\": [\n\t\t\t\t\"example-string\"\n\t\t\t]\n\t\t},\n\t\t\"field2.2\":
+          [\n\t\t\t\"2022-01-01T15:00:14Z\"\n\t\t],\n\t\t\"field2.3\": \"example-string\"\n\t},\n\t\"field1.2\":
+          1234\n});\nconsole.log(request.responseText);"
   /test-xml:
     post:
       requestBody:

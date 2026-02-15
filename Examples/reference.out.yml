@@ -65,15 +65,9 @@ paths:
           // Dumps the response\ncurl_close($curl);"
       - label: JavaScript
         lang: js
-        source: |2-
-
-          var url = "https://example.tld/data";
-
-          var request = new XMLHttpRequest();
-          request.open("POST", url);
-          request.setRequestHeader("Content-Type", "application/json");
-
-          request.send("{\"field1\":{\"name\":\"example-string\"},\"field2\":{\"name\":1234}}");
-          console.log(request.responseText);
+        source: "\nvar url = \"https://example.tld/data\";\n\nvar request = new XMLHttpRequest();\nrequest.open(\"POST\",
+          url);\nrequest.setRequestHeader(\"Content-Type\", \"application/json\");\n\nrequest.send({\n\t\"field1\":
+          {\n\t\t\"name\": \"example-string\"\n\t},\n\t\"field2\": {\n\t\t\"name\":
+          1234\n\t}\n});\nconsole.log(request.responseText);"
 servers:
 - url: example.tld

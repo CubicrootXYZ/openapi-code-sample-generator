@@ -17,7 +17,7 @@ import (
 	"github.com/CubicrootXYZ/openapi-code-sample-generator/internal/codesample"
 
 	openapi "github.com/getkin/kin-openapi/openapi3"
-	"github.com/ghodss/yaml"
+	"github.com/goccy/go-yaml"
 	"github.com/spf13/cobra"
 )
 
