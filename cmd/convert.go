@@ -34,7 +34,7 @@ func init() {
 	convertCmd.PersistentFlags().BoolVar(&debug, "v", false, "Enable to get verbose output")
 }
 
-func convert(cmd *cobra.Command, args []string) {
+func convert(_ *cobra.Command, _ []string) {
 	log.Verbose = debug
 
 	if fromVersion != 2 || toVersion != 3 {
@@ -42,11 +42,12 @@ func convert(cmd *cobra.Command, args []string) {
 		os.Exit(1)
 	}
 
-	log.Info("Loading file " + inputFile)
+	log.Info("Loading file " + convertFile)
 	var doc openapi2.T
 	input, err := os.ReadFile(convertFile)
 	if err != nil {
-		panic(err)
+		log.Error(err.Error())
+		os.Exit(1)
 	}
 	err = yaml.Unmarshal(input, &doc)
 	if err != nil {
@@ -64,6 +65,7 @@ func convert(cmd *cobra.Command, args []string) {
 	json, err := yaml.Marshal(newDoc)
 	if err != nil {
 		log.Error(err.Error())
+		os.Exit(1)
 	}
 	_ = os.WriteFile(outputFile, json, 0666)
 }
