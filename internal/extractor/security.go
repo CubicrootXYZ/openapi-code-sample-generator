@@ -70,6 +70,13 @@ func (o *openAPIExtractor) GetSecurity(operation *openapi3.Operation, document *
 }
 
 func (o *openAPIExtractor) getSecuritySchema(name string, document *openapi3.T) *openapi3.SecurityScheme {
+	if document.Components == nil {
+		return nil
+	}
+	if document.Components.SecuritySchemes == nil {
+		return nil
+	}
+
 	for secName, ref := range document.Components.SecuritySchemes {
 		if name == secName {
 			return ref.Value
