@@ -42,8 +42,8 @@ func init() {
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	generateCmd.PersistentFlags().StringVar(&inputFile, "input-file", "swagger.yaml", "Location of the input swagger yaml specification file")
-	generateCmd.PersistentFlags().StringVar(&outputFile, "output-file", "swagger-out.yaml", "Location of the output swagger yaml specification file")
+	generateCmd.PersistentFlags().StringVar(&inputFile, "input-file", "swagger.yaml", "Location of the input OpenAPI v3 specification file in YAML format")
+	generateCmd.PersistentFlags().StringVar(&outputFile, "output-file", "swagger-out.yaml", "Location of the output OpenAPI v3 YAML specification file")
 	generateCmd.PersistentFlags().StringVar(&selectedLanguages, "languages", "curl,php,js", "Comma separated list of languages to make examples for")
 	generateCmd.PersistentFlags().BoolVar(&debug, "v", false, "Enable to get verbose output")
 
