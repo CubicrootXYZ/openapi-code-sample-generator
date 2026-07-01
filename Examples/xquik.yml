@@ -1,0 +1,97 @@
+openapi: 3.0.3
+info:
+  title: Xquik API fixture
+  version: "1.0"
+  description: Minimal fixture for public X search and media download endpoints.
+servers:
+  - url: https://xquik.com
+paths:
+  /api/v1/x/tweets/search:
+    get:
+      summary: Search public X posts
+      operationId: searchTweets
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema:
+            type: string
+          example: from:xquik
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 200
+          example: 25
+      responses:
+        "200":
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tweets:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        text:
+                          type: string
+                  has_next_page:
+                    type: boolean
+                  next_cursor:
+                    type: string
+      security:
+        - XquikApiKey: []
+  /api/v1/x/media/download:
+    post:
+      summary: Request media download links
+      operationId: downloadTweetMedia
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - tweetIds
+              properties:
+                tweetIds:
+                  type: array
+                  minItems: 1
+                  items:
+                    type: string
+            example:
+              tweetIds:
+                - "1234567890123456789"
+      responses:
+        "200":
+          description: Media links
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  downloads:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        tweetId:
+                          type: string
+                        url:
+                          type: string
+                          format: uri
+      security:
+        - XquikApiKey: []
+components:
+  securitySchemes:
+    XquikApiKey:
+      type: apiKey
+      name: x-api-key
+      in: header
