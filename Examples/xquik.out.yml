@@ -1,0 +1,125 @@
+components:
+  securitySchemes:
+    XquikApiKey:
+      in: header
+      name: x-api-key
+      type: apiKey
+info:
+  description: Minimal fixture for public X search and media download endpoints.
+  title: Xquik API fixture
+  version: "1.0"
+openapi: 3.0.3
+paths:
+  /api/v1/x/media/download:
+    post:
+      operationId: downloadTweetMedia
+      requestBody:
+        content:
+          application/json:
+            example:
+              tweetIds:
+              - "1234567890123456789"
+            schema:
+              properties:
+                tweetIds:
+                  items:
+                    type: string
+                  minItems: 1
+                  type: array
+              required:
+              - tweetIds
+              type: object
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                properties:
+                  downloads:
+                    items:
+                      properties:
+                        tweetId:
+                          type: string
+                        url:
+                          format: uri
+                          type: string
+                      type: object
+                    type: array
+                type: object
+          description: Media links
+      security:
+      - XquikApiKey: []
+      summary: Request media download links
+      x-codeSamples:
+      - lang: curl
+        source: "TOKEN=\"my secure token\"\ncurl https://xquik.com/api/v1/x/media/download -X POST -H \"x-api-key: ${TOKEN}\" -H \"Content-Type: application/json \" -d \"{\\\"tweetIds\\\":[\\\"1234567890123456789\\\"]}\""
+        label: bash/curl
+      - lang: php
+        source: "$token = \"my secret token\";\n$url = \"https://xquik.com/api/v1/x/media/download\";\n$headers = array(\n    \"x-api-key: \" . $token,\n);\n$data = json_encode(array(\n\t\"tweetIds\" => array(\n\t\t\"1234567890123456789\",\n\t),\n));\n\n\n$curl = curl_init($url);\ncurl_setopt($curl, CURLOPT_CUSTOMREQUEST, \"POST\");\ncurl_setopt($curl, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($curl, CURLOPT_POSTFIELDS, $data);\ncurl_setopt($curl, CURLOPT_HTTPHEADER, $headers);\nvar_dump(curl_exec($curl)); // Dumps the response\ncurl_close($curl);"
+        label: PHP
+      - lang: js
+        source: "var token = \"my secret token\";\nvar url = \"https://xquik.com/api/v1/x/media/download\";\n\nvar request = new XMLHttpRequest();\nrequest.open(\"POST\", url);\nrequest.setRequestHeader(\"x-api-key\", token);\nrequest.setRequestHeader(\"Content-Type\", \"application/json\");\n\nrequest.send({\n\t\"tweetIds\": [\n\t\t\"1234567890123456789\"\n\t]\n});\nconsole.log(request.responseText);"
+        label: JavaScript
+  /api/v1/x/tweets/search:
+    get:
+      operationId: searchTweets
+      parameters:
+      - example: from:xquik
+        in: query
+        name: q
+        required: true
+        schema:
+          type: string
+      - example: 25.0
+        in: query
+        name: limit
+        schema:
+          maximum: 200.0
+          minimum: 1.0
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                properties:
+                  has_next_page:
+                    type: boolean
+                  next_cursor:
+                    type: string
+                  tweets:
+                    items:
+                      properties:
+                        id:
+                          type: string
+                        text:
+                          type: string
+                      type: object
+                    type: array
+                type: object
+          description: Search results
+      security:
+      - XquikApiKey: []
+      summary: Search public X posts
+      x-codeSamples:
+      - lang: curl
+        source: "TOKEN=\"my secure token\"\ncurl https://xquik.com/api/v1/x/tweets/search?q=from%3Axquik -X GET -H \"x-api-key: ${TOKEN}\""
+        label: bash/curl
+      - lang: php
+        source: "$token = \"my secret token\";\n$url = \"https://xquik.com/api/v1/x/tweets/search?q=from%3Axquik\";\n$headers = array(\n    \"x-api-key: \" . $token,\n);\n\n$curl = curl_init($url);\ncurl_setopt($curl, CURLOPT_CUSTOMREQUEST, \"GET\");\ncurl_setopt($curl, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($curl, CURLOPT_HTTPHEADER, $headers);\nvar_dump(curl_exec($curl)); // Dumps the response\ncurl_close($curl);"
+        label: PHP
+      - lang: js
+        source: |-
+          var token = "my secret token";
+          var url = "https://xquik.com/api/v1/x/tweets/search?q=from%3Axquik";
+          
+          var request = new XMLHttpRequest();
+          request.open("GET", url);
+          request.setRequestHeader("x-api-key", token);
+          
+          request.send("");
+          console.log(request.responseText);
+        label: JavaScript
+servers:
+- url: https://xquik.com
