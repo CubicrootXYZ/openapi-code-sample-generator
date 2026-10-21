@@ -55,7 +55,7 @@ func (u *URLEncode) EnocdeParameter(name string, value interface{}) (string, err
 			}
 		}
 
-		encoded.WriteString(fmt.Sprintf("%s=%s", url.QueryEscape(name), newValue))
+		fmt.Fprintf(&encoded, "%s=%s", url.QueryEscape(name), newValue)
 	}
 
 	return encoded.String(), nil
@@ -73,7 +73,7 @@ func (u *URLEncode) EnocdeValue(ref string, value interface{}, meta *types.Forma
 		}
 
 		for index, newVa := range newVal {
-			encoded.WriteString(fmt.Sprint(index))
+			fmt.Fprint(&encoded, index)
 
 			deeperLevels, err := u.urlencodeSecondLevelObject(newVa)
 			if err != nil {
@@ -96,7 +96,7 @@ func (u *URLEncode) EnocdeValue(ref string, value interface{}, meta *types.Forma
 				encoded.WriteString("&")
 			}
 
-			encoded.WriteString(fmt.Sprint(key))
+			fmt.Fprint(&encoded, key)
 			deeperLevels, err := u.urlencodeSecondLevelObject(newVa)
 			if err != nil {
 				log.Info(fmt.Sprintf("Can not generate object: %s", err.Error()))
