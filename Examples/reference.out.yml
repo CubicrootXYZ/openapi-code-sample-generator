@@ -49,7 +49,6 @@ paths:
             schema:
               $ref: "#/components/schemas/Data"
         required: true
-      responses: null
       x-codeSamples:
       - lang: curl
         source: "curl https://example.tld/data -X POST -H \"Content-Type: application/json \" -d \"{\\\"field1\\\":{\\\"name\\\":\\\"example-string\\\"},\\\"field2\\\":{\\\"name\\\":1234}}\""
@@ -96,7 +95,6 @@ paths:
             schema:
               $ref: "#/components/schemas/Data"
         required: true
-      responses: null
       x-codeSamples:
       - lang: curl
         source: "curl https://example.tld/data/example-string/1234 -X POST -H \"Content-Type: application/json \" -d \"{\\\"field1\\\":{\\\"name\\\":\\\"example-string\\\"},\\\"field2\\\":{\\\"name\\\":1234}}\""
@@ -105,11 +103,11 @@ paths:
         source: |-
           $url = "https://example.tld/data/example-string/1234";
           $data = json_encode(array(
-          	"field2" => array(
-          		"name" => "1234",
-          	),
           	"field1" => array(
           		"name" => "example-string",
+          	),
+          	"field2" => array(
+          		"name" => "1234",
           	),
           ));
           
